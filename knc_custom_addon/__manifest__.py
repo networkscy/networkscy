@@ -10,9 +10,7 @@
     "license": "AGPL-3",
 
     'depends': [
-        'base', 'contacts', 'base_address_city', 'base_location', 'partner_multi_relation',
-        'stock', 'website', 'website_sale', 'website_sale_comparison', 'crm', 'project',
-        'sale', 'account', 'board'
+        'base', 'contacts', 'base_address_city', 'base_location',
     ],
 
     'data': [
@@ -25,38 +23,17 @@
         'views/partner_profiles.xml',
         'views/partner_relations.xml',
         'views/partner_street_names.xml',
-        'views/project.xml',
         # 'views/opportunity.xml',
-        'views/competitor.xml',
-        'views/product_brand.xml',
-        'views/product_state.xml',
-        'views/product_product.xml',
-        'views/product_template.xml',
-        'views/product_attribute.xml',
-        'views/product_attribute_related.xml',
-        'views/product_attribute_set.xml',
-        'views/product_attribute_tag.xml',
-        'views/sale_order.xml',
-        'views/waybill.xml',
-        'views/product_product_code.xml',
-        'views/account_bill_views.xml',
         # 'views/x_product_attribute_value_supplier.xml',
 
         # Views Website
         # 'views/web_product_template.xml',
 
         # Menu
-        'views/_menu.xml',
-        'views/_menu_views.xml',
 
         # Reports
-        'report/product_datasheet_report.xml',
-        'report/template_datasheet_report.xml',
-        'report/waybill_report.xml',
 
         # Reports Configuration
-        'report/_report_layout.xml',
-        'data/report_paperformat_data.xml',
     ],
 
     'images': [
