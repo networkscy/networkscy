@@ -28,8 +28,8 @@
                     <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" />
                     <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" />
 					<button name="force_update" type="object" string="Force Update to Google" class="oe_highlight"/>
-					<group name="google" string="Google Contacts Connector">
-                        <field name="id_x" string="Old ID" readonly="1"/>
+				<group name="google" string="Google Contacts Connector">
+                      <!--  <field name="id_x" string="Old ID" readonly="1"/>-->
                     </group>
 				</xpath>
 					<xpath expr="//group[@name='google']" position="after">
