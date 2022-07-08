@@ -10,7 +10,7 @@
 				<xpath expr="//field[@name='company_id']" position="after">
                     <field name="active_sync" optional="show" string="Sync" widget="boolean_toggle"/>
                 </xpath>
-                <xpath expr="//field[@name='active_sync']" position="after">
+                <xpath expr="//field[@name='company_id']" position="after">
                     <field name="gc_id" optional="hide"/>
                     <field name="gc_etag" optional="hide"/>
                 </xpath>
