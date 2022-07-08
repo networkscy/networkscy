@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "KNC Customizations Addon",
-    'summary': "KNC Custom Module for Customizations",
-    'description': "KNC Custom Module for Customizations",
-    'author': "KNC Advanced Lighting",
-    'website': "http://www.knc.com.cy",
+    'name': "Networkscy Customization Addon",
+    'summary': "Networkscy Custom Module for Customizations",
+    'description': "Networkscy Custom Module for Customizations",
+    'author': "Networkscy",
     'category': "Extra Tools",
     'version': "1.0.0",
     "license": "AGPL-3",
@@ -21,8 +20,6 @@
         'views/partner.xml',
         'views/partner_names.xml',
         'views/partner_profiles.xml',
-        'views/partner_relations.xml',
-        'views/partner_street_names.xml',
         # 'views/opportunity.xml',
         # 'views/x_product_attribute_value_supplier.xml',
 
