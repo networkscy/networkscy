@@ -10,7 +10,7 @@
     'website': "https://woadsoft.com/",
     'category': "Extra Tools",
     'version': '1.0',
-    'depends': ['base', 'contacts', 'knc_custom_addon'],
+    'depends': ['base', 'contacts'],
     'data': [
         'security/ir.model.access.csv',
         'views/credential_views.xml',
