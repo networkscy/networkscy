@@ -10,3 +10,4 @@ from . import profile
 from . import people
 from . import cron
 from . import contact
+from . import partner
