@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on 23/04/2022 -->
+    <data>
+
+    <!-- *** First / Given Names Views --> <!-- Checked 23/04/2022 -->
+
+        <!-- First / Given Names List View --> <!-- Checked 23/04/2022 -->
+        <record id="partner_first_name_list" model="ir.ui.view">
+            <field name="name">First / Given Names List</field>
+            <field name="model">res.partner.first.name</field>
+            <field name="arch" type="xml">
+                <tree string="First / Given Names" editable="top" default_order="name asc">
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- First / Given Names Search View --> <!-- Checked 23/04/2022 -->
+        <record id="partner_first_name_search" model="ir.ui.view">
+            <field name="name">First / Given Names Search</field>
+            <field name="model">res.partner.first.name</field>
+            <field name="arch" type="xml">
+                <search string="First / Given Names Search">
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- First / Given Names Form View --> <!-- Checked 23/04/2022 -->
+        <record id="partner_first_name_form" model="ir.ui.view">
+            <field name="name">First / Given Names Form</field>
+            <field name="model">res.partner.first.name</field>
+            <field name="arch" type="xml">
+                <form string="First / Given Names Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- First / Given Names Action --> <!-- Checked 23/04/2022 -->
+        <record id="partner_first_name_action" model="ir.actions.act_window">
+            <field name="name">First / Given Names</field>
+            <field name="res_model">res.partner.first.name</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    <!-- *** Last + Maiden Names Views --> <!-- Checked 23/04/2022 -->
+
+        <!-- Last + Maiden Names List View --> <!-- Checked 23/04/2022 -->
+        <record id="partner_last_name_list" model="ir.ui.view">
+            <field name="name">Last + Maiden Names List</field>
+            <field name="model">res.partner.last.name</field>
+            <field name="arch" type="xml">
+                <tree string="Last + Maiden Names List" editable="top" default_order="name asc">
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Last + Maiden Names Search View --> <!-- Checked 23/04/2022 -->
+        <record id="partner_last_name_search" model="ir.ui.view">
+            <field name="name">Last + Maiden Names Search</field>
+            <field name="model">res.partner.last.name</field>
+            <field name="arch" type="xml">
+                <search string="Last + Maiden Names Search">
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Last + Maiden Names Form View --> <!-- Checked 23/04/2022 -->
+        <record id="partner_last_name_form" model="ir.ui.view">
+            <field name="name">Last + Maiden Names Form</field>
+            <field name="model">res.partner.last.name</field>
+            <field name="arch" type="xml">
+                <form string="Last + Maiden Names Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Last + Maiden Names Action --> <!-- Checked 23/04/2022 -->
+        <record id="partner_last_name_action" model="ir.actions.act_window">
+            <field name="name">Last + Maiden Names</field>
+            <field name="res_model">res.partner.last.name</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

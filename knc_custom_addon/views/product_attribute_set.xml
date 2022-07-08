@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+    <!-- *** Product Attribute Sets Views --> <!-- Checked ../../2022 -->
+
+        <!-- Product Attribute Sets List View --> <!-- Checked 26/06/2022 -->
+        <record id="product_attribute_set_list" model="ir.ui.view">
+            <field name="name">Product Attribute Sets List</field>
+            <field name="model">product.attribute.set</field>
+            <field name="arch" type="xml">
+                <tree string="Product Attribute Sets List">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="attribute_line_ids" widget="one2many" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Product Attribute Sets Search View --> <!-- Checked 26/06/2022 -->
+        <record id="product_attribute_set_search" model="ir.ui.view">
+            <field name="name">Product Attribute Sets Search</field>
+            <field name="model">product.attribute.set</field>
+            <field name="arch" type="xml">
+                <search string="Product Attribute Sets Search">
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Product Attribute Sets Form View --> <!-- Checked 26/06/2022 -->
+        <record id="product_attribute_set_form" model="ir.ui.view">
+            <field name="name">Product Attribute Sets Form</field>
+            <field name="model">product.attribute.set</field>
+            <field name="arch" type="xml">
+                <form string="Product Attribute Sets Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group string="Related Attributes">
+                            <field name="attribute_line_ids" widget="one2many" nolabel="1" context="{'show_attribute': False}">
+                                <tree string="Related Attributes" editable="bottom" default_order="sequence asc">
+                                    <field name="sequence" optional="hide"/>
+                                    <field name="attribute_id" widget="many2one" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="value_ids" widget="many2many_tags" context="{'show_attribute': False}" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="create_uid" optional="hide"/>
+                                    <field name="create_date" optional="hide"/>
+                                    <field name="write_uid" optional="show"/>
+                                    <field name="write_date" optional="show"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Product Attribute Sets Action --> <!-- Checked 02/06/2022 -->
+        <record id="product_attribute_set_action" model="ir.actions.act_window">
+            <field name="name">Product Attribute Sets</field>
+            <field name="res_model">product.attribute.set</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="product_attribute_set_product_template_form" model="ir.ui.view">
+            <field name="name">Product Attribute Sets List</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='variants']/field[@name='attribute_line_ids']" position="before">
+<!--                    <group attrs="{'invisible': [('product_variant_count', '&gt;=', 1)]}">-->
+                    <field name="creation_days" invisible="1"/>
+                    <group attrs="{'invisible': [('creation_days', '&gt;=', 1)]}">
+                        <group>
+                            <field name="attribute_set_id" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                        <group>
+                            <button name="show_confirmation_popup" type="object" string="Load" class="float-left btn-secondary"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Start Confirmation Wizard -->
+        <record model="ir.ui.view" id="product_attribute_set_confirm_wizard_form">
+            <field name="name">product.attribute.set.wizard.form</field>
+            <field name="model">product.attribute.set.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Confirm dialog">
+                    <field name="yes_no" readonly="1" />
+                    <footer>
+                        <button class="oe_highlight" name="yes" type="object" string="Yes" />
+                        <button class="oe_highlight" name="no" type="object" string="No" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- End Confirmation Wizard -->
+
+    </data>
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+    <!-- *** Product Attribute Tags Views --> <!-- Checked ../../2022 -->
+
+        <!--Product Attribute Tags List View --> <!-- Checked ../../2022 -->
+        <record id="product_attribute_tag_list" model="ir.ui.view">
+            <field name="name">Product Attribute Tags List</field>
+            <field name="model">product.attribute.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Product Attribute Tags List" editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Product Attribute Tags Search View --> <!-- Checked ../../2022 -->
+        <record id="product_attribute_tag_search" model="ir.ui.view">
+            <field name="name">Product Attribute Tags Search</field>
+            <field name="model">product.attribute.tag</field>
+            <field name="arch" type="xml">
+                <search string="Product Attribute Tags Search">
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--Product Attribute Tags Form View --> <!-- Checked ../../2022 -->
+        <record id="product_attribute_tag_form" model="ir.ui.view">
+            <field name="name">Product Attribute Tags Form</field>
+            <field name="model">product.attribute.tag</field>
+            <field name="arch" type="xml">
+                <form string="Product Attribute Tags Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Product Attribute Tags Action --> <!-- Checked 02/06/2022 -->
+        <record id="product_attribute_tag_action" model="ir.actions.act_window">
+            <field name="name">Product Attribute Tags</field>
+            <field name="res_model">product.attribute.tag</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

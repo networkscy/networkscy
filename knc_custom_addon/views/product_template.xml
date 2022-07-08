@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+        <!-- Product Template - Form View --> <!-- Checked ../../2022 -->
+        <record id="product_variant_addons_view_extend" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <!-- Lock / Unlock Button -->
+                <xpath expr="//form//header" position="inside">
+                    <button name="button_lock" type="object" string="Lock" attrs="{'invisible': [('is_lock', '=', True)]}"/>
+                    <button name="button_unlock" type="object" string="Unlock" class="oe_highlight" attrs="{'invisible': [('is_lock', '=', False)]}"/>
+                </xpath>
+
+                <!-- Ribbon Widget for Lock / Unlock Action -->
+                <xpath expr="//form/sheet/div[@name='button_box']" position="after">
+                    <widget name="web_ribbon" title="Locked" bg_color="bg-success" attrs="{'invisible': [('is_lock', '=', False)]}"/>
+                </xpath>
+
+                <field name="detailed_type" position="before">
+                    <field name="version"/>
+                </field>
+
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="is_lock" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="attrs">{'invisible': 0}</attribute>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='image_1920']" position="before">-->
+<!--                    <label for="is_lock" string="Lock" style="margin-left:83%"/>-->
+<!--                    <field name="is_lock" widget="boolean_toggle"/>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//form" position="attributes">-->
+<!--                    <t t-if="is_lock">-->
+<!--                        <attribute name="create">false</attribute>-->
+<!--                        <attribute name="delete">false</attribute>-->
+<!--                        <attribute name="edit">false</attribute>-->
+<!--                    </t>-->
+<!--                    <t t-if="not is_lock">-->
+<!--                        <attribute name="create">true</attribute>-->
+<!--                        <attribute name="delete">true</attribute>-->
+<!--                        <attribute name="edit">true</attribute>-->
+<!--                    </t>-->
+<!--                </xpath>-->
+
+                <!-- Replace Attribute & Variants Page -->
+                <xpath expr="//notebook/page[@name='variants']" position="replace">
+                    <page name="variants" string="Attributes &amp; Variants" groups="product.group_product_variant">
+
+                        <separator string="Variants Information"/>
+                        <div name="instructions" class="table">
+                            <table class="table table-striped table-bordered table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4" scope="col">*** Make sure you create a new Product Template when any
+                                            of the following conditions is True :</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Different IP</strong> Options</td>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Watt</strong> Options</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Different CRI</strong> Options</td>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Sensors</strong> Options</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Different Size</strong> Options</td>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Emergency</strong> Options</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>Different Shape</strong> Options</td>
+                                        <td style="width: 3%; text-align: center;"><input type="checkbox"/></td>
+                                        <td style="width: 47%; text-align: left;">When the Variants of the Product
+                                            contains <strong>CCT</strong> or <strong>RGB</strong> or <strong>TW</strong> Options</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">*** When creating multiple Product Templates for the same Physical
+                                            Product, make sure you mention the Difference Option in the Product Name</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr/>
+
+                        <!-- Option "color_field": "color" for Field value_ids is causing Javascript Error when Field attribute_line_ids is Read Only -->
+                        <separator string="Product Attributes"/>
+                        <field name="attribute_line_ids" widget="one2many" context="{'show_attribute': False}">
+                            <tree string="Variants" editable="bottom" decoration-info="state=='normal'" decoration-danger="state=='blocked'" decoration-success="state=='done'" decoration-bf="state=='blocked' or state=='done'">
+                                <field name="value_count" invisible="1"/>
+                                <field name="attribute_id" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                <field name="note" optional="show"/>
+                                <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" force_save="1" context="{'default_attribute_id': attribute_id, 'show_attribute': False}" attrs="{'readonly': [('state', 'in', 'done')]}"/>
+                                <field name="state" widget="state_selection" optional="show"/>
+                                <field name="category_id" string="Related Category" options="{'no_open': True}" optional="hide"/>
+                                <field name="create_variant" string="Variants" options="{'no_open': True}" optional="hide"/>
+                                <field name="is_related" optional="hide"/>
+                                <field name="is_float" optional="hide"/>
+                                <field name="is_integer" optional="hide"/>
+                                <field name="is_single_value" optional="hide"/>
+                                <field name="is_used_desc" optional="hide"/>
+                                <field name="create_uid" widget="many2one_avatar_user" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" widget="many2one_avatar_user" optional="show"/>
+                                <field name="write_date" widget="remaining_days" optional="hide"/>
+                                <!--<button string="Configure" class="float-right btn-secondary" type="object" name="action_open_attribute_values" groups="product.group_product_variant"/>-->
+                            </tree>
+                        </field>
+                        <p class="oe_grey oe_edit_only">
+                            <strong>Warning</strong>: adding or deleting attributes
+                            will delete and recreate existing variants and lead
+                            to the loss of their possible customizations.
+                        </p>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='public_categ_ids']" position="attributes">
+                    <attribute name="domain">[('child_id', '=', False)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- Product Template - Product Variants View --> <!-- Checked ../../2022 -->
+        <record id="product_product_addons_view_extend" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree" position="replace">
+                    <tree editable="top">
+                        <field name="priority" widget="priority" nolabel="1" readonly="1"/>
+                        <field name="product_tmpl_id" readonly="1" optional="hide"/>
+                        <field name="default_code" optional="show"/>
+                        <field name="barcode" optional="hide"/>
+                        <field name="name" readonly="1" optional="hide"/>
+                        <field name="type" optional="hide" readonly="1"/>
+                        <field name="product_template_attribute_value_ids" widget="many2many_tags"
+                               string="Template Attribute Values" readonly="1" force_save="1" optional="show"/>
+                        <field name="product_template_variant_value_ids" widget="many2many_tags"
+                               string="Variant Attribute Values" readonly="1" force_save="1" optional="show"/>
+                        <field name="related_attributes_value_ids" widget="many2many_tags"
+                               string="Related Attribute Values" options="{'no_open': True, 'no_create': True}"
+                               domain="[('ptav_active','=',True),('product_tmpl_id','=',product_tmpl_id),('attribute_id.is_related','=',True)]"/>
+                        <field name="is_sync_value" widget="boolean_toggle" optional="hide"/>
+                        <field name="tmp_related_attributes_value_ids" widget="many2many_tags"
+                               string="Temporary Values" readonly="1" optional="hide"/>
+                        <field name="restore_attribute_value_ids" widget="many2many_tags"
+                               string="Restore Values" optional="hide"/>
+                        <field name="weight" string="Weight (kg)" optional="hide"/>
+                        <field name="volume" string="Volume (m³)" optional="hide"/>
+                        <field name="active" invisible="1"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- Product Template - Product Variant Form --> <!-- Checked ../../2022 -->
+        <record id="product_product_addons_view_extend_form" model="ir.ui.view">
+            <field name="name">product.product.view.form.easy</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="related_attributes_value_ids" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Template Attribute Line Form - Product Template -->
+        <record id="product_template_attribute_line_view_extend_form" model="ir.ui.view">
+            <field name="name">product.template.attribute.line.form</field>
+            <field name="model">product.template.attribute.line</field>
+            <field name="inherit_id" ref="product.product_template_attribute_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form" position="replace">
+                    <form string="Product Attribute and Values">
+                        <group name="main_field">
+                            <label for="attribute_id" string="Attribute Name"/>
+                            <field name="attribute_id" nolabel="1"/>
+                            <field name="value_ids" widget="one2many">
+                                <tree string="Values">
+                                    <field name="name"/>
+                                    <field name="html_color"/>
+                                </tree>
+                                <form string="Values">
+                                    <field name="name"/>
+                                </form>
+                            </field>
+                        </group>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Template Search View -->
+        <record id="product_template_search_view_extend_form" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="after">
+                    <separator/>
+                    <filter name="normal" string=" Attributes Not Checked" domain="[('attribute_line_ids.state', '=', 'normal')]"/>
+                    <filter name="blocked" string="Attributes to Review" domain="[('attribute_line_ids.state', '=', 'blocked')]"/>
+                    <filter name="done" string="Attributes Checked" domain="[('attribute_line_ids.state', '=', 'done')]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

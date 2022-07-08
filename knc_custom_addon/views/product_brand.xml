@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+    <!-- *** Product Brands Views -->
+
+        <!-- Product Brands List View --> <!-- Checked 14/05/2022 -->
+        <record id="product_brands_list" model="ir.ui.view">
+            <field name="name">Product Brands List</field>
+            <field name="model">product.brands</field>
+            <field name="arch" type="xml">
+                <tree string="Product Brands List" default_order="sequence asc">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="origin" options="{'no_open': True, 'no_create': True}" optional="show"/>
+                    <field name="website" widget="url" optional="show"/>
+                    <field name="partner_id" options="{'no_create': True}" optional="show"/>
+                    <field name="related_products_ids" options="{'no_create': True}" optional="show"/>
+                    <field name="notes" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Product Brands Search View --> <!-- Checked 14/05/2022 -->
+        <record id="product_brands_search" model="ir.ui.view">
+            <field name="name">Product Brands Search</field>
+            <field name="model">product.brands</field>
+            <field name="arch" type="xml">
+                <search string="Product Brands Search">
+                    <field name="name"/>
+                    <field name="origin"/>
+                    <field name="partner_id"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="origin" domain="[]" context="{'group_by':'origin'}"/>
+                        <filter name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Product Brands Form View --> <!-- Checked 14/05/2022 -->
+        <record id="product_brands_form" model="ir.ui.view">
+            <field name="name">Product Brands Form</field>
+            <field name="model">product.brands</field>
+            <field name="arch" type="xml">
+                <form string="Product Brands Form">
+                    <sheet>
+                        <field name="logo" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="origin" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="website" widget="url"/>
+                            </group>
+                            <group>
+                                <field name="partner_id" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                            <group colspan="2">
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                        <separator string="Related Product Templates"/>
+                        <field name="related_products_ids" widget="many2many" nolabel="1"/>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids" options="{'post_refresh':True}" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Product Brands Kanban View --> <!-- Checked 14/05/2022 --> <!-- NEEDS REVIEW -->
+        <record id="product_brands_kanban" model="ir.ui.view">
+            <field name="name">Product Brands Kanban</field>
+            <field name="model">product.brands</field>
+            <field name="arch" type="xml">
+                <kanban class="o_product_brands_kanban" default_order="sequence">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="origin"/>
+                    <field name="products_count"/>
+                    <field name="logo"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click o_product_brands_kanban">
+                                <div class="o_kanban_image">
+                                    <t t-if="record.logo">
+                                        <img t-att-src="kanban_image('product.brands', 'logo', record.id.raw_value)" alt="Image"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4>
+                                        <a type="open">
+                                            <field name="name"/>
+                                        </a>
+                                    </h4>
+                                    <ul>
+                                        <li>
+                                            <strong>Origin:</strong> <field name="origin"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Product Brands Action --> <!-- Checked 14/05/2022 -->
+        <record id="product_brands_action" model="ir.actions.act_window">
+            <field name="name">Product Brands</field>
+            <field name="res_model">product.brands</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+
+        <!--  Product Brands - Product Template List View --> <!-- Checked 15/05/2022 -->
+        <record id="product_brands_product_template_list" model="ir.ui.view">
+            <field name="name">Product Brands List</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="product_brand_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Same View for Variants in Template - Need to Create Separate View -->
+        <!--  Product Brands - Product Variant List View --> <!-- Checked 15/05/2022 -->
+<!--        <record id="product_brands_product_variant_list" model="ir.ui.view">-->
+<!--            <field name="name">Product Brands List</field>-->
+<!--            <field name="model">product.product</field>-->
+<!--            <field name="inherit_id" ref="product.product_product_tree_view"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="name" position="after">-->
+<!--                    <field name="product_brand_id"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--  Product Brands - Product Template & Variant Form View --> <!-- Checked 15/05/2022 -->
+        <record id="product_brands_product_template_variant_form" model="ir.ui.view">
+            <field name="name">Product Brands Form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="detailed_type" position="before">
+                    <field name="product_brand_id" options="{'no_open': True, 'no_create': True}"/>
+                </field>
+            </field>
+        </record>
+
+        <!--  Product Brands - Product Template & Variant Search View --> <!-- Checked 15/05/2022 -->
+        <record id="product_brands_product_template_variant_search" model="ir.ui.view">
+            <field name="name">Product Brands Search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="product_brand_id"/>
+                </field>
+                <filter name="type" position="after">
+                    <filter name="brand" domain="[]" context="{'group_by':'product_brand_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+    </data>
+</odoo>

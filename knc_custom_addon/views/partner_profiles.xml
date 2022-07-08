@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on 23/04/2022 -->
+    <data>
+
+    <!-- *** Social Profiles Views --> <!-- Checked 23/04/2022 -->
+
+        <!-- Social Profiles List View --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_list" model="ir.ui.view">
+            <field name="name">Social Profiles List</field>
+            <field name="model">social.profiles</field>
+            <field name="arch" type="xml">
+                <tree string="Social Profiles" editable="top" default_order="sp_partner_id asc, sp_type asc">
+                    <field name="id" optional="hide"/>
+                    <field name="sp_partner_id" optional="show"/>
+                    <field name="sp_type" optional="show"/>
+                    <field name="name" widget="url" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Social Profiles Search View --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_search" model="ir.ui.view">
+            <field name="name">Social Profiles Search</field>
+            <field name="model">social.profiles</field>
+            <field name="arch" type="xml">
+                <search string="Social Profiles Search">
+                    <field name="sp_partner_id"/>
+                    <field name="sp_type"/>
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="sp_partner_id" domain="[]" context="{'group_by':'sp_partner_id'}"/>
+                        <filter name="sp_type" domain="[]" context="{'group_by':'sp_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Social Profiles Form View --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_form" model="ir.ui.view">
+            <field name="name">Social Profiles Form</field>
+            <field name="model">social.profiles</field>
+            <field name="arch" type="xml">
+                <form string="Social Profiles Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sp_partner_id"/>
+                                <field name="sp_type"/>
+                            </group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Social Profiles Action --> <!-- Checked 23/04/2022 -->
+        <record id="social_profiles_action" model="ir.actions.act_window">
+            <field name="name">Social Profiles</field>
+            <field name="res_model">social.profiles</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    <!-- *** Social Profile Types Views --> <!-- Checked 23/04/2022 -->
+
+        <!-- Social Profile Types List View --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_type_list" model="ir.ui.view">
+            <field name="name">Social Profile Types List</field>
+            <field name="model">social.profile.types</field>
+            <field name="arch" type="xml">
+                <tree string="Social Profile Types" editable="top" default_order="sequence asc">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="label" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Social Profile Types Search View --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_type_search" model="ir.ui.view">
+            <field name="name">Social Profile Types Search</field>
+            <field name="model">social.profile.types</field>
+            <field name="arch" type="xml">
+                <search string="Social Profile Types Search">
+                    <field name="name"/>
+                    <field name="label"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="label" domain="[]" context="{'group_by':'label'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Social Profile Types Form View --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_type_form" model="ir.ui.view">
+            <field name="name">Social Profile Types Form</field>
+            <field name="model">social.profile.types</field>
+            <field name="arch" type="xml">
+                <form string="Social Profile Types Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="label"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Social Profile Types Action --> <!-- Checked 23/04/2022 -->
+        <record id="social_profile_type_action" model="ir.actions.act_window">
+            <field name="name">Social Profile Types</field>
+            <field name="res_model">social.profile.types</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- Social Profiles - Partner Form View --> <!-- Checked 26/04/2022 -->
+        <record id="social_profiles_partner_view" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="social_profiles" string="Social Profiles">
+                        <field name="social_profiles_ids" widget="one2many" nolabel="1">
+                            <tree editable="bottom" default_order="sequence asc">
+                                <field name="sequence" optional="hide"/>
+                                <field name="id" optional="hide"/>
+                                <field name="name" widget="url" optional="show"/>
+                                <field name="sp_type" optional="show"/>
+                                <field name="create_uid" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" optional="show"/>
+                                <field name="write_date" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

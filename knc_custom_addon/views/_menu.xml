@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Partner Related Menus -->
+        <menuitem name="Settings" id="knc_contact_settings" parent="contacts.menu_contacts" sequence="9"/>
+
+        <menuitem name="Product Brands" id="knc_product_brands" parent="knc_contact_settings" action="product_brands_action" sequence="4"/>
+
+        <menuitem name="Competitors" id="knc_competitors_root" parent="knc_contact_settings" sequence="5"/>
+            <menuitem name="Competitor List" id="knc_competitors" parent="knc_competitors_root" action="competitor_action" sequence="1"/>
+            <menuitem name="Competitor Brands" id="knc_competitor_brands" parent="knc_competitors_root" action="competitor_brands_action" sequence="2"/>
+            <menuitem name="Competitor Sectors" id="knc_competitor_sectors" parent="knc_competitors_root" action="competitor_sectors_action" sequence="3"/>
+            <menuitem name="Competitor Industries" id="knc_competitor_industries" parent="knc_competitors_root" action="competitor_industries_action" sequence="4"/>
+            <menuitem name="Competitor Projects" id="knc_competitor_projects" parent="knc_competitors_root" action="competitor_projects_action" sequence="5"/>
+            <menuitem name="Competitor Opportunities" id="knc_competitor_opportunities" parent="knc_competitors_root" action="competitor_opportunities_action" sequence="6"/>
+
+        <menuitem name="Social Profiles" id="knc_social_profiles_root" parent="knc_contact_settings" sequence="10"/>
+            <menuitem name="Social Profiles List" id="knc_social_profiles" parent="knc_social_profiles_root" action="social_profiles_action" sequence="1"/>
+            <menuitem name="Social Profile Types" id="knc_social_profile_type" parent="knc_social_profiles_root" action="social_profile_type_action" sequence="2"/>
+
+        <menuitem name="Project Relations" id="knc_project_relations_root" parent="knc_contact_settings" sequence="15"/>
+            <menuitem name="Project Relations List" id="knc_project_relations" parent="knc_project_relations_root" action="project_relations_action" sequence="1"/>
+            <menuitem name="Project Relation Types" id="knc_project_relation_type" parent="knc_project_relations_root" action="project_relation_type_action" sequence="2"/>
+
+        <menuitem name="Contact Relations" id="knc_partner_relations_root" parent="knc_contact_settings" sequence="20"/>
+            <menuitem name="Contact Relations List" id="knc_partner_relations" parent="knc_partner_relations_root" action="partner_multi_relation.action_res_partner_relation_all" sequence="1"/>
+            <menuitem name="Contact Relation Types" id="knc_partner_relation_type" parent="knc_partner_relations_root" action="partner_multi_relation.action_res_partner_relation_type" sequence="2"/>
+
+        <menuitem name="Names Directory" id="knc_partner_names_root" parent="knc_contact_settings" sequence="30"/>
+            <menuitem name="First / Given Names" id="knc_partner_firstname" parent="knc_partner_names_root" action="partner_first_name_action" sequence="1"/>
+            <menuitem name="Last + Maiden Names" id="knc_partner_lastname" parent="knc_partner_names_root" action="partner_last_name_action" sequence="2"/>
+
+        <menuitem name="Addresses Directory" id="knc_partner_address_root" parent="knc_contact_settings" sequence="40"/>
+            <menuitem name="Street Names" id="knc_partner_street" parent="knc_partner_address_root" action="loc_contact_street_action" sequence="1"/>
+            <menuitem name="Postal Codes" id="knc_partner_postal" parent="knc_partner_address_root" action="base_location.action_zip_tree" sequence="2"/>
+            <menuitem name="Cities" id="knc_partner_cities" parent="knc_partner_address_root" action="base_location.action_res_city_full" sequence="3"/>
+            <menuitem name="States" id="knc_partner_states" parent="knc_partner_address_root" action="base.action_country_state" sequence="4"/>
+            <menuitem name="Countries" id="knc_partner_countries" parent="knc_partner_address_root" action="base.action_country" sequence="5"/>
+            <menuitem name="Country Groups" id="knc_partner_groups" parent="knc_partner_address_root" action="base.action_country_group" sequence="6"/>
+
+
+        <!-- Hide Menus from Other Modules -->
+        <record model="ir.ui.menu" id="partner_multi_relation.menu_res_partner_relation">
+            <field name="active" eval="False"/>
+        </record>
+        <record model="ir.ui.menu" id="partner_multi_relation.menu_res_partner_relation_all">
+            <field name="active" eval="False"/>
+        </record>
+        <record model="ir.ui.menu" id="partner_multi_relation.menu_res_partner_relation_type">
+            <field name="active" eval="False"/>
+        </record>
+
+
+        <!-- Missing Menus for Default Models -->
+
+        <!-- KNC Menu -->
+        <menuitem name="KNC Menu" id="knc_menu_root" web_icon="knc_custom_addon,images/KNC_Vector.png" sequence="0"/>
+
+            <menuitem name="Dashboards" id="knc_menu_dashboards_root" parent="knc_menu_root" sequence="1"/>
+                <menuitem name="Personal" id="knc_menu_dashboards_personal_root" parent="knc_menu_dashboards_root" sequence="1"/>
+                    <menuitem name="My Dashboards" id="knc_menu_dashboards_my_dashboard" parent="knc_menu_dashboards_personal_root" action="board.open_board_my_dash_action" sequence="1"/>
+
+            <menuitem name="Competitors" id="knc_menu_competitors_root" parent="knc_menu_root" sequence="5"/>
+                <menuitem name="Competitor List" id="knc_menu_competitors" parent="knc_menu_competitors_root" action="competitor_action" sequence="1"/>
+                <menuitem name="Competitor Brands" id="knc_menu_competitor_brands" parent="knc_menu_competitors_root" action="competitor_brands_action" sequence="2"/>
+                <menuitem name="Competitor Sectors" id="knc_menu_competitor_sectors" parent="knc_menu_competitors_root" action="competitor_sectors_action" sequence="3"/>
+                <menuitem name="Competitor Industries" id="knc_menu_competitor_industries" parent="knc_menu_competitors_root" action="competitor_industries_action" sequence="4"/>
+                <menuitem name="Competitor Projects" id="knc_menu_competitor_projects" parent="knc_menu_competitors_root" action="competitor_projects_action" sequence="5"/>
+                <menuitem name="Competitor Opportunities" id="knc_menu_competitor_opportunities" parent="knc_menu_competitors_root" action="competitor_opportunities_action" sequence="6"/>
+
+            <menuitem name="Stock / Inventory" id="knc_menu_stock_root" parent="knc_menu_root" sequence="6"/>
+                <menuitem name="Stock Moves" id="knc_menu_stock_moves_root" parent="knc_menu_stock_root" sequence="1"/>
+                <menuitem name="Waybills List" id="knc_menu_waybills" parent="knc_menu_stock_moves_root" action="way_bill_class" sequence="1"/>
+                <menuitem name="Waybills Lines" id="knc_menu_waybills_lines" parent="knc_menu_stock_moves_root" action="way_bill_line_action" sequence="2"/>
+
+            <menuitem name="Products" id="knc_menu_products_root" parent="knc_menu_root" sequence="7"/>
+
+                <menuitem name="Product Templates" id="knc_menu_templates_root" parent="knc_menu_products_root" sequence="1"/>
+                <menuitem name="All Templates List" id="knc_menu_templates_all" parent="knc_menu_templates_root" action="product_templates_all_action" sequence="1"/>
+
+                <menuitem name="Product Variants" id="knc_menu_variants_root" parent="knc_menu_products_root" sequence="2"/>
+                <menuitem name="All Variants List" id="knc_menu_variants_all" parent="knc_menu_variants_root" action="product_variants_all_action" sequence="1"/>
+
+                <menuitem name="Product Attributes" id="knc_menu_attributes_root" parent="knc_menu_products_root" sequence="3"/>
+                    <menuitem name="Attributes List" id="knc_menu_attributes" parent="knc_menu_attributes_root" action="product.attribute_action" sequence="1"/>
+                    <menuitem name="Attributes Sets" id="knc_menu_attribute_sets" parent="knc_menu_attributes_root" action="product_attribute_set_action" sequence="2"/>
+                    <menuitem name="Attributes Tags" id="knc_menu_attribute_tags" parent="knc_menu_attributes_root" action="product_attribute_tag_action" sequence="3"/>
+                    <menuitem name="Attributes Values" id="knc_menu_attributes_values" parent="knc_menu_attributes_root" action="product_attribute_values_action" sequence="4"/>
+                    <menuitem name="Attributes Categories" id="knc_menu_attributes_categories" parent="knc_menu_attributes_root" action="website_sale_comparison.product_attribute_category_action" sequence="5"/>
+
+
+                <menuitem name="Product Code Generator" id="knc_menu_generator_root" parent="knc_menu_products_root" sequence="4"/>
+                    <menuitem name="Product Code Syntax Sets" id="knc_menu_attributes_categories2" parent="knc_menu_generator_root" action="product_code_syntax_sets_action" sequence="1"/>
+                    <menuitem name="Product Code Brand Values" id="knc_menu_attributes_categories1" parent="knc_menu_generator_root" action="attribute_value_brand_comb_action" sequence="2"/>
+
+
+                <menuitem name="Configuration / Settings" id="knc_menu_product_settings_root" parent="knc_menu_products_root" sequence="5"/>
+                    <menuitem name="Product Brands" id="knc_menu_product_brands" parent="knc_menu_product_settings_root" action="product_brands_action" sequence="1"/>
+                    <menuitem name="Product States" id="knc_menu_product_states" parent="knc_menu_product_settings_root" action="product_states_action" sequence="2"/>
+
+            <menuitem name="Accounting" id="knc_menu_accounting_root" parent="knc_menu_root" sequence="8"/>
+                <menuitem name="Bank List" id="knc_menu_bank_list" parent="knc_menu_accounting_root" action="base.action_res_bank_form" sequence="1"/>
+                <menuitem name="Bank Accounts" id="knc_menu_bank_accounts" parent="knc_menu_accounting_root" action="base.action_res_partner_bank_account_form" sequence="2"/>
+
+
+            <menuitem name="Settings" id="knc_menu_settings_root" parent="knc_menu_root" sequence="10"/>
+                <menuitem name="System" id="knc_menu_settings_system_root" parent="knc_menu_settings_root" sequence="1"/>
+                    <menuitem name="Users" id="knc_menu_settings_system_users" parent="knc_menu_settings_system_root" action="base.action_res_users" sequence="1"/>
+                    <menuitem name="Groups" id="knc_menu_settings_system_groups" parent="knc_menu_settings_system_root" action="base.action_res_groups" sequence="2"/>
+                    <menuitem name="Companies" id="knc_menu_settings_system_companies" parent="knc_menu_settings_system_root" action="base.action_res_company_form" sequence="3"/>
+
+                <menuitem name="Settings" id="knc_menu_settings_settings_root" parent="knc_menu_settings_root" sequence="2"/>
+                    <menuitem name="General" id="knc_menu_settings_system_general" parent="knc_menu_settings_settings_root" action="base_setup.action_general_configuration" sequence="1"/>
+                    <menuitem name="Apps Store" id="knc_menu_settings_system_appsstore" parent="knc_menu_settings_settings_root" action="base.open_module_tree" sequence="2"/>
+                    <menuitem name="Paper Format" id="knc_menu_settings_system_paperformat" parent="knc_menu_settings_settings_root" action="base.paper_format_action" sequence="3"/>
+                    <menuitem name="Server Actions" id="knc_menu_settings_system_serveractions" parent="knc_menu_settings_settings_root" action="base.action_server_action" sequence="4"/>
+                    <menuitem name="Printed Reports" id="knc_menu_settings_system_printedreports" parent="knc_menu_settings_settings_root" action="base.reports_action" sequence="5"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+        <record id="knc_project_view" model="ir.ui.view">
+            <field name="name">project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+                <!-- Child Projects Button -->
+<!--                <xpath expr="//button[@name='397']" position="before">-->
+<!--                    <button name="248" class="oe_stat_button" type="action" icon="fa-folder-open-o">-->
+<!--                        <div class="o_field_widget o_stat_info">-->
+<!--                            <span class="o_stat_value">-->
+<!--                                <field name="related_child_projects_count" nolabel="1"/>-->
+<!--                            </span>-->
+<!--                            <span class="o_stat_text">-->
+<!--                                Child Projects-->
+<!--                            </span>-->
+<!--                        </div>-->
+<!--                    </button>-->
+<!--                </xpath>-->
+
+                <xpath expr="//field[@name='company_id']" position="before">
+                    <field name="parent_project_id" widget="many2one" domain="[('id', '!=', id)]" options="{'no_create': True}"/>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page name="related_projects" string="Related Projects">
+                        <field name="related_child_projects_ids" widget="many2many" domain="[('id', '!=', id)]" nolabel="1"/>
+                    </page>
+
+<!--                    <page name="related_opportunities" string="Related Opportunities">-->
+<!--                        <field name="related_opportunities_ids" widget="many2many" nolabel="1" />-->
+<!--                    </page>-->
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

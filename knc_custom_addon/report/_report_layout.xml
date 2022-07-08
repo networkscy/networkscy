@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Custom Report Layout - Start -->
+    <template id="external_layout_knc">
+
+    <!-- Report Header - Start -->
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style" style="font-family: Century Gothic; letter-spacing: 0.5px; font-size: 9pt; color: #333E48;">
+        <!-- Line 1 - KNC Logo + Vertical Line + Headline -->
+            <div class="row">
+            <!-- Left Column - KNC Logo -->
+                <div class="col-3 text-left">
+                    <span style="display: table;">
+                        <img src="knc_custom_addon/static/src/img/KNC_Logo.png" style="max-height: 70px; max-width: 170px;" alt="Logo"/>
+                    </span>
+                </div>
+            <!-- Right Column - Vertical Line + Headline -->
+                <div class="col-9 text-right" style="margin-top: 43px;">
+                    <div style="padding-right: 5px;">
+                        <span><strong>advanced lighting controls</strong></span>
+                    </div>
+                    <div>
+                        <hr align="right" style="background: #F04F23; height: 4px; border-radius: 20px; border: 0; margin: 0px; margin-left: -46px;"/>
+                    </div>
+                    <div style="padding-right: 5px;">
+                        <span><strong>architectural lighting solutions</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+     <!-- Report Header - End -->
+
+
+    <!-- Default Code which Exists in Default Reports - Start -->
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+             t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <!-- This div ensures that the address is not cropped by the header -->
+            <div class="pt-5">
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-out="0"/>
+        </div>
+    <!-- Default Code which Exists in Default Reports - End -->
+
+
+    <!-- Report Footer - Start -->  <!-- Checked 08/05/2022 -->
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout" style="font-family: Century Gothic; letter-spacing: 0.5px; font-size: 9pt; color: #333E48;">
+
+        <!-- Line 1 - Company Information -->
+            <div class="row">
+            <!-- Left Column - Empty Line -->
+                <div class="col-6 text-left">
+                </div>
+            <!-- Right Column - Company Information -->
+                <div class="col-6 text-right" style="padding-right: 14px;">
+                    <i class="fa fa-rss" style="font-size: 10pt; padding-right: 3px; color: #F04F23"/>
+                    <span><strong>Panos K. Charalambous Ltd</strong></span> <span>trading as</span> <span><strong>KNC Advanced Lighting</strong></span>
+                </div>
+            </div>
+
+        <!-- Line 2 - Address Information + Print Details -->
+            <div class="row">
+            <!-- Left Column - Print Details -->
+                <div class="col-6 text-left" style="font-size: 8pt; top: 10px;">
+                    <div t-if="report_type == 'pdf'" class="text-muted" style="padding-left: 3px;">
+                        Page <span class="page"/> of <span class="topage"/>
+                        <span>-</span>
+                        Printed on <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y at %H:%M')"/> by <span t-esc="user.name"/>
+                    </div>
+                </div>
+            <!-- Right Column - Address Information -->
+                <div class="col-6 text-right" style="padding-right: 15px;">
+                    <i class="fa fa-map-marker" style="font-size: 9pt; padding-right: 4px; color: #333E48"> </i><span style="word-spacing: 2px;">Corner of Roikou 8 &amp; Vitonos 2, Pallouriotissa, 1045, Nicosia, Cyprus</span>
+                </div>
+            </div>
+
+        <!-- Line 3 - Contact Information + Vertical Line -->
+            <div class="row">
+            <!-- Left Column - Vertical Line -->
+                <div class="col-5 text-left">
+                    <div style="background-color: #333E48; text-align: left; width: 108%; height: 4px; border-radius: 20px; position: absolute; top: 49%;"/>
+                </div>
+            <!-- Right Column - Contact Information -->
+                <div class="col-7 text-right" style="padding-right: 13px;">
+                    <i class="fa fa-phone" style="font-size: 9pt; padding-right: 3px; color: #333E48"/> <span>+357 22468468</span>
+                    <span style="padding-left: 1px; padding-right: 2px;">\</span>
+                    <i class="fa fa-address-card" style="font-size: 8pt; padding-right: 3px; color: #333E48"/> <span>CY10403278R</span>
+                    <span style="padding-left: 1px; padding-right: 2px;">\</span>
+                    <i class="fa fa-envelope" style="font-size: 8pt; padding-right: 3px; color: #333E48"/> <span>info@knc.com.cy</span>
+                    <span style="padding-left: 1px; padding-right: 2px;">\</span>
+                    <i class="fa fa-link" style="font-size: 8pt; padding-right: 1px; color: #333E48"/> <span>www.knc.com.cy</span>
+                </div>
+            </div>
+
+        </div>
+    <!-- Report Footer - End -->
+
+    </template>
+<!-- Custom Report Layout - End -->
+
+
+<!-- Default Report Assignment - Start -->
+    <template id="web.external_layout">
+
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-call="knc_custom_addon.external_layout_knc"><t t-out="0"/></t>
+
+    </template>
+<!-- Default Report Assignment - End -->
+
+</odoo>

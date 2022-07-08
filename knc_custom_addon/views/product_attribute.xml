@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+    <!-- *** Attributes Views --> <!-- Added Missing Default Views & Adjusted Fields -->
+
+        <!-- Attributes List View - Adjusted Fields --> <!-- Checked 17/05/2022 -->
+        <record id="product_attributes_list" model="ir.ui.view">
+            <field name="name">Attributes List</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.attribute_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree" position="replace">
+                    <tree string="Attributes List" multi_edit="1" default_order="sequence asc">
+                        <field name="sequence" widget="handle"/>
+                        <field name="id" optional="hide"/>
+                        <field name="name" optional="show"/>
+                        <field name="category_id" optional="show"/>
+                        <field name="display_type" optional="show"/>
+                        <field name="note" optional="show"/>
+                        <field name="prefix" string="Prefix" optional="show"/>
+                        <field name="suffix" string="Suffix" optional="show"/>
+                        <field name="name_alt" string="Short" optional="show"/>
+                        <field name="is_used_desc" string="Description" optional="show"/>
+                        <field name="is_related" string="Related" optional="show"/>
+                        <field name="is_single_value" string="Single" optional="show"/>
+                        <field name="is_float" string="Float" optional="show"/>
+                        <field name="is_integer" string="Integer" optional="show"/>
+                        <field name="number_related_products" string="Products" optional="show"/>
+                        <field name="create_variant" string="Variants" optional="show"/>
+                        <field name="visibility" string="Website" optional="hide"/>
+                        <field name="attribute_tags_ids" widget="many2many_tags" optional="show"/>
+                        <field name="comments" optional="show"/>
+                        <field name="create_uid" optional="hide"/>
+                        <field name="create_date" optional="hide"/>
+                        <field name="write_uid" optional="hide"/>
+                        <field name="write_date" optional="hide"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Attributes Form View - Adjusted Fields --> <!-- Checked ../05/2022 -->
+        <record id="product_attribute_addons_view_extend" model="ir.ui.view">
+            <field name="name">product.attribute.form</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.product_attribute_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='main_fields']" position="after">
+                    <group string="Additional Configuration">
+                        <group>
+                            <field name="prefix"/>
+                            <field name="suffix"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+<!--                            <field name="name_alt" attrs="{'readonly': [('create_variant', '!=', 'always')]}"/>-->
+                            <field name="name_alt"/>
+                            <field name="is_used_desc" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group string="Advanced Configuration">
+                        <group>
+                            <field name="is_related" widget="boolean_toggle"/>
+                            <field name="is_single_value" widget="boolean_toggle"/>
+                            <field name="attribute_tags_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="is_float" widget="boolean_toggle" attrs="{'readonly': [('is_integer', '=', True)]}"/>
+                            <field name="is_integer" widget="boolean_toggle" attrs="{'readonly': [('is_float', '=', True)]}"/>
+                            <field name="comments"/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='value_ids']/tree/field[@name='name']" position="before">
+                    <field name="id" optional="hide"/>
+                </xpath>
+
+                <xpath expr="//field[@name='value_ids']/tree/field[@name='is_custom']" position="attributes">
+                    <attribute name="string">Custom</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='value_ids']/tree/field[@name='html_color']" position="after">
+                    <field name="dis_name" readonly="1" force_save="1" optional="show"/>
+                    <field name="is_child_float" string="Float" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_float', '!=', True)]}"/>
+                    <field name="name_float" widget="float" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_float', '!=', True)]}"/>
+                    <field name="is_child_integer" string="Integer" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_integer', '!=', True)]}"/>
+                    <field name="name_integer" widget="integer" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_integer', '!=', True)]}"/>
+                    <field name="is_used_on_products" string="Used" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='value_ids']/tree" position="replace">-->
+<!--                    <tree string="Values" editable="bottom">-->
+<!--                        <field name="sequence" widget="handle"/>-->
+<!--                        <field name="name" optional="show"/>-->
+<!--                        <field name="display_type" optional="hide"/>-->
+<!--                        <field name="is_custom" string="Custom" optional="show"/>-->
+<!--                        <field name="html_color" widget="color" attrs="{'column_invisible': [('parent.display_type', '!=', 'color')]}"/>-->
+<!--                        <field name="dis_name" readonly="1" force_save="1" optional="show"/>-->
+<!--                        <field name="is_child_float" string="Float" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_float', '!=', True)]}"/>-->
+<!--                        <field name="name_float" widget="float" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_float', '!=', True)]}"/>-->
+<!--                        <field name="is_child_integer" string="Integer" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_integer', '!=', True)]}"/>-->
+<!--                        <field name="name_integer" widget="integer" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_integer', '!=', True)]}"/>-->
+<!--                        <field name="is_used_on_products" string="Used" optional="show"/>-->
+<!--                        <field name="create_uid" optional="hide"/>-->
+<!--                        <field name="create_date" optional="hide"/>-->
+<!--                        <field name="write_uid" optional="show"/>-->
+<!--                        <field name="write_date" optional="show"/>-->
+<!--                    </tree>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+
+        <!-- Attributes Search View - Missing View --> <!-- Checked 17/05/2022 -->
+        <record id="product_attributes_search" model="ir.ui.view">
+            <field name="name">Attributes Search</field>
+            <field name="model">product.attribute</field>
+            <field name="arch" type="xml">
+                <search string="Attributes Search">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <separator/>
+                    <filter name="creates_variant" string="Create Variant" domain="[('create_variant','=', 'always')]"/>
+                    <filter name="is_related" string="Related Attribute" domain="[('is_related','=', True)]"/>
+                    <filter name="is_used_desc" string="Used in Description" domain="[('is_used_desc','=', True)]"/>
+                    <filter name="is_float" string="Contain Float Values" domain="[('is_float','=', True)]"/>
+                    <filter name="is_integer" string="Contain Integer Values" domain="[('is_integer','=', True)]"/>
+                    <filter name="is_single_value" string="Only Single Value Selection" domain="[('is_single_value','=', True)]"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="category_id" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter name="display_type" domain="[]" context="{'group_by':'display_type'}"/>
+                        <filter name="create_variant" domain="[]" context="{'group_by':'create_variant'}"/>
+                        <filter name="visibility" domain="[]" context="{'group_by':'visibility'}" string="eCommerce Filter Visibility"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+    <!-- *** Attributes Values Views --> <!-- Added Missing Default Views -->
+
+        <!-- Attributes Values List View - Missing View --> <!-- Checked 17/05/2022 -->
+        <record id="product_attributes_values_list" model="ir.ui.view">
+            <field name="name">product.attribute.value.tree</field>
+            <field name="model">product.attribute.value</field>
+            <field name="arch" type="xml">
+                <tree string="Attributes Values List" default_order="attribute_id asc, sequence asc">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="attribute_id" optional="show"/>
+                    <field name="name" optional="show"/>
+                    <field name="is_child_float" string="Float" optional="show"/>
+                    <field name="name_float" widget="float" optional="show"/>
+                    <field name="is_child_integer" string="Integer" optional="show"/>
+                    <field name="name_integer" widget="integer" optional="show"/>
+                    <field name="dis_name" readonly="1" optional="show"/>
+                    <field name="display_name" optional="show"/>
+                    <field name="pav_attribute_line_ids" readonly="1" optional="show"/>
+                    <field name="is_used_on_products" string="Used" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Attributes Values Search View - Missing View --> <!-- Checked 17/05/2022 -->
+        <record id="product_attributes_values_search" model="ir.ui.view">
+            <field name="name">Attributes Values Search</field>
+            <field name="model">product.attribute.value</field>
+            <field name="arch" type="xml">
+                <search string="Attributes Values Search">
+                    <field name="name"/>
+                    <field name="attribute_id"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="attribute_id" domain="[]" context="{'group_by':'attribute_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Attributes Values Types Form View --> <!-- Checked ../../2022 -->
+        <record id="product_attributes_values_form" model="ir.ui.view">
+            <field name="name">Attributes Values Form</field>
+            <field name="model">product.attribute.value</field>
+            <field name="arch" type="xml">
+                <form string="Attributes Values Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Name Value"/>
+                                <field name="name_float" widget="float"/>
+                                <field name="name_integer" widget="integer"/>
+                                <field name="html_color"/>
+                            </group>
+                            <group>
+                                <field name="attribute_id" string="Related Attribute" readonly="1"/>
+                                <field name="is_used_on_products"/>
+                                <field name="is_child_float" widget="boolean"/>
+                                <field name="is_child_integer" widget="boolean"/>
+                            </group>
+                            <group string="Brand Value Combination">
+                                <field name="brand_attr_comb_ids" widget="one2many" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="brand_id"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Attributes Values Action - Missing View --> <!-- Checked 17/05/2022 -->
+        <record id="product_attribute_values_action" model="ir.actions.act_window">
+            <field name="name">Attributes Values</field>
+            <field name="res_model">product.attribute.value</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

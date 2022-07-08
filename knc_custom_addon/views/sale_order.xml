@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="sale_order_line_view_extend" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="/form/sheet/div[1]" position="inside">
+                    <button name="update_description_order_line" type="object" class="oe_stat_button" icon="fa-life-ring icon">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Update Description</span>
+                        </div>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Start Confirmation Wizard -->
+        <record model="ir.ui.view" id="sale_order_upd_desc_set_confirm_wizard_form">
+            <field name="name">sale.order.wizard.form</field>
+            <field name="model">sale.order.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Confirm dialog">
+                    <field name="yes_no" readonly="1" />
+                    <footer>
+                        <button class="oe_highlight" name="yes" type="object" string="Yes" />
+                        <button class="oe_highlight" name="no" type="object" string="No" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- End Confirmation Wizard -->
+    </data>
+</odoo>

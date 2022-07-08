@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+        <!-- Product Variant - Form View --> <!-- Checked ../../2022 -->
+        <record id="product_product_variant_addons_view_extend" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+
+                <!-- Lock / Unlock Button -->
+                <xpath expr="//form//header" position="inside">
+                    <button name="button_lock" type="object" string="Lock" attrs="{'invisible': [('is_lock', '=', True)]}"/>
+                    <button name="button_unlock" type="object" string="Unlock" class="oe_highlight" attrs="{'invisible': [('is_lock', '=', False)]}"/>
+                </xpath>
+
+                <!-- Ribbon Widget for Lock / Unlock Action -->
+                <xpath expr="//form/sheet/div[@name='button_box']" position="after">
+                    <widget name="web_ribbon" title="Locked" bg_color="bg-success" attrs="{'invisible': [('is_lock', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="is_lock" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='product_template_image_ids']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='id']" position="after">
+                    <field name="is_lock" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Product Variant - Form View --> <!-- Checked ../../2022 -->
+        <record id="product_product_variant_addons_view_easy_extend" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='id']" position="after">
+                    <field name="is_lock" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Product Variant - Tree View --> <!-- Checked ../../2022 -->
+        <record id="product_product_variant_addons_view_easy_tree_extend1" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='priority']" position="before">
+                    <field name="is_lock" invisible="1"/>
+                    <!-- Related with Duplicate Default Code Flag -->
+                    <field name="is_similar_code" invisible="1"/>
+                </xpath>
+
+                <!-- Related with Duplicate Default Code -->
+                <xpath expr="/tree" position="attributes">
+                    <attribute name="decoration-bf">is_similar_code == True</attribute>
+                    <attribute name="decoration-danger">is_similar_code == True</attribute>
+                </xpath>
+                <!-- End Related with Duplicate Default Code -->
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

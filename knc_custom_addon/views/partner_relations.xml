@@ -1,0 +1,397 @@
+<odoo>
+    <data>
+
+    <!-- *** Project Relations Views --> <!-- Checked 23/04/2022 -->
+
+        <!-- Project Relations List View --> <!-- Checked 23/04/2022 -->
+        <record id="project_relations_list" model="ir.ui.view">
+            <field name="name">Project Relations List</field>
+            <field name="model">project.relations</field>
+            <field name="arch" type="xml">
+                <tree string="Project Relations" editable="top" default_order="partner_id asc, name asc">
+                    <field name="id" optional="hide"/>
+                    <field name="partner_id" widget="many2one" optional="show"/>
+                    <field name="name" optional="show"/>
+                    <field name="project_id" widget="many2one" optional="show"/>
+                    <field name="opportunity_id" widget="many2one" optional="show"/>
+                    <field name="note" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Project Relations Search View --> <!-- Checked 23/04/2022 -->
+        <record id="project_relations_search" model="ir.ui.view">
+            <field name="name">Project Relations Search</field>
+            <field name="model">project.relations</field>
+            <field name="arch" type="xml">
+                <search string="Project Relations Search">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="opportunity_id"/>
+                    <field name="note"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="name" domain="[]" context="{'group_by':'name'}"/>
+                        <filter name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter name="project_id" domain="[]" context="{'group_by':'project_id'}"/>
+                        <filter name="opportunity_id" domain="[]" context="{'group_by':'opportunity_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Project Relations Form View --> <!-- Checked 23/04/2022 -->
+        <record id="project_relations_form" model="ir.ui.view">
+            <field name="name">Project Relations Form</field>
+            <field name="model">project.relations</field>
+            <field name="arch" type="xml">
+                <form string="Project Relations Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="project_id"/>
+                                <field name="opportunity_id"/>
+                                <field name="note"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Project Relations Action --> <!-- Checked 23/04/2022 -->
+        <record id="project_relations_action" model="ir.actions.act_window">
+            <field name="name">Project Relations</field>
+            <field name="res_model">project.relations</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    <!-- *** Project Relation Types Views --> <!-- Checked 23/04/2022 -->
+
+        <!-- Project Relation Types List View --> <!-- Checked 23/04/2022 -->
+        <record id="project_relation_type_list" model="ir.ui.view">
+            <field name="name">Project Relation Types List</field>
+            <field name="model">project.relation.types</field>
+            <field name="arch" type="xml">
+                <tree string="Project Relation Types" editable="top" default_order="sequence asc">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="is_company" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Project Relation Types Search View --> <!-- Checked 23/04/2022 -->
+        <record id="project_relation_type_search" model="ir.ui.view">
+            <field name="name">Project Relation Types Search</field>
+            <field name="model">project.relation.types</field>
+            <field name="arch" type="xml">
+                <search string="Project Relation Types Search">
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="is_company" domain="[]" context="{'group_by':'is_company'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Project Relation Types Form View --> <!-- Checked 23/04/2022 -->
+        <record id="project_relation_type_form" model="ir.ui.view">
+            <field name="name">Project Relation Types Form</field>
+            <field name="model">project.relation.types</field>
+            <field name="arch" type="xml">
+                <form string="Project Relation Types Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="is_company"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Project Relation Types Action --> <!-- Checked 23/04/2022 -->
+        <record id="project_relation_type_action" model="ir.actions.act_window">
+            <field name="name">Project Relation Types</field>
+            <field name="res_model">project.relation.types</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- Project Relations - Project Form View --> <!-- Checked 25/04/2022 -->
+        <record id="project_relations_project_view" model="ir.ui.view">
+            <field name="name">project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="project_relations" string="Project Relations">
+                        <field name="partner_relations_ids" widget="one2many" nolabel="1">
+                            <tree editable="bottom" default_order="sequence asc">
+                                <field name="sequence" optional="hide"/>
+                                <field name="id" optional="hide"/>
+                                <field name="partner_id" widget="many2one" options="{'no_create': True}" optional="show"/>
+                                <field name="name" options="{'no_quick_create': True}" optional="show"/>
+                                <field name="project_id" options="{'no_create': True}" widget="many2one" optional="hide"/>
+                                <field name="note" optional="show"/>
+                                <field name="create_uid" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" optional="show"/>
+                                <field name="write_date" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Opportunity Relations - Opportunity Form View --> <!-- Checked 27/04/2022 -->
+        <record id="project_relations_opportunity_view" model="ir.ui.view">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='lead']" position="after">
+                    <page name="opportunity_relations" string="Opportunity Relations">
+                        <field name="partner_relations_ids" widget="one2many" nolabel="1">
+                            <tree editable="bottom" default_order="sequence asc">
+                                <field name="sequence" optional="hide"/>
+                                <field name="id" optional="hide"/>
+                                <field name="partner_id" widget="many2one" options="{'no_create': True}" optional="show"/>
+                                <field name="name" options="{'no_quick_create': True}" optional="show"/>
+                                <field name="opportunity_id" options="{'no_create': True}" widget="many2one" optional="hide"/>
+                                <field name="note" optional="show"/>
+                                <field name="create_uid" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" optional="show"/>
+                                <field name="write_date" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- All Relations - Partner Form View --> <!-- Checking 26/04/2022 -->
+        <record id="all_relations_partner_view" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='social_profiles']" position="after">
+
+                    <!-- Contact Relations - Partner Form View --> <!-- Checking 29/04/2022 -->
+                    <page name="contact_relations" string="Contact Relations">
+                        <field name="inverse_relation_ids" widget="one2many" nolabel="1">
+                            <tree editable="bottom" default_order="type_selection_id asc">
+                                <field name="id" optional="hide"/>
+                                <field name="this_partner_id" string="Related Partner" domain="[('id', '!=', id)]" options="{'no_create': True}"/>
+                                <field name="type_selection_id" options="{'no_create': True}"/>
+<!--                                    <field name="create_uid" optional="hide"/>-->
+<!--                                    <field name="create_uid" noupdate="1" optional="hide"/>-->
+<!--                                    <field name="create_date" noupdate="1" optional="hide"/>-->
+<!--                                    <field name="write_uid" noupdate="1" optional="show"/>-->
+<!--                                    <field name="write_date" noupdate="1" optional="show"/>-->
+                            </tree>
+                        </field>
+                    </page>
+
+                    <!-- Project Relations - Partner Form View --> <!-- Checked 25/04/2022 -->
+                    <page name="project_relations" string="Project Relations">
+                        <field name="project_relations_ids" widget="one2many" nolabel="1" >
+                            <tree editable="bottom" default_order="project_id asc">
+                                <field name="id" optional="hide"/>
+                                <field name="name" options="{'no_quick_create': True}" optional="show"/>
+                                <field name="project_id" options="{'no_create': True}" widget="many2one" optional="show"/>
+                                <field name="note" optional="show"/>
+<!--                                    <field name="create_uid" optional="hide"/>-->
+<!--                                    <field name="create_date" optional="hide"/>-->
+<!--                                    <field name="write_uid" optional="show"/>-->
+<!--                                    <field name="write_date" optional="show"/>-->
+                            </tree>
+                        </field>
+                    </page>
+
+
+                    <!-- Opportunity Relations - Partner Form View --> <!-- Checked 27/04/2022 -->
+                    <page name="opportunity_relations" string="Opportunity Relations">
+                        <field name="opportunity_relations_ids" widget="one2many" nolabel="1" domain="[('opportunity_id', '=', parent.opportunity_id)]">
+                            <tree editable="bottom" default_order="opportunity_id asc" domain="[('opportunity_id', '=', parent.opportunity_id)]">
+                                <field name="id" optional="hide"/>
+                                <field name="name" options="{'no_quick_create': True}" widget="many2one" optional="show"/>
+                                <field name="opportunity_id" options="{'no_create': True}" widget="many2one" optional="show"/>
+                                <field name="note" optional="show"/>
+                                <field name="create_uid" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" optional="show"/>
+                                <field name="write_date" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- Project Relations - Partner Form View --> <!-- Checked 25/04/2022 -->
+<!--        <record id="project_relations_partner_view" model="ir.ui.view">-->
+<!--            <field name="name">res.partner.form</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='contact_relations']" position="after">-->
+<!--                    <page name="project_relations" string="Project Relations">-->
+<!--                        <group>-->
+<!--                            <field name="project_relations_ids" widget="one2many" nolabel="1">-->
+<!--                                <tree editable="bottom" default_order="project_id asc">-->
+<!--                                    <field name="id" optional="hide"/>-->
+<!--                                    <field name="name" widget="many2one" optional="show"/>-->
+<!--                                    <field name="project_id" widget="many2one" optional="show"/>-->
+<!--                                    <field name="note" optional="show"/>-->
+<!--                                    <field name="create_uid" optional="hide"/>-->
+<!--                                    <field name="create_date" optional="hide"/>-->
+<!--                                    <field name="write_uid" optional="show"/>-->
+<!--                                    <field name="write_date" optional="show"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+        <!-- Opportunity Relations - Partner Form View --> <!-- Checked 27/04/2022 -->
+<!--        <record id="opportunity_relations_partner_view" model="ir.ui.view">-->
+<!--            <field name="name">res.partner.form</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='project_relations']" position="after">-->
+<!--                    <page name="opportunity_relations" string="Opportunity Relations">-->
+<!--                        <group>-->
+<!--                            <field name="opportunity_relations_ids" widget="one2many" nolabel="1">-->
+<!--                                <tree editable="bottom" default_order="opportunity_id asc">-->
+<!--                                    <field name="id" optional="hide"/>-->
+<!--                                    <field name="name" widget="many2one" optional="show"/>-->
+<!--                                    <field name="opportunity_id" widget="many2one" optional="show"/>-->
+<!--                                    <field name="note" optional="show"/>-->
+<!--                                    <field name="create_uid" optional="hide"/>-->
+<!--                                    <field name="create_date" optional="hide"/>-->
+<!--                                    <field name="write_uid" optional="show"/>-->
+<!--                                    <field name="write_date" optional="show"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!-- Contact Relations - Partner Form View --> <!-- Checking 26/04/2022 -->
+<!--        <record id="contact_relations_partner_view" model="ir.ui.view">-->
+<!--            <field name="name">res.partner.form</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//notebook" position="inside">-->
+<!--                    <page name="contact_relations" string="Contact Relations">-->
+<!--                        <group>-->
+<!--                            <field name="inverse_relation_ids" widget="one2many" nolabel="1">-->
+<!--                                <tree editable="bottom" default_order="type_selection_id asc">-->
+<!--                                    <field name="id" optional="hide"/>-->
+<!--                                    <field name="this_partner_id" string="Related Partner" domain="[('id', '!=', id)]" options="{'no_create': True}"/>-->
+<!--                                    <field name="type_selection_id" options="{'no_create': True}"/>-->
+<!--                                    <field name="create_uid" optional="hide"/>-->
+<!--                                    <field name="create_date" optional="hide"/>-->
+<!--                                    <field name="write_uid" optional="show"/>-->
+<!--                                    <field name="write_date" optional="show"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+        <!-- Contact Relation Type Views --> <!-- Need to Check -->
+        <record id="contact_relation_type_form_view_custom" model="ir.ui.view">
+            <field name="name">res.partner.relation.type form</field>
+            <field name="model">res.partner.relation.type</field>
+            <field name="inherit_id" ref="partner_multi_relation.form_res_partner_relation_type"/>
+            <field name="arch" type="xml">
+
+                <!-- Fields are hidden for partner category left & right -->
+                <xpath expr="//field[@name='partner_category_left']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_category_right']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+                <!-- End Fields are hidden for partner category left & right -->
+
+                <xpath expr="//group[@name='properties']" position="attributes">
+                    <attribute name="attrs">{'invisible': 0}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='contact_type_left']" position="after">
+                    <field name="google_label"/>
+                </xpath>
+
+                <xpath expr="//field[@name='contact_type_right']" position="after">
+                    <field name="related_google_label"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="contact_relation_type_tree_view_custom" model="ir.ui.view">
+            <field name="name">res.partner.relation.type tree</field>
+            <field name="model">res.partner.relation.type</field>
+            <field name="inherit_id" ref="partner_multi_relation.tree_res_partner_relation_type"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='allow_self']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': 1}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='is_symmetric']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='contact_type_left']" position="after">
+                    <field name="google_label"/>
+                </xpath>
+
+                <xpath expr="//field[@name='contact_type_right']" position="after">
+                    <field name="related_google_label"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

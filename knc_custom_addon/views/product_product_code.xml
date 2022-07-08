@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo> <!-- Code Checked & Confirmed by Panos on ../../2022 -->
+    <data>
+
+    <!-- *** Product Code Generator Wizard Views --> <!-- Checked ../../2022 -->
+
+        <!-- Product Code Generator Wizard Form View --> <!-- Checked 26/06/2022 -->
+        <record id="product_code_generator_wizard_form" model="ir.ui.view">
+            <field name="name">Product Code Generator Wizard Form</field>
+            <field name="model">product.code.generator.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group colspan="2">
+                            <field name="product_tmpl_id"/>
+                            <field name="product_tmpl_code" force_save="1"/>
+                        </group>
+                        <hr/>
+                        <group>
+                            <group>
+                                <field name="product_syntax_id" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="product_brand_id" options="{'no_open': True, 'no_create': True}" force_save="1"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <field name="version_ids" widget="one2many" options="{'no_create_edit': True}" default_order="sequence asc" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="id" optional="hide"/>
+                                <field name="name" widget="selection" optional="show"/>
+                                <field name="value_tmpl_code" attrs="{'invisible': ['|', ('name', '=', 'attribute'), ('name', '=', 'seperator')]}" optional="show"/>
+                                <field name="value" attrs="{'invisible': ['|', ('name', '=', 'default_code'), ('name', '=', 'attribute')]}" force_save="1" optional="show"/>
+                                <field name="value_sel" attrs="{'readonly': ['|', ('name', '=', 'default_code'), ('name', '=', 'seperator')]}" domain="[('create_variant', '=', 'always')]" options="{'no_open': True, 'no_create': True}" widget="many2one" optional="show"/>
+                                <field name="product_wiz_id" widget="many2one" optional="hide"/>
+                                <field name="create_uid" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" optional="hide"/>
+                                <field name="write_date" optional="hide"/>
+                            </tree>
+                        </field>
+                        <hr/>
+                        <button class="btn-secondary" name="generate_versions" type="object" string="Generate Attribute Values"/>
+                        <hr/>
+                        <field name="version_value_ids" widget="one2many" options="{'no_create_edit': True}" nolabel="1">
+                            <tree editable="bottom" create="false" default_order="attribute_id asc, name asc">
+                                <field name="id" optional="hide"/>
+                                <field name="attribute_id" optional="show"/>
+                                <field name="name" optional="show"/>
+                                <field name="value" optional="show"/>
+                                <field name="product_tmpl_id" widget="many2one" optional="hide"/>
+                                <field name="product_version_id" widget="many2one" optional="hide"/>
+                                <field name="create_uid" optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" optional="hide"/>
+                                <field name="write_date" optional="hide"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <footer>
+                        <button class="oe_highlight" name="yes" type="object" string="Generate Product Codes"/>
+                        <button class="oe_highlight" name="no" type="object" string="Cancel / Back"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="product_code_generator_wizard_variants_form" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="/tree" position="inside">
+                    <header>
+                        <button class="oe_highlight" name="update_default_code" type="object" string="Generate Product Codes"/>
+                    </header>
+                </xpath>
+
+            </field>
+        </record>
+
+    <!-- *** Product Code Syntax Sets Views --> <!-- Checked ../../2022 -->
+
+        <!-- Product Code Syntax Sets List View --> <!-- Checked 26/06/2022 -->
+        <record id="product_code_syntax_sets_list" model="ir.ui.view">
+            <field name="name">Product Code Syntax Sets List</field>
+            <field name="model">product.code.syntax.set</field>
+            <field name="arch" type="xml">
+                <tree string="Product Code Syntax Sets List">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="product_code_def_ids" widget="many2many_tags" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Product Code Syntax Sets Search View --> <!-- Checked 26/06/2022 -->
+        <record id="product_code_syntax_sets_search" model="ir.ui.view">
+            <field name="name">Product Code Syntax Sets Search</field>
+            <field name="model">product.code.syntax.set</field>
+            <field name="arch" type="xml">
+                <search string="Product Code Syntax Sets Search">
+                    <field name="name"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Product Code Syntax Sets Form View --> <!-- Checked 26/06/2022 -->
+        <record id="product_code_syntax_set_form" model="ir.ui.view">
+            <field name="name">Product Code Syntax Sets Form</field>
+            <field name="model">product.code.syntax.set</field>
+            <field name="arch" type="xml">
+                <form string="Product Code Syntax Sets Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group string="Related Values">
+                            <field name="product_code_def_ids" widget="many2many" nolabel="1">
+                                <tree string="Related Values" editable="bottom" default_order="sequence asc">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name" widget="selection"/>
+                                    <field name="value" force_save="1" attrs="{'readonly': ['|', ('name', '=', 'default_code'), ('name', '=', 'attribute')]}"/>
+                                    <field name="value_sel" attrs="{'readonly': ['|', ('name', '=', 'default_code'), ('name', '=', 'seperator')]}" domain="[('create_variant', '=', 'always')]" options="{'no_open': True, 'no_create': True}" widget="many2one"/>
+                                    <field name="create_uid" optional="hide"/>
+                                    <field name="create_date" optional="hide"/>
+                                    <field name="write_uid" optional="show"/>
+                                    <field name="write_date" optional="show"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Product Code Syntax Sets Action --> <!-- Checked 26/06/2022 -->
+        <record id="product_code_syntax_sets_action" model="ir.actions.act_window">
+            <field name="name">Product Code Syntax Sets</field>
+            <field name="res_model">product.code.syntax.set</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="attributes_value_brand_comb_list" model="ir.ui.view">
+            <field name="name">product.code.generator.brand.tree</field>
+            <field name="model">product.code.generator.brand</field>
+            <field name="arch" type="xml">
+                <tree string="Attributes Values Brand Comb List" editable="bottom">
+                    <field name="id" optional="hide"/>
+                    <field name="attr_value_id" optional="show"/>
+                    <field name="brand_id" optional="show"/>
+                    <field name="name" optional="show"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="show"/>
+                    <field name="write_date" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="attribute_value_brand_comb_action" model="ir.actions.act_window">
+            <field name="name">Attributes Value Brand Combs</field>
+            <field name="res_model">product.code.generator.brand</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <!-- Product Brands Form View --> <!-- Checked 14/05/2022 -->
+        <record id="attribute_value_product_brands_form" model="ir.ui.view">
+            <field name="name">Product Brands Form</field>
+            <field name="model">product.brands</field>
+            <field name="inherit_id" ref="product_brands_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='related_products_ids']" position="after">
+                    <separator string="Attribute Value Combination"/>
+                    <field name="attr_brand_comb_ids" widget="one2many" nolabel="1">
+                        <tree editable="bottom" default_order="attr_value_id asc">
+                            <field name="id" optional="hide"/>
+                            <field name="attr_value_id" options="{'no_create': True}" widget="many2one" optional="show"/>
+                            <field name="name" optional="show"/>
+                            <field name="brand_id" optional="hide"/>
+                            <field name="create_uid" optional="hide"/>
+                            <field name="create_date" optional="hide"/>
+                            <field name="write_uid" optional="show"/>
+                            <field name="write_date" optional="show"/>
+                        </tree>
+                    </field>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
