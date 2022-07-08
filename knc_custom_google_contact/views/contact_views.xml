@@ -24,11 +24,7 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-				<xpath expr="//header" position="after">
-					<header>
-						<button name="force_update" type="object" string="Force Update to Google" class="oe_highlight"/>
-					</header>
-				</xpath>
+					<button name="force_update" type="object" string="Force Update to Google" class="oe_highlight"/>
 				<xpath expr="//field[@name='image_1920']" position="after">
                     <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
                     <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
