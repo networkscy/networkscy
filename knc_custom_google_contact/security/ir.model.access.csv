@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_google_mod_credentials,google.mod.credentials,model_google_mod_credentials,base.group_user,1,1,1,1
+access_google_mod_connector,google.mod.connector,model_google_mod_connector,base.group_user,1,1,1,1
+access_google_mod_import_stats,google.mod.import.stats,model_google_mod_import_stats,base.group_user,1,1,1,1
+access_google_mod_export_stats,google.mod.export.stats,model_google_mod_export_stats,base.group_user,1,1,1,1
+access_google_mod_cron,google.mod.cron,model_google_mod_cron,base.group_user,1,1,1,1

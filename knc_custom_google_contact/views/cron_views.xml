@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+         <record model="ir.ui.view" id="google_mod_cron_settings">
+             <field name="name">Google Contacts Automation</field>
+             <field name="model">google.mod.cron</field>
+             <field name="arch" type="xml">
+                 <form edit="false" create="false">
+                     <sheet>
+                         <group string="Google Contacts Auto Configuration">
+                             <group>
+                                 <h3>Import OPT</h3>
+                                <div>
+                                    <label for="is_auto_import" string="Enable"/>
+                                    <field name="is_auto_import"/>
+                                    <br />
+                                    <label for="import_call_num" string="Number of Calls"/>
+                                    <field name="import_call_num" widget="selection" />
+                                    <label for="import_interval_num" string="Next Interval"/>
+                                    <field name="import_interval_num"/>
+                                    <label for="import_interval_type" string="Interval Type"/>
+                                    <field name="import_interval_type" widget="selection"/>
+                                </div>
+                             </group>
+
+                             <group>
+                                 <h3>Export OPT</h3>
+                                 <div>
+                                     <label for="is_auto_export" string="Enable"/>
+                                     <field name="is_auto_export"/>
+                                     <br />
+                                     <label for="export_call_num" string="Number of Calls"/>
+                                     <field name="export_call_num" widget="selection"/>
+                                     <label for="export_interval_num" string="Next Interval"/>
+                                     <field name="export_interval_num"/>
+                                     <label for="export_interval_type" string="Interval Type"/>
+                                     <field name="export_interval_type" widget="selection"/>
+                                 </div>
+                             </group>
+                         </group>
+                         <button name="save_config_mod" type="object" string="Save" class="oe_highlight" target="_blank"/>
+                     </sheet>
+                 </form>
+             </field>
+         </record>
+
+         <record model="ir.actions.act_window" id="google_mod_cron_settings_action_window">
+             <field name="name">Google Contacts Automation</field>
+             <field name="res_model">google.mod.cron</field>
+             <field name="view_mode">form</field>
+             <field name="target">inline</field>
+         </record>
+
+        <record id="ir_cron_act_cs" model="ir.actions.act_window">
+            <field name="name">Google Contact Scheduled Actions</field>
+            <field name="res_model">ir.cron</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'search_default_all': 1, 'search_default_name': 1}</field>
+            <field name="view_id" ref="base.ir_cron_view_tree"/>
+        </record>
+
+        <record model="ir.ui.view" id="ir_cron_search_form_custom">
+            <field name="name">ir_cron_search_form_custom</field>
+            <field name="model">ir.cron</field>
+            <field name="inherit_id" ref="base.ir_cron_view_search" />
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+
+                <field name="name" position="replace">
+                    <filter string="Google Contact" name="name" domain="[('name', 'like', 'Google')]" />
+                </field>
+            </field>
+        </record>
+
+        <!-- Previous work
+        <record id="google_mod_ir_cron_action_filter" model="ir.ui.view">
+            <field name="model">ir.cron</field>
+            <field name="context">{'search_default_all': 1}</field>
+            <field name="arch" type="xml">
+                <search string="Scheduled Actions">
+                    <filter string="Google Contacts" name="all" domain="['&amp;', ('name', 'like', 'Google Contacts'), '|', ('active', '=', False), ('active', '=', True)]" />
+                </search>
+            </field>
+        </record>
+        -->
+    </data>
+</odoo>
