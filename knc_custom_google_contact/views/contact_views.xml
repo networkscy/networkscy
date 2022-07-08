@@ -13,6 +13,11 @@
                 </xpath>
             </field>
          </record>
+		 
+		  <xpath expr="//field[@name='image_1920']" position="after">
+                    <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
+                    <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
+          </xpath>
 
         <!-- Partner Form View -->
         <record id="contact_mod_view_extend" model="ir.ui.view">
