@@ -1,6 +1,5 @@
 # Code Checked & Confirmed by Panos on 23/04/2022
 from odoo import models, fields, api, _
-from . import constants
 
 
 class FirstNameModel(models.Model):
