@@ -31,7 +31,7 @@
                         <field name="id_x" string="Old ID" readonly="1"/>
                     </group>
 				</xpath>
-					<xpath expr="//group[@name='company_id']" position="after">
+					<xpath expr="//group[@name='google']" position="after">
 						<field name="source" readonly="1" invisible="1"/>
 						<field name="gc_id" readonly="1"/>
 						<field name="gc_etag" readonly="1"/>
