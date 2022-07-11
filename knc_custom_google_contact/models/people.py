@@ -452,8 +452,8 @@ class People:
                 ],
                 "urls": [
                     {"value": db_contact.website if db_contact.website else "", "type": "homePage"},
-                    {"value": db_contact.map_work if db_contact.map_work else "", "type": "Work Map"},
-                    {"value": db_contact.map_home if db_contact.map_home else "", "type": "Home Map"}
+                 #   {"value": db_contact.map_work if db_contact.map_work else "", "type": "Work Map"},
+                  #  {"value": db_contact.map_home if db_contact.map_home else "", "type": "Home Map"}
                 ],
                 "memberships": [{
                     'contactGroupMembership': {
