@@ -21,7 +21,6 @@
         'views/cron_views.xml',
         'views/menu.xml',
         'views/partner_street_names.xml',
-        'views/_menu.xml',
         
     ],
     'demo': [
