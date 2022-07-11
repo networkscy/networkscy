@@ -591,8 +591,8 @@ class People:
                                 # "person": rel_each.this_partner_id.name,
                                 # "type": rel_each.type_selection_id.name if rel_each.type_selection_id.name else "N/A"
                             # })
-            except Exception as ex:
-                self.__logging.exception("Google Export Relation Exception: " + str(ex))
+            # except Exception as ex:
+                # self.__logging.exception("Google Export Relation Exception: " + str(ex))
 
             if not is_update:
                 self.__logging.info("* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Creating Contact to Google for ID : " + str(db_contact.id)) # Panos 06/03/2022 - Checked
