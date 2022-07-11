@@ -20,7 +20,6 @@
         'views/contact_views.xml',
         'views/cron_views.xml',
         'views/menu.xml',
-        'views/partner_street_names.xml',
         
     ],
     'demo': [
