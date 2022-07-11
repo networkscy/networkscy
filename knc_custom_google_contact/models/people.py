@@ -151,57 +151,57 @@ class People:
             chk_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CHK_EXCEPT
         return chk_resp
 
-    def create_membership_resource(self, s2l_category=None, l2s_category=None, custom_fields=None):
-        crt_resp = {"err_status": True, "response": None}
-        try:
-            if s2l_category:
-                gt_serv_resp = self.get_serv_category_by_id(
-                    label_resource=s2l_category["contactGroupMembership"]["contactGroupResourceName"])
-                if not gt_serv_resp["err_status"]:
-                    s2l_category = gt_serv_resp["response"]
-                    chk_exist_category = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].search([
-                        ('name', '=', s2l_category['formattedName'])
-                    ])
-                    if chk_exist_category and len(chk_exist_category) > 0:
-                        chk_exist_category[0].write({
-                            'gc_name': s2l_category['name'],
-                            'gc_res_id': s2l_category["resourceName"].split('/')[1]
-                        })
-                        crt_resp["response"] = chk_exist_category[0]
-                    else:
-                        crt_resp["response"] = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].create({
-                            'name': s2l_category['formattedName'],
-                            'gc_name': s2l_category['name'],
-                            'gc_res_id': s2l_category["resourceName"].split('/')[1]
-                        })
-                    crt_resp["err_status"] = False
-            elif l2s_category or custom_fields:
-                if l2s_category:
-                    srv_params = {
-                        "contactGroup": {
-                            "name": l2s_category.name
-                        }
-                    }
-                else:
-                    srv_params = {
-                        "contactGroup": {
-                            "name": custom_fields['name']
-                        }
-                    }
-                req_url = self.__base_endpoint + self.__req_version + self.__contact_group_lc_api
-                sr_resp = requests.post(req_url, data=json.dumps(srv_params), headers=self.__req_headers,
-                                        timeout=self.__req_timeout).json()
-                if constants.RESPONSE_ERROR_KEY not in sr_resp:
-                    crt_resp["response"] = sr_resp
-                    crt_resp["err_status"] = False
-                else:
-                    crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-            else:
-                crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-        except Exception as ex:
-            self.__logging.exception("Create either Contact Category or Membership  Exception: " + str(ex))
-            crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
-        return crt_resp
+    # def create_membership_resource(self, s2l_category=None, l2s_category=None, custom_fields=None):
+        # crt_resp = {"err_status": True, "response": None}
+        # try:
+            # if s2l_category:
+                # gt_serv_resp = self.get_serv_category_by_id(
+                    # label_resource=s2l_category["contactGroupMembership"]["contactGroupResourceName"])
+                # if not gt_serv_resp["err_status"]:
+                    # s2l_category = gt_serv_resp["response"]
+                    # chk_exist_category = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].search([
+                        # ('name', '=', s2l_category['formattedName'])
+                    # ])
+                    # if chk_exist_category and len(chk_exist_category) > 0:
+                        # chk_exist_category[0].write({
+                            # 'gc_name': s2l_category['name'],
+                            # 'gc_res_id': s2l_category["resourceName"].split('/')[1]
+                        # })
+                        # crt_resp["response"] = chk_exist_category[0]
+                    # else:
+                        # crt_resp["response"] = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].create({
+                            # 'name': s2l_category['formattedName'],
+                            # 'gc_name': s2l_category['name'],
+                            # 'gc_res_id': s2l_category["resourceName"].split('/')[1]
+                        # })
+                    # crt_resp["err_status"] = False
+            # elif l2s_category or custom_fields:
+                # if l2s_category:
+                    # srv_params = {
+                        # "contactGroup": {
+                            # "name": l2s_category.name
+                        # }
+                    # }
+                # else:
+                    # srv_params = {
+                        # "contactGroup": {
+                            # "name": custom_fields['name']
+                        # }
+                    # }
+                # req_url = self.__base_endpoint + self.__req_version + self.__contact_group_lc_api
+                # sr_resp = requests.post(req_url, data=json.dumps(srv_params), headers=self.__req_headers,
+                                        # timeout=self.__req_timeout).json()
+                # if constants.RESPONSE_ERROR_KEY not in sr_resp:
+                    # crt_resp["response"] = sr_resp
+                    # crt_resp["err_status"] = False
+                # else:
+                    # crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+            # else:
+                # crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+        # except Exception as ex:
+            # self.__logging.exception("Create either Contact Category or Membership  Exception: " + str(ex))
+            # crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
+        # return crt_resp
 
     def get_membership_resource_list(self):
         gt_mbr_resp = {"err_status": True, "response": None}
