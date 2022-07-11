@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Partner Related Menus -->
+
+        <menuitem name="Addresses Directory" id="knc_partner_address_root" parent="knc_contact_settings" sequence="40"/>
+            <menuitem name="Street Names" id="knc_partner_street" parent="knc_partner_address_root" action="loc_contact_street_action" sequence="1"/>
+            <menuitem name="Postal Codes" id="knc_partner_postal" parent="knc_partner_address_root" action="base_location.action_zip_tree" sequence="2"/>
+            <menuitem name="Cities" id="knc_partner_cities" parent="knc_partner_address_root" action="base_location.action_res_city_full" sequence="3"/>
+            <menuitem name="States" id="knc_partner_states" parent="knc_partner_address_root" action="base.action_country_state" sequence="4"/>
+            <menuitem name="Countries" id="knc_partner_countries" parent="knc_partner_address_root" action="base.action_country" sequence="5"/>
+            <menuitem name="Country Groups" id="knc_partner_groups" parent="knc_partner_address_root" action="base.action_country_group" sequence="6"/>
+
+    </data>
+</odoo>
