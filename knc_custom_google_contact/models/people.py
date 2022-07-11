@@ -1368,7 +1368,7 @@ class People:
                 query_params.append(('write_date', '<=', str(self.__end_date)))
 
             query_params.append('&')
-            query_params.append(('is_family', '=', False))
+       #     query_params.append(('is_family', '=', False))
             query_params.append(('active_sync', '=', True))
 
             _db_contacts = self.__default_env[constants.RES_PARTNER_MODEL].search(query_params, order='write_date desc')
