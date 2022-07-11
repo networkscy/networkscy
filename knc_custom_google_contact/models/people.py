@@ -521,8 +521,8 @@ class People:
                 if db_contact.type == 'contact':
                     gl_json_params["names"] = [{
                         "displayName": db_contact.name,
-                        "givenName": db_contact.firstname.name if db_contact.firstname else "",
-                        "familyName": db_contact.lastname.name if db_contact.lastname else "",
+                        "givenName": db_contact.firstname if db_contact.firstname else "",
+                        "familyName": db_contact.lastname if db_contact.lastname else "",
                         "middleName": db_contact.middle_name.name if db_contact.middle_name else "",
                         #"honorificPrefix": db_contact.title.name if db_contact.title.name else ""
                     }]
