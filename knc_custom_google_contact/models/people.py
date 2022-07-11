@@ -1367,7 +1367,7 @@ class People:
                 query_params.append(('write_date', '>=', str(self.__initial_date)))
                 query_params.append(('write_date', '<=', str(self.__end_date)))
 
-            query_params.append('&')
+        #    query_params.append('&')
        #     query_params.append(('is_family', '=', False))
             query_params.append(('active_sync', '=', True))
 
