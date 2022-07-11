@@ -423,15 +423,15 @@ class People:
                         "postalCode": db_contact.zip if db_contact.zip else "",
                         'country': db_contact.country_id.name if db_contact.country_id else ""
                     },
-                    {
-                        'type': "Home",
-                        "streetAddress": db_contact.street_home if db_contact.street_home else "",
-                        'extendedAddress': db_contact.street2_home if db_contact.street2_home else "",
-                        'poBox': db_contact.state_id_home.name if db_contact.state_id_home else "",
-                        "city": db_contact.city_home if db_contact.city_home else "",
-                        "postalCode": db_contact.zip_home if db_contact.zip_home else "",
-                        'country': db_contact.country_id_home.name if db_contact.country_id_home else ""
-                    }
+              #      {
+               #         'type': "Home",
+                #        "streetAddress": db_contact.street_home if db_contact.street_home else "",
+                 #       'extendedAddress': db_contact.street2_home if db_contact.street2_home else "",
+                  #      'poBox': db_contact.state_id_home.name if db_contact.state_id_home else "",
+                   #     "city": db_contact.city_home if db_contact.city_home else "",
+                    #    "postalCode": db_contact.zip_home if db_contact.zip_home else "",
+                     #   'country': db_contact.country_id_home.name if db_contact.country_id_home else ""
+                    #}
                 ],
                 "emailAddresses": [
                     {"value": db_contact.email if db_contact.email else "", "type": "Work"},

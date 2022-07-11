@@ -12,7 +12,6 @@ class Partner(models.Model):
     first_name = fields.Many2one("res.partner.first.name", string="First / Given Name")
     middle_name = fields.Many2one("res.partner.last.name", string="Maiden Name")
     last_name = fields.Many2one("res.partner.last.name", string="Last Name")
-    is_family = fields.Boolean(string="Is a Family", default=False)
 
     mobile = fields.Char(string="Mobile Phone", tracking=True)  # Default Field
     phone = fields.Char(string="Work Phone", tracking=True)  # Default Field
