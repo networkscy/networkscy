@@ -45,7 +45,7 @@ class Partner(models.Model):
                                          index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
 
     # Inverse Relation Field
-    inverse_relation_ids = fields.One2many(constants.RES_PARTNER_RELATION_ALL_MODEL, 'other_partner_id', string='Inverse Relation')
+   # inverse_relation_ids = fields.One2many(constants.RES_PARTNER_RELATION_ALL_MODEL, 'other_partner_id', string='Inverse Relation')
 
 
     # Auto Complete Custom Home Address Fields based on the Custom Field zip_id_home
