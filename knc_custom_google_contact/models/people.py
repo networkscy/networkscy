@@ -582,15 +582,15 @@ class People:
                 pass
 
             # For RelationShips Custom Manageable fields
-            try:
-                gl_json_params["relations"] = []
-                if db_contact.inverse_relation_ids and len(db_contact.inverse_relation_ids) > 0:
-                    for rel_each in db_contact.inverse_relation_ids:
-                        if rel_each.this_partner_id:
-                            gl_json_params["relations"].append({
-                                "person": rel_each.this_partner_id.name,
-                                "type": rel_each.type_selection_id.name if rel_each.type_selection_id.name else "N/A"
-                            })
+         #   try:
+          #      gl_json_params["relations"] = []
+           #     if db_contact.inverse_relation_ids and len(db_contact.inverse_relation_ids) > 0:
+            #        for rel_each in db_contact.inverse_relation_ids:
+            #            if rel_each.this_partner_id:
+            #                gl_json_params["relations"].append({
+            #                    "person": rel_each.this_partner_id.name,
+            #                    "type": rel_each.type_selection_id.name if rel_each.type_selection_id.name else "N/A"
+            #                })
             except Exception as ex:
                 self.__logging.exception("Google Export Relation Exception: " + str(ex))
 
