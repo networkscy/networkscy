@@ -26,6 +26,7 @@
 				<xpath expr="//field[@name='image_1920']" position="after">
                     <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" />
                     <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" />
+				</xpath>
 				<xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
 					<page string="Google Connector" name="google_connector_page">
 						<field name="source" readonly="1" invisible="1"/>
