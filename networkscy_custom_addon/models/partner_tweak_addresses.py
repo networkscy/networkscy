@@ -17,7 +17,7 @@ class Partner(models.Model):
     city = fields.Char(string="City Work", tracking=True)  # Default Field
     state_id = fields.Many2one(string="State Work", tracking=True)  # Default Field
     country_id = fields.Many2one(string="Country Work", tracking=True)  # Default Field
-    map_work = fields.Char(string="Work Map", tracking=True)
+    # map_work = fields.Char(string="Work Map", tracking=True)
 
     # Home Address Fields - Custom Fields
     # street_home = fields.Char(string="Street Home", compute="_compute_street_home", tracking=True, store=True)
