@@ -4,7 +4,7 @@ from . import constants
 import logging
 
 ADDRESS_FIELDS = ('street', 'street2', 'zip', 'city', 'state_id', 'country_id')
-ADDRESS_FIELDS_HOME = ('street_home', 'street2_home', 'zip_home', 'city_home', 'state_id_home', 'country_id_home')
+# ADDRESS_FIELDS_HOME = ('street_home', 'street2_home', 'zip_home', 'city_home', 'state_id_home', 'country_id_home')
 
 
 class Partner(models.Model):
@@ -20,29 +20,29 @@ class Partner(models.Model):
     map_work = fields.Char(string="Work Map", tracking=True)
 
     # Home Address Fields - Custom Fields
-    street_home = fields.Char(string="Street Home", compute="_compute_street_home", tracking=True, store=True)
-    street2_home = fields.Char(string="Street 2 Home", tracking=True)
-    zip_home = fields.Char(string="Post Code Home", tracking=True)
-    city_home = fields.Char(string="City Home", tracking=True)
-    state_id_home = fields.Many2one("res.country.state", string="State Home", tracking=True)
-    country_id_home = fields.Many2one("res.country", string="Country Home", tracking=True)
-    map_home = fields.Char(string="Home Map", tracking=True)
+    # street_home = fields.Char(string="Street Home", compute="_compute_street_home", tracking=True, store=True)
+    # street2_home = fields.Char(string="Street 2 Home", tracking=True)
+    # zip_home = fields.Char(string="Post Code Home", tracking=True)
+    # city_home = fields.Char(string="City Home", tracking=True)
+    # state_id_home = fields.Many2one("res.country.state", string="State Home", tracking=True)
+    # country_id_home = fields.Many2one("res.country", string="Country Home", tracking=True)
+    # map_home = fields.Char(string="Home Map", tracking=True)
 
     # Auto Sync Fields for Work & Home Addresses
     sync_work_add = fields.Boolean(string='Sync Work Address', default=False, help='Sync Work Address from Related Company')
-    sync_home_add = fields.Boolean(string='Sync Home Address', default=False, help='Sync Home Address from Related Company')
+    # sync_home_add = fields.Boolean(string='Sync Home Address', default=False, help='Sync Home Address from Related Company')
 
     # Auto Complete Address Fields for Work & Home Addresses
     zip_id = fields.Many2one(comodel_name="res.city.zip", string="Post Code Work Lookup", index=True,
                              compute="_compute_zip_id", readonly=False, store=True) # Existing Field from base_location
-    zip_id_home = fields.Many2one(comodel_name="res.city.zip", string="Post Code Home Lookup",
-                                  index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
+    # zip_id_home = fields.Many2one(comodel_name="res.city.zip", string="Post Code Home Lookup",
+                                  # index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
 
     # Auto Complete Address Fields for Work & Home Addresses with Street Names
     street_zip_id = fields.Many2one(comodel_name="res.partner.street", string="Post Code Work Lookup with Street",
                                     index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
-    street_zip_id_home = fields.Many2one(comodel_name="res.partner.street", string="Post Code Home Lookup with Street",
-                                         index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
+    # street_zip_id_home = fields.Many2one(comodel_name="res.partner.street", string="Post Code Home Lookup with Street",
+                                         # index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
 
     # Inverse Relation Field
    # inverse_relation_ids = fields.One2many(constants.RES_PARTNER_RELATION_ALL_MODEL, 'other_partner_id', string='Inverse Relation')
@@ -50,14 +50,14 @@ class Partner(models.Model):
 
     # Auto Complete Custom Home Address Fields based on the Custom Field zip_id_home
     # This is a similar action of the field zip_id from module base_location but for Home Fields
-    @api.onchange("zip_id_home") # Checked 25/04/2022
-    def _compute_zip_id_home(self):
-        for record in self:
-            if record.zip_id_home:
-                record.city_home = record.zip_id_home.city_id.name
-                record.state_id_home = record.zip_id_home.state_id
-                record.zip_home = record.zip_id_home.name
-                record.country_id_home = record.zip_id_home.country_id
+    # @api.onchange("zip_id_home") # Checked 25/04/2022
+    # def _compute_zip_id_home(self):
+        # for record in self:
+            # if record.zip_id_home:
+                # record.city_home = record.zip_id_home.city_id.name
+                # record.state_id_home = record.zip_id_home.state_id
+                # record.zip_home = record.zip_id_home.name
+                # record.country_id_home = record.zip_id_home.country_id
 
 
     # Auto Complete Work Address Fields based on the Custom Street Field street_zip_id
@@ -75,15 +75,15 @@ class Partner(models.Model):
 
     # Auto Complete Home Address Fields based on the Custom Street Field street_zip_id
     # This is a similar action of the field zip_id from module base_location but includes the Street Names
-    @api.onchange("street_zip_id_home") # Checked 25/04/2022
-    def _compute_street_home(self):
-        for record in self:
-            if record.street_zip_id_home:
-                record.street_home = record.street_zip_id_home.street
-                record.city_home = record.street_zip_id_home.zip_id.city_id.name
-                record.state_id_home = record.street_zip_id_home.zip_id.state_id
-                record.zip_home = record.street_zip_id_home.zip_id.name
-                record.country_id_home = record.street_zip_id_home.zip_id.country_id
+    # @api.onchange("street_zip_id_home") # Checked 25/04/2022
+    # def _compute_street_home(self):
+        # for record in self:
+            # if record.street_zip_id_home:
+                # record.street_home = record.street_zip_id_home.street
+                # record.city_home = record.street_zip_id_home.zip_id.city_id.name
+                # record.state_id_home = record.street_zip_id_home.zip_id.state_id
+                # record.zip_home = record.street_zip_id_home.zip_id.name
+                # record.country_id_home = record.street_zip_id_home.zip_id.country_id
 
 
     # Sync Work Address Fields from Parent Contact
@@ -100,16 +100,16 @@ class Partner(models.Model):
 
 
     # Sync Home Address Fields from Parent Contact
-    @api.onchange('sync_home_add') # Checked 25/04/2022
-    def sync_home_address(self):
-        if self.sync_home_add and self.parent_id:
-            self.street_home = self.parent_id.street_home
-            self.street2_home = self.parent_id.street2_home
-            self.city_home = self.parent_id.city_home
-            self.state_id_home = self.parent_id.state_id_home
-            self.zip_home = self.parent_id.zip_home
-            self.country_id_home = self.parent_id.country_id_home
-            self.map_home = self.parent_id.map_home
+    # @api.onchange('sync_home_add') # Checked 25/04/2022
+    # def sync_home_address(self):
+        # if self.sync_home_add and self.parent_id:
+            # self.street_home = self.parent_id.street_home
+            # self.street2_home = self.parent_id.street2_home
+            # self.city_home = self.parent_id.city_home
+            # self.state_id_home = self.parent_id.state_id_home
+            # self.zip_home = self.parent_id.zip_home
+            # self.country_id_home = self.parent_id.country_id_home
+            # self.map_home = self.parent_id.map_home
 
 
     # Clean Values of the Lookup Fields used for Auto Completion of the Work & Home Address Fields
@@ -148,26 +148,26 @@ class Partner(models.Model):
 
 
     # Sync Work & Home Address Fields from Parent Contact when Saving Parent Contact
-    @api.model # Checked 25/04/2022
-    def update_address_params(self, sel_contact, parent_contact, child_address=False):
-        if not child_address:
-            update_query = "update " + constants.RES_PARTNER_STASH_MODEL + " set " + \
-                           "street='" + str(parent_contact.street if parent_contact.street else '') + \
-                            "',street2='" + str(parent_contact.street2 if parent_contact.street2 else '') + \
-                            "',city='" + str(parent_contact.city if parent_contact.city else '') + \
-                            "',state_id=" + str(parent_contact.state_id.id if parent_contact.state_id else 0) + \
-                            ",zip='" + str(parent_contact.zip if parent_contact.zip else '') + \
-                            "',country_id=" + str(parent_contact.country_id.id if parent_contact.country_id else 0) + \
-                            ",map_work='" + str(parent_contact.map_work if parent_contact.map_work else '') + \
-                            "' where id=" + str(sel_contact.id)
-        else:
-            update_query = "update " + constants.RES_PARTNER_STASH_MODEL + " set " + \
-                            "street_home='" + str(parent_contact.street_home if parent_contact.street_home else '') + \
-                            "',street2_home='" + str(parent_contact.street2_home if parent_contact.street2_home else '') + \
-                            "',city_home='" + str(parent_contact.city_home if parent_contact.city_home else '') + \
-                            "',state_id_home=" + str(parent_contact.state_id_home.id if parent_contact.state_id_home else 0) + \
-                            ",zip_home='" + str(parent_contact.zip_home if parent_contact.zip_home else '') + \
-                            "',country_id_home=" + str(parent_contact.country_id_home.id if parent_contact.country_id_home else 0) + \
-                            ",map_home='" + str(parent_contact.map_home if parent_contact.map_home else '') + \
-                            "' where id=" + str(sel_contact.id)
-        self.env.cr.execute(update_query)
+    # @api.model # Checked 25/04/2022
+    # def update_address_params(self, sel_contact, parent_contact, child_address=False):
+        # if not child_address:
+            # update_query = "update " + constants.RES_PARTNER_STASH_MODEL + " set " + \
+                           # "street='" + str(parent_contact.street if parent_contact.street else '') + \
+                            # "',street2='" + str(parent_contact.street2 if parent_contact.street2 else '') + \
+                            # "',city='" + str(parent_contact.city if parent_contact.city else '') + \
+                            # "',state_id=" + str(parent_contact.state_id.id if parent_contact.state_id else 0) + \
+                            # ",zip='" + str(parent_contact.zip if parent_contact.zip else '') + \
+                            # "',country_id=" + str(parent_contact.country_id.id if parent_contact.country_id else 0) + \
+                            # ",map_work='" + str(parent_contact.map_work if parent_contact.map_work else '') + \
+                            # "' where id=" + str(sel_contact.id)
+        # else:
+            # update_query = "update " + constants.RES_PARTNER_STASH_MODEL + " set " + \
+                            # "street_home='" + str(parent_contact.street_home if parent_contact.street_home else '') + \
+                            # "',street2_home='" + str(parent_contact.street2_home if parent_contact.street2_home else '') + \
+                            # "',city_home='" + str(parent_contact.city_home if parent_contact.city_home else '') + \
+                            # "',state_id_home=" + str(parent_contact.state_id_home.id if parent_contact.state_id_home else 0) + \
+                            # ",zip_home='" + str(parent_contact.zip_home if parent_contact.zip_home else '') + \
+                            # "',country_id_home=" + str(parent_contact.country_id_home.id if parent_contact.country_id_home else 0) + \
+                            # ",map_home='" + str(parent_contact.map_home if parent_contact.map_home else '') + \
+                            # "' where id=" + str(sel_contact.id)
+        # self.env.cr.execute(update_query)
