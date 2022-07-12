@@ -87,15 +87,15 @@ class Partner(models.Model):
 
 
     # Sync Work Address Fields from Parent Contact
-    @api.onchange('sync_work_add') # Checked 25/04/2022
-    def sync_work_address(self):
-        if self.sync_work_add and self.parent_id:
-            self.street = self.parent_id.street
-            self.street2 = self.parent_id.street2
-            self.city = self.parent_id.city
-            self.state_id = self.parent_id.state_id
-            self.zip = self.parent_id.zip
-            self.country_id = self.parent_id.country_id
+    # @api.onchange('sync_work_add') # Checked 25/04/2022
+    # def sync_work_address(self):
+        # if self.sync_work_add and self.parent_id:
+            # self.street = self.parent_id.street
+            # self.street2 = self.parent_id.street2
+            # self.city = self.parent_id.city
+            # self.state_id = self.parent_id.state_id
+            # self.zip = self.parent_id.zip
+            # self.country_id = self.parent_id.country_id
             # self.map_work = self.parent_id.map_work
 
 
