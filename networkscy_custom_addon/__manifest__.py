@@ -7,6 +7,7 @@
     'website': "http://www.networkscy.com",
     'category': "Extra Tools",
     'version': "1.0.0",
+    "license": "AGPL-3",
 
     'depends': [
         'base', 'contacts', 'base_address_city', 'base_location',
