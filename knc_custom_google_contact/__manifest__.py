@@ -10,7 +10,7 @@
     'website': "https://woadsoft.com/",
     'category': "Extra Tools",
     'version': '1.0',
-    'depends': ['base', 'contacts'],
+    'depends': ['base', 'contacts', 'networkscy_custom_addon'],
     'data': [
         'security/ir.model.access.csv',
         'views/credential_views.xml',
