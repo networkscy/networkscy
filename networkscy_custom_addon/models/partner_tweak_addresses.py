@@ -96,7 +96,7 @@ class Partner(models.Model):
             self.state_id = self.parent_id.state_id
             self.zip = self.parent_id.zip
             self.country_id = self.parent_id.country_id
-            self.map_work = self.parent_id.map_work
+            # self.map_work = self.parent_id.map_work
 
 
     # Sync Home Address Fields from Parent Contact
