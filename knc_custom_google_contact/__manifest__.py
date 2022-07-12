@@ -19,7 +19,7 @@
         'views/export_views.xml',
         'views/contact_views.xml',
         'views/cron_views.xml',
-        'views/partner_street_names.xml',
+      #  'views/partner_street_names.xml',
         'views/menu.xml',
         
     ],
