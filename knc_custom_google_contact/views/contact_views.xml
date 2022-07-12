@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+
+        <!-- Partner Tree View -->
+        <record id="contact_mod_tree_view_extend" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='company_id']" position="after">
+                    <field name="active_sync" optional="show" string="Sync" widget="boolean_toggle"/>
+                </xpath>
+            </field>
+         </record>
+		 
+
+        <!-- Partner Form View -->
+        <record id="contact_mod_view_extend" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="/form/*" position="before">
+					<header>
+						<button name="force_update" type="object" string="Force Update to Google" class="oe_highlight"/>
+					</header>
+				</xpath>
+				<xpath expr="//field[@name='image_1920']" position="after">
+                    <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" />
+                    <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" />
+				</xpath>
+				<xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+					<page string="Google Connector" name="google_connector_page">
+						<field name="source" readonly="1" invisible="1"/>
+						<field name="gc_id" readonly="1"/>
+						<field name="gc_etag" readonly="1"/>
+					</page>
+				</xpath>
+            </field>
+         </record>
+
+        <!-- Partner Action Menu -->
+        <record id="force_update_cs_action" model="ir.actions.server">
+            <field name="name">Force Update to Google</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="knc_custom_google_contact.model_res_partner"/>
+            <field name="binding_model_id" ref="knc_custom_google_contact.model_res_partner" />
+            <field name="state">code</field>
+            <field name="code">
+                action = records.force_update()
+            </field>
+        </record>
+
+    </data>
+</odoo>
