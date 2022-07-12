@@ -18,6 +18,7 @@
 
         # Views
         'views/partner_street_names.xml',
+        'views/partner.xml',
         
 
 
