@@ -29,7 +29,7 @@ class Partner(models.Model):
     # map_home = fields.Char(string="Home Map", tracking=True)
 
     # Auto Sync Fields for Work & Home Addresses
-    sync_work_add = fields.Boolean(string='Sync Work Address', default=False, help='Sync Work Address from Related Company')
+    # sync_work_add = fields.Boolean(string='Sync Work Address', default=False, help='Sync Work Address from Related Company')
     # sync_home_add = fields.Boolean(string='Sync Home Address', default=False, help='Sync Home Address from Related Company')
 
     # Auto Complete Address Fields for Work & Home Addresses
