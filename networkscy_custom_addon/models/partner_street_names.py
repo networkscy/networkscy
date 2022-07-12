@@ -112,20 +112,20 @@ class ContactStreetModel(models.Model):
         return response
 
 
-   # Update Display Name with Street Details
-    # def _update_zip_id(self, obj, rec):
-        # display_name = [rec.name]
-        # if obj.street:
-            # display_name.append(obj.street)
-        # if rec.city_id:
-            # display_name.append(rec.city_id.name)
-        # if rec.state_id:
-            # display_name.append(rec.state_id.name)
-        # if rec.country_id:
-            # display_name.append(rec.country_id.name)
-        # if obj.limits:
-            # display_name.append(obj.limits)
+  # Update Display Name with Street Details
+    def _update_zip_id(self, obj, rec):
+        display_name = [rec.name]
+        if obj.street:
+            display_name.append(obj.street)
+        if rec.city_id:
+            display_name.append(rec.city_id.name)
+        if rec.state_id:
+            display_name.append(rec.state_id.name)
+        if rec.country_id:
+            display_name.append(rec.country_id.name)
+        if obj.limits:
+            display_name.append(obj.limits)
 
-        # upd_query = "update " + res.partner.street + " set zip_id=" + str(rec.id) + \
-                    # ", name='" + ', '.join(display_name) + "' where id=" + str(obj.id)
-        # self.env.cr.execute(upd_query)
+        upd_query = "update " + res.partner.street + " set zip_id=" + str(rec.id) + \
+                    ", name='" + ', '.join(display_name) + "' where id=" + str(obj.id)
+        self.env.cr.execute(upd_query)
