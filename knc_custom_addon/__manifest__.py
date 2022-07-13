@@ -10,7 +10,7 @@
     "license": "AGPL-3",
 
     'depends': [
-        'base', 'contacts', 'base_address_city', 'base_location', 'partner_multi_relation',
+        'base', 'contacts', 'base_address_city', 'base_location',
     ],
 
     'data': [
