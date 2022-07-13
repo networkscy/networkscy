@@ -71,7 +71,7 @@ class ContactStreetModel(models.Model):
     def create(self, values):
         save_recs = super(ContactStreetModel, self).create(values)
         for each in save_recs:
-            chk_exist = self.env[res.city.zip].search([('name', '=', each.zip)])
+            chk_exist = self.env[constants.RES_CITY_ZIP_MODEL].search([('name', '=', each.zip)])
             if chk_exist and len(chk_exist) > 0:
                 self._update_zip_id(obj=each, rec=chk_exist[0])
         return save_recs
@@ -105,7 +105,7 @@ class ContactStreetModel(models.Model):
             except:
                 filter_query.append(('country_id', '=', country_id))
         filter_query.append(('name', '=', zip_code))
-        chk_exist = self.env[res.city.zip].search(filter_query)
+        chk_exist = self.env[constants.RES_CITY_ZIP_MODEL].search(filter_query)
         if chk_exist and len(chk_exist) > 0:
             response = chk_exist
         return response
