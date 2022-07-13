@@ -39,9 +39,9 @@ class Partner(models.Model):
                                   index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
 
     # Auto Complete Address Fields for Work & Home Addresses with Street Names
-    street_zip_id = fields.Many2one(comodel_name="res.partner.street", string="Post Code Work Lookup with Street",
+    street_zip_id = fields.Many2one(comodel_name="res.partner.streets", string="Post Code Work Lookup with Street",
                                     index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
-    street_zip_id_home = fields.Many2one(comodel_name="res.partner.street", string="Post Code Home Lookup with Street",
+    street_zip_id_home = fields.Many2one(comodel_name="res.partner.streets", string="Post Code Home Lookup with Street",
                                          index=True, readonly=False, store=True) # Custom Field from knc_custom_addon
 
     # Inverse Relation Field
