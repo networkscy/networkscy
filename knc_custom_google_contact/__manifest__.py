@@ -10,7 +10,7 @@
     'website': "https://woadsoft.com/",
     'category': "Extra Tools",
     'version': '1.0',
-    'depends': ['base', 'contacts', 'networkscy_custom_addon'],
+    'depends': ['base', 'contacts', 'knc_custom_addon'],
     'data': [
         'security/ir.model.access.csv',
         'views/credential_views.xml',
@@ -19,9 +19,7 @@
         'views/export_views.xml',
         'views/contact_views.xml',
         'views/cron_views.xml',
-      #  'views/partner_street_names.xml',
         'views/menu.xml',
-        
     ],
     'demo': [
         'demo/demo.xml',

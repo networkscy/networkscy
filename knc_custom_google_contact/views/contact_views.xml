@@ -7,12 +7,12 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_tree"/>
             <field name="arch" type="xml">
-				<xpath expr="//field[@name='company_id']" position="after">
-                    <field name="active_sync" optional="show" string="Sync" widget="boolean_toggle"/>
+                <xpath expr="//field[@name='active_sync']" position="after">
+                    <field name="gc_id" optional="hide"/>
+                    <field name="gc_etag" optional="hide"/>
                 </xpath>
             </field>
          </record>
-		 
 
         <!-- Partner Form View -->
         <record id="contact_mod_view_extend" model="ir.ui.view">
@@ -20,22 +20,15 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-				<xpath expr="/form/*" position="before">
-					<header>
-						<button name="force_update" type="object" string="Force Update to Google" class="oe_highlight"/>
-					</header>
-				</xpath>
-				<xpath expr="//field[@name='image_1920']" position="after">
-                    <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" />
-                    <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" />
-				</xpath>
-				<xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
-					<page string="Google Connector" name="google_connector_page">
-						<field name="source" readonly="1" invisible="1"/>
-						<field name="gc_id" readonly="1"/>
-						<field name="gc_etag" readonly="1"/>
-					</page>
-				</xpath>
+                <xpath expr="//group[@name='google']" position="inside">
+                    <field name="source" readonly="1" invisible="1"/>
+                    <field name="gc_id" readonly="1"/>
+                    <field name="gc_etag" readonly="1"/>
+                </xpath>
+
+                <header>
+                    <button name="force_update" type="object" string="Force Update to Google" class="oe_highlight"/>
+                </header>
             </field>
          </record>
 

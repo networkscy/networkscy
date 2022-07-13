@@ -151,57 +151,57 @@ class People:
             chk_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CHK_EXCEPT
         return chk_resp
 
-    # def create_membership_resource(self, s2l_category=None, l2s_category=None, custom_fields=None):
-        # crt_resp = {"err_status": True, "response": None}
-        # try:
-            # if s2l_category:
-                # gt_serv_resp = self.get_serv_category_by_id(
-                    # label_resource=s2l_category["contactGroupMembership"]["contactGroupResourceName"])
-                # if not gt_serv_resp["err_status"]:
-                    # s2l_category = gt_serv_resp["response"]
-                    # chk_exist_category = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].search([
-                        # ('name', '=', s2l_category['formattedName'])
-                    # ])
-                    # if chk_exist_category and len(chk_exist_category) > 0:
-                        # chk_exist_category[0].write({
-                            # 'gc_name': s2l_category['name'],
-                            # 'gc_res_id': s2l_category["resourceName"].split('/')[1]
-                        # })
-                        # crt_resp["response"] = chk_exist_category[0]
-                    # else:
-                        # crt_resp["response"] = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].create({
-                            # 'name': s2l_category['formattedName'],
-                            # 'gc_name': s2l_category['name'],
-                            # 'gc_res_id': s2l_category["resourceName"].split('/')[1]
-                        # })
-                    # crt_resp["err_status"] = False
-            # elif l2s_category or custom_fields:
-                # if l2s_category:
-                    # srv_params = {
-                        # "contactGroup": {
-                            # "name": l2s_category.name
-                        # }
-                    # }
-                # else:
-                    # srv_params = {
-                        # "contactGroup": {
-                            # "name": custom_fields['name']
-                        # }
-                    # }
-                # req_url = self.__base_endpoint + self.__req_version + self.__contact_group_lc_api
-                # sr_resp = requests.post(req_url, data=json.dumps(srv_params), headers=self.__req_headers,
-                                        # timeout=self.__req_timeout).json()
-                # if constants.RESPONSE_ERROR_KEY not in sr_resp:
-                    # crt_resp["response"] = sr_resp
-                    # crt_resp["err_status"] = False
-                # else:
-                    # crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-            # else:
-                # crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-        # except Exception as ex:
-            # self.__logging.exception("Create either Contact Category or Membership  Exception: " + str(ex))
-            # crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
-        # return crt_resp
+    def create_membership_resource(self, s2l_category=None, l2s_category=None, custom_fields=None):
+        crt_resp = {"err_status": True, "response": None}
+        try:
+            if s2l_category:
+                gt_serv_resp = self.get_serv_category_by_id(
+                    label_resource=s2l_category["contactGroupMembership"]["contactGroupResourceName"])
+                if not gt_serv_resp["err_status"]:
+                    s2l_category = gt_serv_resp["response"]
+                    chk_exist_category = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].search([
+                        ('name', '=', s2l_category['formattedName'])
+                    ])
+                    if chk_exist_category and len(chk_exist_category) > 0:
+                        chk_exist_category[0].write({
+                            'gc_name': s2l_category['name'],
+                            'gc_res_id': s2l_category["resourceName"].split('/')[1]
+                        })
+                        crt_resp["response"] = chk_exist_category[0]
+                    else:
+                        crt_resp["response"] = self.__default_env[constants.RES_PARTNER_CATEGORY_MODEL].create({
+                            'name': s2l_category['formattedName'],
+                            'gc_name': s2l_category['name'],
+                            'gc_res_id': s2l_category["resourceName"].split('/')[1]
+                        })
+                    crt_resp["err_status"] = False
+            elif l2s_category or custom_fields:
+                if l2s_category:
+                    srv_params = {
+                        "contactGroup": {
+                            "name": l2s_category.name
+                        }
+                    }
+                else:
+                    srv_params = {
+                        "contactGroup": {
+                            "name": custom_fields['name']
+                        }
+                    }
+                req_url = self.__base_endpoint + self.__req_version + self.__contact_group_lc_api
+                sr_resp = requests.post(req_url, data=json.dumps(srv_params), headers=self.__req_headers,
+                                        timeout=self.__req_timeout).json()
+                if constants.RESPONSE_ERROR_KEY not in sr_resp:
+                    crt_resp["response"] = sr_resp
+                    crt_resp["err_status"] = False
+                else:
+                    crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+            else:
+                crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+        except Exception as ex:
+            self.__logging.exception("Create either Contact Category or Membership  Exception: " + str(ex))
+            crt_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
+        return crt_resp
 
     def get_membership_resource_list(self):
         gt_mbr_resp = {"err_status": True, "response": None}
@@ -423,15 +423,15 @@ class People:
                         "postalCode": db_contact.zip if db_contact.zip else "",
                         'country': db_contact.country_id.name if db_contact.country_id else ""
                     },
-              #      {
-               #         'type': "Home",
-                #        "streetAddress": db_contact.street_home if db_contact.street_home else "",
-                 #       'extendedAddress': db_contact.street2_home if db_contact.street2_home else "",
-                  #      'poBox': db_contact.state_id_home.name if db_contact.state_id_home else "",
-                   #     "city": db_contact.city_home if db_contact.city_home else "",
-                    #    "postalCode": db_contact.zip_home if db_contact.zip_home else "",
-                     #   'country': db_contact.country_id_home.name if db_contact.country_id_home else ""
-                    #}
+                    {
+                        'type': "Home",
+                        "streetAddress": db_contact.street_home if db_contact.street_home else "",
+                        'extendedAddress': db_contact.street2_home if db_contact.street2_home else "",
+                        'poBox': db_contact.state_id_home.name if db_contact.state_id_home else "",
+                        "city": db_contact.city_home if db_contact.city_home else "",
+                        "postalCode": db_contact.zip_home if db_contact.zip_home else "",
+                        'country': db_contact.country_id_home.name if db_contact.country_id_home else ""
+                    }
                 ],
                 "emailAddresses": [
                     {"value": db_contact.email if db_contact.email else "", "type": "Work"},
@@ -452,8 +452,8 @@ class People:
                 ],
                 "urls": [
                     {"value": db_contact.website if db_contact.website else "", "type": "homePage"},
-                 #   {"value": db_contact.map_work if db_contact.map_work else "", "type": "Work Map"},
-                  #  {"value": db_contact.map_home if db_contact.map_home else "", "type": "Home Map"}
+                    {"value": db_contact.map_work if db_contact.map_work else "", "type": "Work Map"},
+                    {"value": db_contact.map_home if db_contact.map_home else "", "type": "Home Map"}
                 ],
                 "memberships": [{
                     'contactGroupMembership': {
@@ -521,8 +521,8 @@ class People:
                 if db_contact.type == 'contact':
                     gl_json_params["names"] = [{
                         "displayName": db_contact.name,
-                        "givenName": db_contact.firstname if db_contact.firstname else "",
-                        "familyName": db_contact.lastname if db_contact.lastname else "",
+                        "givenName": db_contact.first_name.name if db_contact.first_name else "",
+                        "familyName": db_contact.last_name.name if db_contact.last_name else "",
                         "middleName": db_contact.middle_name.name if db_contact.middle_name else "",
                         #"honorificPrefix": db_contact.title.name if db_contact.title.name else ""
                     }]
@@ -582,17 +582,17 @@ class People:
                 pass
 
             # For RelationShips Custom Manageable fields
-            # try:
-                # gl_json_params["relations"] = []
-                # if db_contact.inverse_relation_ids and len(db_contact.inverse_relation_ids) > 0:
-                    # for rel_each in db_contact.inverse_relation_ids:
-                       # if rel_each.this_partner_id:
-                          # gl_json_params["relations"].append({
-                                # "person": rel_each.this_partner_id.name,
-                                # "type": rel_each.type_selection_id.name if rel_each.type_selection_id.name else "N/A"
-                            # })
-            # except Exception as ex:
-                # self.__logging.exception("Google Export Relation Exception: " + str(ex))
+            try:
+                gl_json_params["relations"] = []
+                if db_contact.inverse_relation_ids and len(db_contact.inverse_relation_ids) > 0:
+                    for rel_each in db_contact.inverse_relation_ids:
+                        if rel_each.this_partner_id:
+                            gl_json_params["relations"].append({
+                                "person": rel_each.this_partner_id.name,
+                                "type": rel_each.type_selection_id.name if rel_each.type_selection_id.name else "N/A"
+                            })
+            except Exception as ex:
+                self.__logging.exception("Google Export Relation Exception: " + str(ex))
 
             if not is_update:
                 self.__logging.info("* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Creating Contact to Google for ID : " + str(db_contact.id)) # Panos 06/03/2022 - Checked
@@ -1367,8 +1367,8 @@ class People:
                 query_params.append(('write_date', '>=', str(self.__initial_date)))
                 query_params.append(('write_date', '<=', str(self.__end_date)))
 
-        #    query_params.append('&')
-       #     query_params.append(('is_family', '=', False))
+            query_params.append('&')
+            query_params.append(('is_family', '=', False))
             query_params.append(('active_sync', '=', True))
 
             _db_contacts = self.__default_env[constants.RES_PARTNER_MODEL].search(query_params, order='write_date desc')
