@@ -16,6 +16,7 @@ class ContactStreetModel(models.Model):
     zip_id = fields.Many2one("res.city.zip", string="Post Code Info")
     identity = fields.Integer(string="#")
 
+
     # Change Display Name to be used by the 'street_zip_id' & 'street_zip_id_home' autocomplete fields
     @api.depends("street", "zip_id", "zip_id.name", "zip_id.city_id", "zip_id.state_id", "zip_id.country_id", "limits")
     def _compute_new_display_name(self):
@@ -125,5 +126,6 @@ class ContactStreetModel(models.Model):
         if obj.limits:
             display_name.append(obj.limits)
 
-        upd_query = "update " + res.partner.street + " set zip_id=" + str(rec.id) + ", name='" + ', '.join(display_name) + "' where id=" + str(obj.id)
+        upd_query = "update " + res.partner.street + " set zip_id=" + str(rec.id) + \
+                    ", name='" + ', '.join(display_name) + "' where id=" + str(obj.id)
         self.env.cr.execute(upd_query)
