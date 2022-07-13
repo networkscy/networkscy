@@ -5,6 +5,7 @@ import logging
 
 
 class ContactStreetModel(models.Model):
+    _inherit = "res.partner"
     _name = "res.partner.street"
     _description = "Street Names"
 
