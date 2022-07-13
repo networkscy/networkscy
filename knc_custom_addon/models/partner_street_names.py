@@ -126,6 +126,5 @@ class ContactStreetModel(models.Model):
         if obj.limits:
             display_name.append(obj.limits)
 
-        upd_query = "update "  + " set zip_id=" + str(rec.id) + \
-                    ", name='" + ', '.join(display_name) + "' where id=" + str(obj.id)
+        upd_query = "update "
         self.env.cr.execute(upd_query)
