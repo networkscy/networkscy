@@ -9,7 +9,7 @@ RES_USERS_MODEL = 'res.users'
 IR_MODEL_MODEL = 'ir.model'
 IR_ATTACHMENT_MODEL = 'ir.attachment'
 
-# RES_PARTNER_STREET_MODEL = 'res.partner.street'
+RES_PARTNER_STREET_MODEL = 'res.partner.street'
 # RES_PARTNER_STREET_STASH_MODEL = 'res_partner_street'
 RES_CITY_ZIP_MODEL = 'res.city.zip'
 
