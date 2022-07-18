@@ -19,7 +19,7 @@
 
         # Views
          'views/partner.xml',
-         'views/partner_names.xml',
+        # views/partner_names.xml',
          'views/partner_profiles.xml',
          # 'views/partner_relations.xml',
          'views/partner_street_names.xml',
