@@ -55,9 +55,9 @@
 
                         <group name="names_ind" string="Contact Name" attrs="{'invisible': ['|',('is_company', '=', True),('type', '!=', 'contact')]}">
                             <field name="title" string="Title / Abbreviation" placeholder="Title or Abbreviation or Prefix or Salutation" options="{'no_open': True, 'no_create': True}"/>  <!-- Default Field -->
-                            <field name="first_name" placeholder="First / Given Name in Latin as per ISO 843" options="{'no_quick_create': True}"/>
-                            <field name="middle_name" placeholder="Maiden Name in Latin as per ISO 843" options="{'no_quick_create': True}"/>
-                            <field name="last_name" placeholder="Last Name in Latin as per ISO 843" options="{'no_quick_create': True}"/>
+                            <!-- <field name="first_name" placeholder="First / Given Name in Latin as per ISO 843" options="{'no_quick_create': True}"/> -->
+                            <!-- <field name="middle_name" placeholder="Maiden Name in Latin as per ISO 843" options="{'no_quick_create': True}"/> -->
+                            <!-- <field name="last_name" placeholder="Last Name in Latin as per ISO 843" options="{'no_quick_create': True}"/> -->
                             <field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                         </group>
                         <group name="names_ind_add" string="Address Name" attrs="{'invisible': ['|',('is_company', '=', True),('type', '=', 'contact')]}">
@@ -268,9 +268,9 @@
                          <field name="display_name" optional="hide"/>
                          <field name="title" optional="show"/>
                          <field name="name" optional="show" string="Full Name"/>
-                         <field name="first_name" optional="hide"/>
-                         <field name="middle_name" optional="hide"/>
-                         <field name="last_name" optional="hide"/>
+                         <!-- <field name="first_name" optional="hide"/> -->
+                         <!-- <field name="middle_name" optional="hide"/> -->
+                         <!-- <field name="last_name" optional="hide"/> -->
                          <field name="printed_name" optional="hide"/>
 
                          <!-- Company -->
