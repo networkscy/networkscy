@@ -30,11 +30,11 @@
                 <xpath expr="//field[@name='email']" position="replace"/>
 
                 <!-- Replace Name Field with Display Name -->
-                <xpath expr="//h1[1]" position="replace">
-                    <h1>
-                        <field name="display_name"/>
-                    </h1>
-                </xpath>
+                <!-- <xpath expr="//h1[1]" position="replace"> -->
+                    <!-- <h1> -->
+                        <!-- <field name="display_name"/> -->
+                    <!-- </h1> -->
+                <!-- </xpath> -->
 
                 <!-- Hide Default Group of Address, Phone & Email Fields -->
                 <xpath expr="/form[1]/sheet[1]/group[1]" position="attributes">
