@@ -134,7 +134,7 @@
                             <label for="street" string="Address"/>
                             <div class="o_address_format">
                                 <field name="street" placeholder="Street Name &amp; Number / e.g. Roikou 8 &amp; Vitonos 2" class="o_address_street"
-                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" force_save="1"/>
+                                       force_save="1"/>
                                 <field name="street2" placeholder="Building Name, Floor, Flat / e.g. 3rd Floor, Flat 301" class="o_address_street"
                                        attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" force_save="1"/>
                                 <field name="city" placeholder="Municipality" class="o_address_city"
