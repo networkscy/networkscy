@@ -242,7 +242,7 @@
         <!-- Change the default view from kanban to list -->
 
         <record id="contacts.action_contacts" model="ir.actions.act_window">
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">kanban,form,tree</field>
         </record>
 
         <record id="contacts.action_contacts_view_kanban" model="ir.actions.act_window.view">
