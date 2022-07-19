@@ -241,16 +241,16 @@
 
         <!-- Change the default view from kanban to list -->
 
-        <record id="contacts.action_contacts" model="ir.actions.act_window">
-            <field name="view_mode">kanban,form,tree</field>
-        </record>
+        <!-- <record id="contacts.action_contacts" model="ir.actions.act_window"> -->
+            <!-- <field name="view_mode">kanban,form,tree</field> -->
+        <!-- </record> -->
 
-        <record id="contacts.action_contacts_view_kanban" model="ir.actions.act_window.view">
-            <field name="sequence" eval="4"/>
-            <field name="view_mode">kanban</field>
-            <field name="view_id" ref="base.res_partner_kanban_view"/>
-            <field name="act_window_id" ref="contacts.action_contacts"/>
-        </record>
+        <!-- <record id="contacts.action_contacts_view_kanban" model="ir.actions.act_window.view"> -->
+            <!-- <field name="sequence" eval="4"/> -->
+            <!-- <field name="view_mode">kanban</field> -->
+            <!-- <field name="view_id" ref="base.res_partner_kanban_view"/> -->
+            <!-- <field name="act_window_id" ref="contacts.action_contacts"/> -->
+        <!-- </record> -->
 
 
         <!-- Replace list view with custom defined fields -->
