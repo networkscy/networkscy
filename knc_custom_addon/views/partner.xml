@@ -219,8 +219,8 @@
                                    <!-- placeholder="Home Address Completion for Europe" attrs="{'readonly': ['|', ('street_zip_id_home', '!=', False), ('sync_home_add', '=', True)]}" -->
                                    <!-- class="oe_edit_only" nolabel="1" colspan="2"/> -->
                         <!-- </group> -->
-                        <group attrs="{'invisible': ['|',('sync_home_add', '=', False),('is_company', '=', True)]}">
-                        </group>
+                        <!-- <group attrs="{'invisible': ['|',('sync_home_add', '=', False),('is_company', '=', True)]}"> -->
+                        <!-- </group> -->
                     </group>
 
                     <group name="google" string="Google Contacts Connector">
