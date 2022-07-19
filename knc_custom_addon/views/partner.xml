@@ -33,8 +33,8 @@
 				<!-- <xpath expr="//field[@name='website']" position="after"> -->
 					<!-- <xpath expr="//field[@name'industry_id']" position="move"/> -->
 				<!-- </xpath> -->
-				<xpath expr="//field[@name='website']" position="after">
-						<xpath expr="//field[@name='industry_id']" position="move"/>
+				<xpath expr="//field[@name='category_id']" position="before">
+					<xpath expr="//field[@name='industry_id']" position="move"/>
 				</xpath> 	
 
                 <!-- Replace Name Field with Display Name -->
