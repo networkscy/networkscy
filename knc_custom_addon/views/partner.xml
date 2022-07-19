@@ -192,7 +192,7 @@
                         <!-- </group> -->
                     </group>
 
-                    <group class="oe_edit_only" attrs="{'invisible': [('sync_work_add', '=', True)}">
+                    <group class="oe_edit_only" attrs="{'invisible': [('sync_work_add', '=', True)]}">
                         <group string="Work Address Completion" attrs="{'invisible': ['|',('sync_work_add', '=', True),('is_family', '=', True)]}">
                             <!-- Auto Complete Work Address Fields with Street Name from Custom Model -->
                             <field name="street_zip_id" options="{'create_name_field': 'city', 'no_open': True, 'no_create': True}"
@@ -303,14 +303,14 @@
                          <field name="sync_work_add" optional="hide"/>
 
                          <!-- Home Address -->
-                         <field name="street_home" optional="hide"/>
-                         <field name="street2_home" optional="hide"/>
-                         <field name="city_home" optional="hide"/>
-                         <field name="state_id_home" optional="hide" readonly="1"/>
-                         <field name="zip_home" optional="hide"/>
-                         <field name="country_id_home" optional="hide" readonly="1"/>
-                         <field name="map_home" optional="hide"/>
-                         <field name="sync_home_add" optional="hide"/>
+                         <!-- <field name="street_home" optional="hide"/> -->
+                         <!-- <field name="street2_home" optional="hide"/> -->
+                         <!-- <field name="city_home" optional="hide"/> -->
+                         <!-- <field name="state_id_home" optional="hide" readonly="1"/> -->
+                         <!-- <field name="zip_home" optional="hide"/> -->
+                         <!-- <field name="country_id_home" optional="hide" readonly="1"/> -->
+                         <!-- <field name="map_home" optional="hide"/> -->
+                         <!-- <field name="sync_home_add" optional="hide"/> -->
 
                          <field name="vat" optional="hide" readonly="1"/>
                          <field name="reg_date" optional="hide" widget="date"/>
