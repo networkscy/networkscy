@@ -65,8 +65,11 @@
                             <field name="name" string="Address Name" placeholder="Address Name for Internal Use"/>
                             <field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                         </group>
-                        <group name="names_com" string="Company Name" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', True)]}">
-                            <field name="name" string="Company Name" placeholder="Company Name for Internal Use"/>
+                        <group name="names_com" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', True)]}">
+                            <!-- <field name="name" string="Company Name" placeholder="Company Name for Internal Use"/> -->
+							<field name="printed_name" string="Registered Name" placeholder="Registered Company Name in Latin / e.g. KNC Ltd or LLC"/>
+                            <field name="vat" placeholder="VAT or Reg No. / eg. HE 403278 or CY10403278R" attrs="{'readonly': [('parent_id','!=',False)]}"/>
+                            <field name="reg_date" placeholder="Incorporation Date of the Company" widget="date"/>
                             <field name="website" string="Website" placeholder="Company / Corporate Website" widget="url"/>
                             <field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                         </group>
@@ -84,11 +87,9 @@
                             <field name="parent_id" placeholder="Related Company of the Address" widget="res_partner_many2one" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
                             <field name="printed_name" placeholder="Preference Display Name" string="Display Name"/>
                         </group>
-                        <group name="info_com" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', True)]}">
-                            <field name="printed_name" string="Registered Name" placeholder="Registered Company Name in Latin / e.g. KNC Ltd or LLC"/>
-                            <field name="vat" placeholder="VAT or Reg No. / eg. HE 403278 or CY10403278R" attrs="{'readonly': [('parent_id','!=',False)]}"/>
-                            <field name="reg_date" placeholder="Incorporation Date of the Company" widget="date"/>
-                        </group>
+                        <!-- <group name="info_com" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', True)]}"> -->
+                            
+                        <!-- </group> -->
                         <group name="info_com_fam" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', False)]}">
                             <field name="printed_name" placeholder="Preference Display Name" string="Display Name"/>
                         </group>
