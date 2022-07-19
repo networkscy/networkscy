@@ -11,7 +11,7 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     # Work Address Fields - Default Fields
-    street = fields.Char(string="Street Work", compute="_compute_street", tracking=True, store=True)
+    street = fields.Char(string="Street Work", compute="_compute_street", tracking=True, store=True, readonly=False)
     street2 = fields.Char(string="Street 2 Work", tracking=True)  # Default Field
     zip = fields.Char(string="Post Code Work", tracking=True)  # Default Field
     city = fields.Char(string="City Work", tracking=True)  # Default Field
