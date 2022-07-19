@@ -192,7 +192,7 @@
                         <!-- </group> -->
                     </group>
 
-                    <group class="oe_edit_only" attrs="{'invisible': [('sync_work_add', '=', True),('sync_home_add', '=', True)]}">
+                    <group class="oe_edit_only" attrs="{'invisible': [('sync_work_add', '=', True)}">
                         <group string="Work Address Completion" attrs="{'invisible': ['|',('sync_work_add', '=', True),('is_family', '=', True)]}">
                             <!-- Auto Complete Work Address Fields with Street Name from Custom Model -->
                             <field name="street_zip_id" options="{'create_name_field': 'city', 'no_open': True, 'no_create': True}"
