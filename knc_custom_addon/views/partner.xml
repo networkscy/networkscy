@@ -31,7 +31,6 @@
 				
 				<!-- Move Industry Field -->
 				<xpath expr="//field[@name='category_id']" position="before">
-					<xpath expr="//field[@name='industry_id']" position="move"/>
 					<field name="industry_id" attrs="{'invisible': [('is_company', '=', False)]}" options="{'no_create': True}"/>
 				</xpath> 	
 
