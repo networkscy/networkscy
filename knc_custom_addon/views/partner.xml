@@ -30,9 +30,9 @@
                 <xpath expr="//field[@name='email']" position="replace"/>
 				
 				<!-- Move Industry Field -->
-				<xpath expr="//field[@name='category_id']" position="before">
-					<field name="industry_id" attrs="{'invisible': [('is_company', '=', False)]}" options="{'no_create': True}"/>
-				</xpath> 	
+				<!-- <xpath expr="//field[@name='category_id']" position="before"> -->
+					<!-- <field name="industry_id" attrs="{'invisible': [('is_company', '=', False)]}" options="{'no_create': True}"/> -->
+				<!-- </xpath> 	 -->
 
                 <!-- Replace Name Field with Display Name -->
                 <!-- <xpath expr="//h1[1]" position="replace"> -->
