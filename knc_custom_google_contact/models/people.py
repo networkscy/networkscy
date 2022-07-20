@@ -489,7 +489,7 @@ class People:
 
             if db_contact.is_company:
                 gl_json_params["names"] = [{
-                    "givenName": "#",
+                    "givenName": "",
                     "familyName": db_contact.name,
                     "displayName": db_contact.name,
                     #"honorificPrefix": "Company"
