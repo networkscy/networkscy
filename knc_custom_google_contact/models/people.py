@@ -321,57 +321,57 @@ class People:
             self.__logging.exception("Get Default Membership Exception: " + str(ex))
         return gt_resp
 
-    def create_membership_lists(self, s2l_contact=None, l2s_contact=None):
-        crt_ms_resp = {"err_status": True, "response": None}
-        try:
-            if s2l_contact:
-                tmp_local_categories = []
-                if len(s2l_contact["memberships"]) > 0:
-                    for sr_membership in s2l_contact["memberships"]:
-                        chk_lc_resp = self.create_membership_resource(s2l_category=sr_membership)
-                        if not chk_lc_resp["err_status"]:
-                            tmp_local_categories.append(chk_lc_resp["response"].id)
-                crt_ms_resp["response"] = tmp_local_categories
-                crt_ms_resp["err_status"] = False
-            elif l2s_contact:
-                tmp_membership_listing = []
-                prev_wid = [], None
-                for _category in l2s_contact.category_id:
-                    res_wid = None
+    # def create_membership_lists(self, s2l_contact=None, l2s_contact=None):
+        # crt_ms_resp = {"err_status": True, "response": None}
+        # try:
+            # if s2l_contact:
+                # tmp_local_categories = []
+                # if len(s2l_contact["memberships"]) > 0:
+                    # for sr_membership in s2l_contact["memberships"]:
+                        # chk_lc_resp = self.create_membership_resource(s2l_category=sr_membership)
+                        # if not chk_lc_resp["err_status"]:
+                            # tmp_local_categories.append(chk_lc_resp["response"].id)
+                # crt_ms_resp["response"] = tmp_local_categories
+                # crt_ms_resp["err_status"] = False
+            # elif l2s_contact:
+                # tmp_membership_listing = []
+                # prev_wid = [], None
+                # for _category in l2s_contact.category_id:
+                    # res_wid = None
 
-                    chk_resp = self.chk_serv_category(l2s_category=_category)
-                    if not chk_resp["err_status"]:
-                        res_wid = chk_resp["response"]["resourceName"].split('/')[1]
-                        _category.write({
-                            'gc_res_id': res_wid,
-                            'gc_name': chk_resp["response"]['name']
-                        })
-                    else:
-                        crt_srv_resp = self.create_membership_resource(l2s_category=_category)
-                        if not crt_srv_resp["err_status"]:
-                            crt_lc_resp = self.create_membership_resource(s2l_category=crt_srv_resp["response"])
-                            if not crt_lc_resp["err_status"]:
-                                res_wid = crt_lc_resp["response"].gc_res_id
+                    # chk_resp = self.chk_serv_category(l2s_category=_category)
+                    # if not chk_resp["err_status"]:
+                        # res_wid = chk_resp["response"]["resourceName"].split('/')[1]
+                        # _category.write({
+                            # 'gc_res_id': res_wid,
+                            # 'gc_name': chk_resp["response"]['name']
+                        # })
+                    # else:
+                        # crt_srv_resp = self.create_membership_resource(l2s_category=_category)
+                        # if not crt_srv_resp["err_status"]:
+                            # crt_lc_resp = self.create_membership_resource(s2l_category=crt_srv_resp["response"])
+                            # if not crt_lc_resp["err_status"]:
+                                # res_wid = crt_lc_resp["response"].gc_res_id
 
-                    if res_wid and res_wid != prev_wid:
-                        tmp_membership_listing.append({
-                            "contactGroupMembership": {
-                                "contactGroupResourceName": constants.GC_CONTACT_GROUP_KEY + '/' + res_wid
-                            }
-                        })
-                        prev_wid = res_wid
+                    # if res_wid and res_wid != prev_wid:
+                        # tmp_membership_listing.append({
+                            # "contactGroupMembership": {
+                                # "contactGroupResourceName": constants.GC_CONTACT_GROUP_KEY + '/' + res_wid
+                            # }
+                        # })
+                        # prev_wid = res_wid
 
-                if len(tmp_membership_listing) > 0:
-                    crt_ms_resp["response"] = tmp_membership_listing
-                    crt_ms_resp["err_status"] = False
-                else:
-                    crt_ms_resp["err_status"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-            else:
-                crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-        except Exception as ex:
-            self.__logging.exception("Create Contact Membership Listing Exception: " + str(ex))
-            crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
-        return crt_ms_resp
+                # if len(tmp_membership_listing) > 0:
+                    # crt_ms_resp["response"] = tmp_membership_listing
+                    # crt_ms_resp["err_status"] = False
+                # else:
+                    # crt_ms_resp["err_status"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+            # else:
+                # crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+        # except Exception as ex:
+            # self.__logging.exception("Create Contact Membership Listing Exception: " + str(ex))
+            # crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
+        # return crt_ms_resp
 
     def get_custom_relations(self, sr_custom_fields, _type):
         gt_cum_resp = {"err_status": True, "response": None}
@@ -565,10 +565,10 @@ class People:
                     }
                 }]
 
-            if db_contact.category_id and len(db_contact.category_id) > 0:
-                listing_resp = self.create_membership_lists(l2s_contact=db_contact)
-                if not listing_resp["err_status"]:
-                    gl_json_params["memberships"] += listing_resp["response"]
+            # if db_contact.category_id and len(db_contact.category_id) > 0:
+                # listing_resp = self.create_membership_lists(l2s_contact=db_contact)
+                # if not listing_resp["err_status"]:
+                    # gl_json_params["memberships"] += listing_resp["response"]
 
             # For Social Profile Custom Manageable fields
             try:
@@ -892,11 +892,11 @@ class People:
             else:
                 db_data_params["website"] = ""
 
-            if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
-                if previous_local_contact:
-                    ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
-                    if not ct_mbrs_resp["err_status"]:
-                        previous_local_contact.update_categories_params(ct_mbrs_resp["response"])
+            # if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
+                # if previous_local_contact:
+                    # ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
+                    # if not ct_mbrs_resp["err_status"]:
+                        # previous_local_contact.update_categories_params(ct_mbrs_resp["response"])
 
             if 'biographies' in sr_contact and len(sr_contact['biographies']) > 0:
                 db_data_params['comment'] = sr_contact['biographies'][0]['value']
@@ -925,10 +925,10 @@ class People:
                 db_data_params["gc_id"] = sr_contact["resourceName"].split('/')[1]
                 contact_obj = self.__default_env[constants.RES_PARTNER_MODEL].create(db_data_params)
 
-                if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
-                    ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
-                    if not ct_mbrs_resp["err_status"]:
-                        contact_obj.update_categories_params(ct_mbrs_resp["response"])
+                # if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
+                    # ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
+                    # if not ct_mbrs_resp["err_status"]:
+                        # contact_obj.update_categories_params(ct_mbrs_resp["response"])
 
                 crt_lc_resp["response"] = contact_obj
 
