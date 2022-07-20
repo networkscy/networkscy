@@ -786,13 +786,13 @@ class People:
                 db_data_params["mobile"] = sr_contact["phoneNumbers"][1]["value"] if len(sr_contact["phoneNumbers"]) > 1 else ""
 
                 filter_res = list(filter(lambda x: x['type'] == "pager", sr_contact['phoneNumbers']))
-                db_data_params["phone_business"] = filter_res[0]["value"] if len(filter_res) > 1 else "!"
+                db_data_params["phone_business"] = filter_res[1]["value"] if len(filter_res) > 1 else ""
 
                 filter_res = list(filter(lambda x: x['type'] == "other", sr_contact['phoneNumbers']))
-                db_data_params["phone_other"] = filter_res[0]["value"] if len(filter_res) > 1 else "!"
+                db_data_params["phone_other"] = filter_res[1]["value"] if len(filter_res) > 1 else ""
 
                 filter_res = list(filter(lambda x: x['type'] == "main", sr_contact['phoneNumbers']))
-                db_data_params["phone_company"] = filter_res[0]["value"] if len(filter_res) > 1 else "!"
+                db_data_params["phone_company"] = filter_res[1]["value"] if len(filter_res) > 1 else ""
             else:
                 db_data_params["phone"] = ""
                 db_data_params["mobile"] = ""
