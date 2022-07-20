@@ -8,9 +8,7 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 				<xpath expr="/form" position="inside">
-					<sheet>
 						<widget name="web_ribbon" title="Checked" bg_color="bg-success" attrs="{'invisible': [('active', '=', False)]}"/>
-					</sheet>
 				</xpath>
                 <xpath expr="//form[1]/div[1]" position="before">
                     <header>
