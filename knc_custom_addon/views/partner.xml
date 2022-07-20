@@ -18,7 +18,10 @@
                     <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
                 </xpath>
 				<xpath expr="/form[1]/sheet[1]/div[1]" position="after">
-                    <widget name="web_ribbon" title="Checked" bg_color="bg-success" attrs="{'invisible': [('active', '=', False)]}"/>
+					<widget name="web_ribbon" title="Draft" bg_color="bg-secondary" attrs="{'invisible': [('status', '!=', draft)]}"/>
+					<widget name="web_ribbon" title="Pending" bg_color="bg-danger" attrs="{'invisible': [('status', '!=', pending)]}"/>
+					<widget name="web_ribbon" title="Confirmed" bg_color="bg-primary" attrs="{'invisible': [('status', '!=', confirmed)]}"/>
+                    <widget name="web_ribbon" title="Checked" bg_color="bg-success" attrs="{'invisible': [('status', '!=', checked)]}"/>
                 </xpath>
 
                 <!-- Hide Default Fields for Repositioning -->
