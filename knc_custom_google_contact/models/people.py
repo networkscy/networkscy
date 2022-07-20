@@ -669,7 +669,7 @@ class People:
     def create_update_local_contact(self, sr_contact, previous_local_contact=None):
         crt_lc_resp = {"err_status": True, "response": None}
         try:
-            title_id, firstname, lastname = None, None, None, None
+            firstname, lastname = None, None
 
             db_data_params = {
                 'gc_etag': sr_contact["etag"],
@@ -746,8 +746,8 @@ class People:
                 # db_data_params["middle_name"] = middle_name_id
             if lastname:
                 db_data_params["lastname"] = lastname
-            if title_id:
-                db_data_params["title"] = title_id
+            # if title_id:
+                # db_data_params["title"] = title_id
 
             if "birthdays" in sr_contact and len(sr_contact['birthdays']) > 0:
                 birth_date = sr_contact["birthdays"][0]["date"]
