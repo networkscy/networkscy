@@ -669,7 +669,7 @@ class People:
     def create_update_local_contact(self, sr_contact, previous_local_contact=None):
         crt_lc_resp = {"err_status": True, "response": None}
         try:
-            title_id, firstname_id, lastname_id = None, None, None, None
+            title_id, firstname, lastname = None, None, None, None
 
             db_data_params = {
                 'gc_etag': sr_contact["etag"],
@@ -706,13 +706,13 @@ class People:
 
             # Check the First Name field for Many2one relationship
             # if 'givenName' in sr_contact["names"][0] and sr_contact["names"][0]["givenName"]:
-                # firstname_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].search([
+                # firstname = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].search([
                     # ('name', '=', sr_contact["names"][0]["givenName"])
                 # ])
-                # if firstname_id and len(first_name_id) > 0:
-                    # firstname_id = firstname_id[0].id
+                # if firstname and len(first_name_id) > 0:
+                    # firstname = firstname[0].id
                 # else:
-                    # firstname_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].create({
+                    # firstname = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].create({
                         # 'name': sr_contact["names"][0]["givenName"]
                     # }).id
 
@@ -740,12 +740,12 @@ class People:
                         # 'name': sr_contact["names"][0]["middleName"]
                     # }).id
 
-            if firstname_id:
-                db_data_params["firstname"] = firstname_id
+            if firstname:
+                db_data_params["firstname"] = firstname
             # if middle_name_id:
                 # db_data_params["middle_name"] = middle_name_id
-            if lastname_id:
-                db_data_params["lastname"] = lastname_id
+            if lastname:
+                db_data_params["lastname"] = lastname
             if title_id:
                 db_data_params["title"] = title_id
 
