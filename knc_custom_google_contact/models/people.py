@@ -669,15 +669,15 @@ class People:
     def create_update_local_contact(self, sr_contact, previous_local_contact=None):
         crt_lc_resp = {"err_status": True, "response": None}
         try:
-            title_id, first_name_id, middle_name_id, last_name_id = None, None, None, None
+            title_id, firstname_id, lastname_id = None, None, None, None
 
             db_data_params = {
                 'gc_etag': sr_contact["etag"],
                 # 'title': sr_contact["names"][0]["honorificPrefix"] if 'honorificPrefix' in sr_contact["names"][0] else 'Mr/Mrs',
                 'name': sr_contact["names"][0]["displayName"],
-                # 'first_name': sr_contact["names"][0]["givenName"],
+                # 'firstname': sr_contact["names"][0]["givenName"],
                 # 'middle_name': sr_contact["names"][0]["middleName"],
-                # 'last_name': sr_contact["names"][0]["familyName"],
+                # 'lastname': sr_contact["names"][0]["familyName"],
                 'source': constants.GC_CONTACT_SOURCE,
             }
 
@@ -693,59 +693,59 @@ class People:
                 pass
 
             # Check for Title field for Many2one relationship
-            if 'honorificPrefix' in sr_contact["names"][0] and sr_contact["names"][0]["honorificPrefix"]:
-                title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].search([
-                    ('name', '=', str(sr_contact["names"][0]["honorificPrefix"]).capitalize())
-                ])
-                if title_id and len(title_id) > 0:
-                    title_id = title_id[0].id
-                else:
-                    title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].create({
-                        'name': str(sr_contact["names"][0]["honorificPrefix"]).capitalize()
-                    }).id
+            # if 'honorificPrefix' in sr_contact["names"][0] and sr_contact["names"][0]["honorificPrefix"]:
+                # title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].search([
+                    # ('name', '=', str(sr_contact["names"][0]["honorificPrefix"]).capitalize())
+                # ])
+                # if title_id and len(title_id) > 0:
+                    # title_id = title_id[0].id
+                # else:
+                    # title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].create({
+                        # 'name': str(sr_contact["names"][0]["honorificPrefix"]).capitalize()
+                    # }).id
 
             # Check the First Name field for Many2one relationship
-            if 'givenName' in sr_contact["names"][0] and sr_contact["names"][0]["givenName"]:
-                first_name_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].search([
-                    ('name', '=', sr_contact["names"][0]["givenName"])
-                ])
-                if first_name_id and len(first_name_id) > 0:
-                    first_name_id = first_name_id[0].id
-                else:
-                    first_name_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].create({
-                        'name': sr_contact["names"][0]["givenName"]
-                    }).id
+            # if 'givenName' in sr_contact["names"][0] and sr_contact["names"][0]["givenName"]:
+                # firstname_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].search([
+                    # ('name', '=', sr_contact["names"][0]["givenName"])
+                # ])
+                # if firstname_id and len(first_name_id) > 0:
+                    # firstname_id = firstname_id[0].id
+                # else:
+                    # firstname_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].create({
+                        # 'name': sr_contact["names"][0]["givenName"]
+                    # }).id
 
             # Check the Last Name field for Many2one relationship
-            if 'familyName' in sr_contact["names"][0] and sr_contact["names"][0]["familyName"]:
-                last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
-                    ('name', '=', sr_contact["names"][0]["familyName"])
-                ])
-                if last_name_id and len(last_name_id) > 0:
-                    last_name_id = last_name_id[0].id
-                else:
-                    last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
-                        'name': sr_contact["names"][0]["familyName"]
-                    }).id
+            # if 'familyName' in sr_contact["names"][0] and sr_contact["names"][0]["familyName"]:
+                # last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
+                    # ('name', '=', sr_contact["names"][0]["familyName"])
+                # ])
+                # if last_name_id and len(last_name_id) > 0:
+                    # last_name_id = last_name_id[0].id
+                # else:
+                    # last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
+                        # 'name': sr_contact["names"][0]["familyName"]
+                    # }).id
 
             # Check the Middle Name field for Many2one relationship
-            if 'middleName' in sr_contact["names"][0] and sr_contact["names"][0]["middleName"]:
-                middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
-                    ('name', '=', sr_contact["names"][0]["middleName"])
-                ])
-                if middle_name_id and len(middle_name_id) > 0:
-                    middle_name_id = middle_name_id[0].id
-                else:
-                    middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
-                        'name': sr_contact["names"][0]["middleName"]
-                    }).id
+            # if 'middleName' in sr_contact["names"][0] and sr_contact["names"][0]["middleName"]:
+                # middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
+                    # ('name', '=', sr_contact["names"][0]["middleName"])
+                # ])
+                # if middle_name_id and len(middle_name_id) > 0:
+                    # middle_name_id = middle_name_id[0].id
+                # else:
+                    # middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
+                        # 'name': sr_contact["names"][0]["middleName"]
+                    # }).id
 
-            if first_name_id:
-                db_data_params["first_name"] = first_name_id
-            if middle_name_id:
-                db_data_params["middle_name"] = middle_name_id
-            if last_name_id:
-                db_data_params["last_name"] = last_name_id
+            if firstname_id:
+                db_data_params["firstname"] = firstname_id
+            # if middle_name_id:
+                # db_data_params["middle_name"] = middle_name_id
+            if lastname_id:
+                db_data_params["lastname"] = lastname_id
             if title_id:
                 db_data_params["title"] = title_id
 
