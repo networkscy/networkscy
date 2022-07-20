@@ -1,0 +1,359 @@
+<odoo>
+    <data>
+
+        <!-- Partner Form View -->
+        <record id="contact_mod_view_custom" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//form[1]/div[1]" position="before">
+                    <header>
+                        <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                </xpath>
+
+                <xpath expr="//field[@name='image_1920']" position="after">
+                    <field name="active_sync" widget="boolean_toggle" class="oe_right" style="margin-top: 2%;margin-right: 4.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
+                    <label for="active_sync" string="Google Sync" class="oe_right" style="margin-top: 2%;padding-right: 0.5%;" attrs="{'invisible': [('is_family', '=', True)]}"/>
+                </xpath>
+
+                <!-- Hide Default Fields for Repositioning -->
+                <xpath expr="//field[@name='company_type']" position="replace"/>
+                <xpath expr="//field[@name='type']" position="replace"/>
+                <xpath expr="//field[@name='parent_id']" position="replace"/>
+                <xpath expr="//field[@name='function']" position="replace"/>
+                <xpath expr="//field[@name='vat']" position="replace"/>
+                <xpath expr="//field[@name='mobile']" position="replace"/>
+                <xpath expr="//field[@name='phone']" position="replace"/>
+                <xpath expr="//field[@name='email']" position="replace"/>
+				
+				<!-- Move Industry Field -->
+				<!-- <xpath expr="//field[@name='category_id']" position="before"> -->
+					<!-- <field name="industry_id" attrs="{'invisible': [('is_company', '=', False)]}" options="{'no_create': True}"/> -->
+				<!-- </xpath> 	 -->
+
+                <!-- Replace Name Field with Display Name -->
+                <!-- <xpath expr="//h1[1]" position="replace"> -->
+                    <!-- <h1> -->
+                        <!-- <field name="display_name"/> -->
+                    <!-- </h1> -->
+                <!-- </xpath> -->
+
+                <!-- Hide Default Group of Address, Phone & Email Fields -->
+                <xpath expr="/form[1]/sheet[1]/group[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- Replace Default Group -->
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="before">
+                    <group>
+
+                        <group name="com_type" string="&#160;">
+                            <field name="company_type" string="Contact Type" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <group name="com_subtype" string="&#160;">
+                            <field name="is_family" string="Family Contact" widget="boolean_toggle" attrs="{'invisible': [('is_company', '=', False)]}"/>
+                            <field name="type" string="Contact Subtype" attrs="{'invisible': [('is_company','=', True)], 'required': [('is_company','!=', True)], 'readonly': [('user_ids', '!=', [])]}"/>
+                        </group>
+
+                        <group name="names_ind" string="Contact Info" attrs="{'invisible': ['|',('is_company', '=', True),('type', '!=', 'contact')]}">
+                            <field name="title" string="Title / Abbreviation" placeholder="Title or Abbreviation or Prefix or Salutation" options="{'no_open': True, 'no_create': True}"/>  <!-- Default Field -->
+                            <!-- <field name="first_name" placeholder="First / Given Name in Latin as per ISO 843" options="{'no_quick_create': True}"/> -->
+                            <!-- <field name="middle_name" placeholder="Maiden Name in Latin as per ISO 843" options="{'no_quick_create': True}"/> -->
+                            <!-- <field name="last_name" placeholder="Last Name in Latin as per ISO 843" options="{'no_quick_create': True}"/> -->
+							<field name="parent_id" placeholder="Related Company of the Contact" widget="res_partner_many2one" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
+                            <field name="function" placeholder="Job Position or Title"/>
+                        </group>
+                        <group name="names_ind_add" string="Address Name" attrs="{'invisible': ['|',('is_company', '=', True),('type', '=', 'contact')]}">
+                            <field name="name" string="Address Name" placeholder="Address Name for Internal Use"/>
+                            <field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                        </group>
+                        <group name="names_com" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', True)]}">
+                            <!-- <field name="name" string="Company Name" placeholder="Company Name for Internal Use"/> -->
+							<field name="printed_name" string="Registered Name" placeholder="Registered Company Name in Latin / e.g. KNC Ltd or LLC"/>
+                            <field name="vat" placeholder="VAT or Reg No. / eg. HE 403278 or CY10403278R" attrs="{'readonly': [('parent_id','!=',False)]}"/>
+                            <field name="reg_date" placeholder="Incorporation Date of the Company" widget="date"/>
+                            <field name="website" string="Website" placeholder="Company / Corporate Website" widget="url"/>
+                            <field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                        </group>
+                        <group name="names_com_fam" string="Family Name" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', False)]}">
+                            <field name="name" string="Family Name" placeholder="Family Name for Internal Use"/>
+                        </group>
+
+                        <group name="info_ind" string="Contact Info" attrs="{'invisible': ['|',('is_company', '=', True),('type', '!=', 'contact')]}">
+                            <!-- <field name="printed_name" placeholder="Preference Display Name" string="Display Name"/> -->
+                            <field name="birthday" placeholder="Date of Birth" widget="date"/>
+                            <field name="id_no" placeholder="ID Number"/>
+							<field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                        </group>
+                        <group name="info_ind_add" string="Address Info" attrs="{'invisible': ['|',('is_company', '=', True),('type', '=', 'contact')]}">
+                            <field name="parent_id" placeholder="Related Company of the Address" widget="res_partner_many2one" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
+                            <field name="printed_name" placeholder="Preference Display Name" string="Display Name"/>
+                        </group>
+                        <!-- <group name="info_com" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', True)]}"> -->
+                            
+                        <!-- </group> -->
+                        <group name="info_com_fam" string="Company Info" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', False)]}">
+                            <field name="printed_name" placeholder="Preference Display Name" string="Display Name"/>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible': [('is_family', '=', True)]}">
+                        <group name="phones_ind" string="Contact Phones" attrs="{'invisible': ['|',('is_company', '=', True),('type', '!=', 'contact')]}">
+                            <field name="mobile" placeholder="Mobile Phone in the format of +357 9xxxxxxx" widget="phone"/>
+                            <field name="phone_business" placeholder="Business Phone in the format of +357 9xxxxxxx" widget="phone"/>
+                            <field name="phone" placeholder="Work Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                            <field name="phone_other" placeholder="Other Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                        </group>
+                        <group name="phones_ind_add" string="Address Phones" attrs="{'invisible': ['|',('is_company', '=', True),('type', '=', 'contact')]}">
+                            <field name="phone" placeholder="Work Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                            <field name="phone_other" placeholder="Other Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                        </group>
+                        <group name="phones_com" string="Company Phones" attrs="{'invisible': [('is_company', '=', False)]}">
+                            <field name="phone" placeholder="Work Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                            <field name="phone_other" placeholder="Other Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                            <field name="phone_company" placeholder="Company Phone in the format of +357 xxxxxxxx" widget="phone"/>
+                        </group>
+
+                        <group name="emails_ind" string="Contact Emails" attrs="{'invisible': ['|',('is_company', '=', True),('type', '!=', 'contact')]}">
+                            <field name="email" placeholder="Work Email Address" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                            <field name="email_personal" placeholder="Personal Email Address" widget="email"/>
+                            <field name="email_other" placeholder="Other Email Address" widget="email"/>
+                            <field name="email_alternate" placeholder="Alternate Email Address" widget="email"/>
+                        </group>
+                        <group name="emails_ind_add" string="Address Emails" attrs="{'invisible': ['|',('is_company', '=', True),('type', '=', 'contact')]}">
+                            <field name="email" placeholder="Work Email Address" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                            <field name="email_other" placeholder="Other Email Address" widget="email"/>
+                        </group>
+                        <group name="emails_com" string="Company Emails" attrs="{'invisible': [('is_company', '=', False)]}">
+                            <field name="email" placeholder="Work Email Address" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                            <field name="email_other" placeholder="Other Email Address" widget="email"/>
+                            <field name="email_alternate" placeholder="Alternate Email Address" widget="email"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="country_enforce_cities" invisible="1"/>
+                        <group name="address_work" string="Work Address" attrs="{'invisible': [('is_family', '=', True)]}">     <!-- from Default View -->
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street Name &amp; Number / e.g. Roikou 8 &amp; Vitonos 2" class="o_address_street"
+                                       force_save="1"/>
+                                <field name="street2" placeholder="Building Name, Floor, Flat / e.g. 3rd Floor, Flat 301" class="o_address_street"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" force_save="1"/>
+                                <field name="city" placeholder="Municipality" class="o_address_city"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" force_save="1"/>
+                                <field name="city_id" invisible="1"/>
+                                <!--<field name="city" placeholder="Municipality" class="o_address_city"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)], 'invisible': [('country_enforce_cities','=', True)]}"/>
+                                <field name="city_id" placeholder="Municipality" class="o_address_city"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)], 'invisible': [('country_enforce_cities','=', False)]}"/>-->
+                                <field name="state_id" placeholder="City or District" class="o_address_state" options="{'no_open': True, 'no_quick_create': True}"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}" force_save="1"/>
+                                <field name="zip" placeholder="Postcode" class="o_address_zip"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" force_save="1"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'readonly': [('sync_work_add','=', True),('parent_id', '!=', False)]}" force_save="1"/>
+                            </div>
+                            <field name="map_work" placeholder="Work Address Map URL" widget="url" attrs="{'readonly':[('sync_work_add','=', True), ('parent_id','!=', False)]}" force_save="1"/>
+                        </group>
+                        <group name="address_family" attrs="{'invisible': [('is_family', '=', False)]}">
+                        </group>
+                        <!-- <group name="address_home" string="Home Address" attrs="{'invisible': [('is_company', '=', True),('is_family', '=', False)]}"> -->
+                            <!-- <label for="street_home" string="Address"/> -->
+                            <!-- <div class="o_address_format"> -->
+                                <!-- <field name="street_home" placeholder="Street Name &amp; Number / e.g. Roikou 8 &amp; Vitonos 2" class="o_address_street" -->
+                                       <!-- attrs="{'readonly': [('sync_home_add','=', True),('parent_id', '!=', False)]}" force_save="1"/> -->
+                                <!-- <field name="street2_home" placeholder="Building Name, Floor, Flat / e.g. 3rd Floor, Flat 301" class="o_address_street" -->
+                                       <!-- attrs="{'readonly': [('sync_home_add','=', True),('parent_id', '!=', False)]}" force_save="1"/> -->
+                                <!-- <field name="city_home" placeholder="Municipality" class="o_address_city" -->
+                                       <!-- attrs="{'readonly': [('sync_home_add','=', True),('parent_id', '!=', False)]}" force_save="1"/> -->
+                                <!-- <field name="state_id_home" placeholder="City or District" class="o_address_state" options="{'no_open': True, 'no_create': True}" -->
+                                       <!-- attrs="{'readonly': [('sync_home_add','=', True),('parent_id', '!=', False)]}" domain="[('country_id', '=', country_id_home)]" context="{'country_id_home': country_id_home, 'default_country_id_home': country_id_home, 'zip_home': zip_home}" force_save="1"/> -->
+                                <!-- <field name="zip_home" placeholder="Postcode" class="o_address_zip" -->
+                                       <!-- attrs="{'readonly': [('sync_home_add','=', True),('parent_id', '!=', False)]}" force_save="1"/> -->
+                                <!-- <field name="country_id_home" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}" -->
+                                       <!-- attrs="{'readonly': [('sync_home_add','=', True),('parent_id', '!=', False)]}" force_save="1"/> -->
+                            <!-- </div> -->
+                            <!-- <field name="map_home" placeholder="Home Address Map URL" widget="url" attrs="{'readonly':[('sync_home_add','=', True), ('parent_id','!=', False)]}" force_save="1"/> -->
+                        <!-- </group> -->
+                        <group attrs="{'invisible': [('is_company', '=', False)]}">
+                        </group>
+                    </group>
+
+                    <group class="oe_edit_only" attrs="{'invisible': ['|',('is_company', '=', True),('parent_id', '=', False)]}">
+                        <group>
+                            <label for="sync_work_add" string=" "/>
+                            <div class="o_row">
+                                <field name="sync_work_add" widget="boolean_toggle" nolabel="1" class="oe_inline"/>&#160;&#160;Sync 'Work Address' from Related Company
+                            </div>
+                        </group>
+                        <!-- <group> -->
+                            <!-- <label for="sync_home_add" string=" "/> -->
+                            <!-- <div class="o_row"> -->
+                                <!-- <field name="sync_home_add" widget="boolean_toggle" nolabel="1" class="oe_inline"/>&#160;&#160;Sync 'Home Address' from Related Company -->
+                            <!-- </div> -->
+                        <!-- </group> -->
+                    </group>
+
+                    <group class="oe_edit_only" attrs="{'invisible': [('sync_work_add', '=', True)]}">
+                        <group string="Work Address Completion" attrs="{'invisible': ['|',('sync_work_add', '=', True),('is_family', '=', True)]}">
+                            <!-- Auto Complete Work Address Fields with Street Name from Custom Model -->
+                            <field name="street_zip_id" options="{'create_name_field': 'city', 'no_open': True, 'no_create': True}"
+                                   placeholder="Work Address Completion with Street Names for Cyprus" attrs="{'readonly': ['|', ('zip_id', '!=', False), ('sync_work_add', '=', True)]}"
+                                   class="oe_edit_only" nolabel="1" colspan="2"/>
+
+                            <!-- Auto Complete Work Address Fields from base_location Module -->
+                            <field name="zip_id" string="" options="{'create_name_field': 'city', 'no_open': True, 'no_create': True}"
+                                   placeholder="Work Address Completion for Europe" attrs="{'readonly': ['|', ('street_zip_id', '!=', False), ('sync_work_add', '=', True)]}"
+                                   class="oe_edit_only" nolabel="1" colspan="2"/>
+                        </group>
+                        <group attrs="{'invisible': [('sync_work_add', '=', False)]}">
+                        </group>
+                        <group attrs="{'invisible': [('is_family', '=', False)]}">
+                        </group>
+                        <!-- <group string="Home Address Completion" attrs="{'invisible': ['|',('sync_home_add', '=', True),('is_company', '=', True)]}"> -->
+                            <!-- Auto Complete Home Address Fields with Street Name from Custom Model -->
+                            <!-- <field name="street_zip_id_home" string="" options="{'create_name_field': 'city', 'no_open': True, 'no_create': True}" -->
+                                   <!-- placeholder="Home Address Completion with Street Names for Cyprus" attrs="{'readonly': ['|', ('zip_id_home', '!=', False), ('sync_home_add', '=', True)]}" -->
+                                   <!-- class="oe_edit_only" nolabel="1" colspan="2"/> -->
+
+                            <!-- Auto Complete Home Address Fields from base_location Module -->
+                            <!-- <field name="zip_id_home" string="" options="{'create_name_field': 'city', 'no_open': True, 'no_create': True}" -->
+                                   <!-- placeholder="Home Address Completion for Europe" attrs="{'readonly': ['|', ('street_zip_id_home', '!=', False), ('sync_home_add', '=', True)]}" -->
+                                   <!-- class="oe_edit_only" nolabel="1" colspan="2"/> -->
+                        <!-- </group> -->
+                        <!-- <group attrs="{'invisible': ['|',('sync_home_add', '=', False),('is_company', '=', True)]}"> -->
+                        <!-- </group> -->
+                    </group>
+
+                    <group name="google" string="Google Contacts Connector">
+                        <field name="id_x" string="Old ID" readonly="1"/>
+                    </group>
+
+                </xpath>
+
+
+                <!-- Invisible top relations button -->
+                <!--<xpath expr="//div[@name='button_box']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>-->
+
+            </field>
+        </record>
+
+
+        <!-- Change the default view from kanban to list -->
+
+        <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- <record id="contacts.action_contacts_view_kanban" model="ir.actions.act_window.view"> -->
+            <!-- <field name="sequence" eval="4"/> -->
+            <!-- <field name="view_mode">kanban</field> -->
+            <!-- <field name="view_id" ref="base.res_partner_kanban_view"/> -->
+            <!-- <field name="act_window_id" ref="contacts.action_contacts"/> -->
+        <!-- </record> -->
+
+
+        <!-- Replace list view with custom defined fields -->
+         <record id="contact_mod_view_tree_extend" model="ir.ui.view">
+             <field name="name">res.partner.tree</field>
+             <field name="model">res.partner</field>
+             <field name="inherit_id" ref="base.view_partner_tree"/>
+             <field name="arch" type="xml">
+                 <xpath expr="/tree" position="replace">
+                     <tree string="Contacts" multi_edit="1">
+
+                         <field name="id" optional="hide"/>
+
+                         <!-- Names -->
+                         <field name="display_name" optional="hide"/>
+                         <field name="title" optional="show"/>
+                         <field name="name" optional="show" string="Full Name"/>
+                         <!-- <field name="first_name" optional="hide"/> -->
+                         <!-- <field name="middle_name" optional="hide"/> -->
+                         <!-- <field name="last_name" optional="hide"/> -->
+                         <field name="printed_name" optional="hide"/>
+
+                         <!-- Company -->
+                         <field name="company_type" optional="show"/>
+                         <field name="parent_id" optional="show" readonly="1"/>
+                         <field name="function" optional="show"/>
+
+                         <!-- Phones -->
+                         <field name="mobile" optional="show" class="o_force_ltr"/>
+                         <field name="phone_business" optional="show" class="o_force_ltr"/>
+                         <field name="phone" optional="show" class="o_force_ltr"/>
+                         <field name="phone_company" optional="hide" class="o_force_ltr"/>
+                         <field name="phone_other" optional="hide" class="o_force_ltr"/>
+
+                         <!-- Emails -->
+                         <field name="email" optional="hide" widget="email"/>
+                         <field name="email_personal" optional="hide" widget="email"/>
+                         <field name="email_other" optional="hide" widget="email"/>
+                         <field name="email_alternate" optional="hide" widget="email"/>
+
+                         <!-- Work Address -->
+                         <field name="type" optional="hide"/>
+                         <field name="street" optional="hide"/>
+                         <field name="street2" optional="hide"/>
+                         <field name="city" optional="hide"/>
+                         <field name="state_id" optional="hide" readonly="1"/>
+                         <field name="zip" optional="hide"/>
+                         <field name="country_id" optional="hide" readonly="1"/>
+                         <field name="map_work" optional="hide"/>
+                         <field name="sync_work_add" optional="hide"/>
+
+                         <!-- Home Address -->
+                         <!-- <field name="street_home" optional="hide"/> -->
+                         <!-- <field name="street2_home" optional="hide"/> -->
+                         <!-- <field name="city_home" optional="hide"/> -->
+                         <!-- <field name="state_id_home" optional="hide" readonly="1"/> -->
+                         <!-- <field name="zip_home" optional="hide"/> -->
+                         <!-- <field name="country_id_home" optional="hide" readonly="1"/> -->
+                         <!-- <field name="map_home" optional="hide"/> -->
+                         <!-- <field name="sync_home_add" optional="hide"/> -->
+
+                         <field name="vat" optional="hide" readonly="1"/>
+                         <field name="reg_date" optional="hide" widget="date"/>
+                         <field name="id_no" optional="hide"/>
+                         <field name="birthday" optional="hide" widget="date"/>
+
+                         <field name="category_id" optional="show" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                         <field name="is_company" optional="hide"/>
+                         <field name="is_family" optional="hide"/>
+
+                         <field name="user_id" optional="hide" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>
+                         <field name="activity_ids" optional="show" widget="list_activity"/>
+
+                         <field name="status" optional="show" widget="selection"/>
+                         <field name="active_sync" optional="show" string="Sync" widget="boolean_toggle"/>
+                         <field name="company_id" optional="show" groups="base.group_multi_company" readonly="1"/>
+                         <field name="active" optional="hide"/>
+
+                         <field name="create_uid" optional="hide"/>
+                         <field name="create_date" optional="hide"/>
+                         <field name="write_uid" optional="hide"/>
+                         <field name="write_date" optional="hide"/>
+                     </tree>
+                 </xpath>
+             </field>
+         </record>
+
+        <!-- <record id="view_res_partner_filter_addon" model="ir.ui.view"> -->
+            <!-- <field name="name">res.partner.select</field> -->
+            <!-- <field name="model">res.partner</field> -->
+            <!-- <field name="inherit_id" ref="base.view_res_partner_filter"/> -->
+            <!-- <field name="arch" type="xml"> -->
+                <!-- <xpath expr="//filter[@name='type_company']" position="after"> -->
+                    <!-- <filter string="Competitors" name="type_competitor" domain="[('is_competitor', '=', True)]"/> -->
+                <!-- </xpath> -->
+            <!-- </field> -->
+        <!-- </record> -->
+
+    </data>
+</odoo>

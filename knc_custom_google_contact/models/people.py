@@ -321,57 +321,57 @@ class People:
             self.__logging.exception("Get Default Membership Exception: " + str(ex))
         return gt_resp
 
-    def create_membership_lists(self, s2l_contact=None, l2s_contact=None):
-        crt_ms_resp = {"err_status": True, "response": None}
-        try:
-            if s2l_contact:
-                tmp_local_categories = []
-                if len(s2l_contact["memberships"]) > 0:
-                    for sr_membership in s2l_contact["memberships"]:
-                        chk_lc_resp = self.create_membership_resource(s2l_category=sr_membership)
-                        if not chk_lc_resp["err_status"]:
-                            tmp_local_categories.append(chk_lc_resp["response"].id)
-                crt_ms_resp["response"] = tmp_local_categories
-                crt_ms_resp["err_status"] = False
-            elif l2s_contact:
-                tmp_membership_listing = []
-                prev_wid = [], None
-                for _category in l2s_contact.category_id:
-                    res_wid = None
+    # def create_membership_lists(self, s2l_contact=None, l2s_contact=None):
+        # crt_ms_resp = {"err_status": True, "response": None}
+        # try:
+            # if s2l_contact:
+                # tmp_local_categories = []
+                # if len(s2l_contact["memberships"]) > 0:
+                    # for sr_membership in s2l_contact["memberships"]:
+                        # chk_lc_resp = self.create_membership_resource(s2l_category=sr_membership)
+                        # if not chk_lc_resp["err_status"]:
+                            # tmp_local_categories.append(chk_lc_resp["response"].id)
+                # crt_ms_resp["response"] = tmp_local_categories
+                # crt_ms_resp["err_status"] = False
+            # elif l2s_contact:
+                # tmp_membership_listing = []
+                # prev_wid = [], None
+                # for _category in l2s_contact.category_id:
+                    # res_wid = None
 
-                    chk_resp = self.chk_serv_category(l2s_category=_category)
-                    if not chk_resp["err_status"]:
-                        res_wid = chk_resp["response"]["resourceName"].split('/')[1]
-                        _category.write({
-                            'gc_res_id': res_wid,
-                            'gc_name': chk_resp["response"]['name']
-                        })
-                    else:
-                        crt_srv_resp = self.create_membership_resource(l2s_category=_category)
-                        if not crt_srv_resp["err_status"]:
-                            crt_lc_resp = self.create_membership_resource(s2l_category=crt_srv_resp["response"])
-                            if not crt_lc_resp["err_status"]:
-                                res_wid = crt_lc_resp["response"].gc_res_id
+                    # chk_resp = self.chk_serv_category(l2s_category=_category)
+                    # if not chk_resp["err_status"]:
+                        # res_wid = chk_resp["response"]["resourceName"].split('/')[1]
+                        # _category.write({
+                            # 'gc_res_id': res_wid,
+                            # 'gc_name': chk_resp["response"]['name']
+                        # })
+                    # else:
+                        # crt_srv_resp = self.create_membership_resource(l2s_category=_category)
+                        # if not crt_srv_resp["err_status"]:
+                            # crt_lc_resp = self.create_membership_resource(s2l_category=crt_srv_resp["response"])
+                            # if not crt_lc_resp["err_status"]:
+                                # res_wid = crt_lc_resp["response"].gc_res_id
 
-                    if res_wid and res_wid != prev_wid:
-                        tmp_membership_listing.append({
-                            "contactGroupMembership": {
-                                "contactGroupResourceName": constants.GC_CONTACT_GROUP_KEY + '/' + res_wid
-                            }
-                        })
-                        prev_wid = res_wid
+                    # if res_wid and res_wid != prev_wid:
+                        # tmp_membership_listing.append({
+                            # "contactGroupMembership": {
+                                # "contactGroupResourceName": constants.GC_CONTACT_GROUP_KEY + '/' + res_wid
+                            # }
+                        # })
+                        # prev_wid = res_wid
 
-                if len(tmp_membership_listing) > 0:
-                    crt_ms_resp["response"] = tmp_membership_listing
-                    crt_ms_resp["err_status"] = False
-                else:
-                    crt_ms_resp["err_status"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-            else:
-                crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
-        except Exception as ex:
-            self.__logging.exception("Create Contact Membership Listing Exception: " + str(ex))
-            crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
-        return crt_ms_resp
+                # if len(tmp_membership_listing) > 0:
+                    # crt_ms_resp["response"] = tmp_membership_listing
+                    # crt_ms_resp["err_status"] = False
+                # else:
+                    # crt_ms_resp["err_status"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+            # else:
+                # crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_ERR
+        # except Exception as ex:
+            # self.__logging.exception("Create Contact Membership Listing Exception: " + str(ex))
+            # crt_ms_resp["response"] = constants.GC_CONTACTS_MEMBERSHIPS_CRT_EXCEPT
+        # return crt_ms_resp
 
     def get_custom_relations(self, sr_custom_fields, _type):
         gt_cum_resp = {"err_status": True, "response": None}
@@ -423,15 +423,15 @@ class People:
                         "postalCode": db_contact.zip if db_contact.zip else "",
                         'country': db_contact.country_id.name if db_contact.country_id else ""
                     },
-              #      {
-               #         'type': "Home",
-                #        "streetAddress": db_contact.street_home if db_contact.street_home else "",
-                 #       'extendedAddress': db_contact.street2_home if db_contact.street2_home else "",
-                  #      'poBox': db_contact.state_id_home.name if db_contact.state_id_home else "",
-                   #     "city": db_contact.city_home if db_contact.city_home else "",
-                    #    "postalCode": db_contact.zip_home if db_contact.zip_home else "",
-                     #   'country': db_contact.country_id_home.name if db_contact.country_id_home else ""
-                    #}
+                    {
+                        'type': "Home",
+                        "streetAddress": db_contact.street_home if db_contact.street_home else "",
+                        'extendedAddress': db_contact.street2_home if db_contact.street2_home else "",
+                        'poBox': db_contact.state_id_home.name if db_contact.state_id_home else "",
+                        "city": db_contact.city_home if db_contact.city_home else "",
+                        "postalCode": db_contact.zip_home if db_contact.zip_home else "",
+                        'country': db_contact.country_id_home.name if db_contact.country_id_home else ""
+                    }
                 ],
                 "emailAddresses": [
                     {"value": db_contact.email if db_contact.email else "", "type": "Work"},
@@ -452,8 +452,8 @@ class People:
                 ],
                 "urls": [
                     {"value": db_contact.website if db_contact.website else "", "type": "homePage"},
-                 #   {"value": db_contact.map_work if db_contact.map_work else "", "type": "Work Map"},
-                  #  {"value": db_contact.map_home if db_contact.map_home else "", "type": "Home Map"}
+                    {"value": db_contact.map_work if db_contact.map_work else "", "type": "Work Map"},
+                    {"value": db_contact.map_home if db_contact.map_home else "", "type": "Home Map"}
                 ],
                 "memberships": [{
                     'contactGroupMembership': {
@@ -489,7 +489,7 @@ class People:
 
             if db_contact.is_company:
                 gl_json_params["names"] = [{
-                    "givenName": "#",
+                    "givenName": "",
                     "familyName": db_contact.name,
                     "displayName": db_contact.name,
                     #"honorificPrefix": "Company"
@@ -523,7 +523,7 @@ class People:
                         "displayName": db_contact.name,
                         "givenName": db_contact.firstname if db_contact.firstname else "",
                         "familyName": db_contact.lastname if db_contact.lastname else "",
-                        "middleName": db_contact.middle_name.name if db_contact.middle_name else "",
+                        # "middleName": db_contact.middle_name.name if db_contact.middle_name else "",
                         #"honorificPrefix": db_contact.title.name if db_contact.title.name else ""
                     }]
                     gl_json_params["organizations"] = [{
@@ -565,10 +565,10 @@ class People:
                     }
                 }]
 
-            if db_contact.category_id and len(db_contact.category_id) > 0:
-                listing_resp = self.create_membership_lists(l2s_contact=db_contact)
-                if not listing_resp["err_status"]:
-                    gl_json_params["memberships"] += listing_resp["response"]
+            # if db_contact.category_id and len(db_contact.category_id) > 0:
+                # listing_resp = self.create_membership_lists(l2s_contact=db_contact)
+                # if not listing_resp["err_status"]:
+                    # gl_json_params["memberships"] += listing_resp["response"]
 
             # For Social Profile Custom Manageable fields
             try:
@@ -586,8 +586,8 @@ class People:
                 # gl_json_params["relations"] = []
                 # if db_contact.inverse_relation_ids and len(db_contact.inverse_relation_ids) > 0:
                     # for rel_each in db_contact.inverse_relation_ids:
-                       # if rel_each.this_partner_id:
-                          # gl_json_params["relations"].append({
+                        # if rel_each.this_partner_id:
+                            # gl_json_params["relations"].append({
                                 # "person": rel_each.this_partner_id.name,
                                 # "type": rel_each.type_selection_id.name if rel_each.type_selection_id.name else "N/A"
                             # })
@@ -669,15 +669,15 @@ class People:
     def create_update_local_contact(self, sr_contact, previous_local_contact=None):
         crt_lc_resp = {"err_status": True, "response": None}
         try:
-            title_id, first_name_id, middle_name_id, last_name_id = None, None, None, None
+            firstname, lastname = None, None
 
             db_data_params = {
                 'gc_etag': sr_contact["etag"],
                 # 'title': sr_contact["names"][0]["honorificPrefix"] if 'honorificPrefix' in sr_contact["names"][0] else 'Mr/Mrs',
                 'name': sr_contact["names"][0]["displayName"],
-                # 'first_name': sr_contact["names"][0]["givenName"],
+                # 'firstname': sr_contact["names"][0]["givenName"],
                 # 'middle_name': sr_contact["names"][0]["middleName"],
-                # 'last_name': sr_contact["names"][0]["familyName"],
+                # 'lastname': sr_contact["names"][0]["familyName"],
                 'source': constants.GC_CONTACT_SOURCE,
             }
 
@@ -693,61 +693,61 @@ class People:
                 pass
 
             # Check for Title field for Many2one relationship
-            if 'honorificPrefix' in sr_contact["names"][0] and sr_contact["names"][0]["honorificPrefix"]:
-                title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].search([
-                    ('name', '=', str(sr_contact["names"][0]["honorificPrefix"]).capitalize())
-                ])
-                if title_id and len(title_id) > 0:
-                    title_id = title_id[0].id
-                else:
-                    title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].create({
-                        'name': str(sr_contact["names"][0]["honorificPrefix"]).capitalize()
-                    }).id
+            # if 'honorificPrefix' in sr_contact["names"][0] and sr_contact["names"][0]["honorificPrefix"]:
+                # title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].search([
+                    # ('name', '=', str(sr_contact["names"][0]["honorificPrefix"]).capitalize())
+                # ])
+                # if title_id and len(title_id) > 0:
+                    # title_id = title_id[0].id
+                # else:
+                    # title_id = self.__default_env[constants.RES_PARTNER_TITLE_MODEL].create({
+                        # 'name': str(sr_contact["names"][0]["honorificPrefix"]).capitalize()
+                    # }).id
 
             # Check the First Name field for Many2one relationship
-            if 'givenName' in sr_contact["names"][0] and sr_contact["names"][0]["givenName"]:
-                first_name_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].search([
-                    ('name', '=', sr_contact["names"][0]["givenName"])
-                ])
-                if first_name_id and len(first_name_id) > 0:
-                    first_name_id = first_name_id[0].id
-                else:
-                    first_name_id = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].create({
-                        'name': sr_contact["names"][0]["givenName"]
-                    }).id
+            # if 'givenName' in sr_contact["names"][0] and sr_contact["names"][0]["givenName"]:
+                # firstname = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].search([
+                    # ('name', '=', sr_contact["names"][0]["givenName"])
+                # ])
+                # if firstname and len(first_name_id) > 0:
+                    # firstname = firstname[0].id
+                # else:
+                    # firstname = self.__default_env[constants.RES_PARTNER_FIRST_NAME_MODEL].create({
+                        # 'name': sr_contact["names"][0]["givenName"]
+                    # }).id
 
             # Check the Last Name field for Many2one relationship
-            if 'familyName' in sr_contact["names"][0] and sr_contact["names"][0]["familyName"]:
-                last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
-                    ('name', '=', sr_contact["names"][0]["familyName"])
-                ])
-                if last_name_id and len(last_name_id) > 0:
-                    last_name_id = last_name_id[0].id
-                else:
-                    last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
-                        'name': sr_contact["names"][0]["familyName"]
-                    }).id
+            # if 'familyName' in sr_contact["names"][0] and sr_contact["names"][0]["familyName"]:
+                # last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
+                    # ('name', '=', sr_contact["names"][0]["familyName"])
+                # ])
+                # if last_name_id and len(last_name_id) > 0:
+                    # last_name_id = last_name_id[0].id
+                # else:
+                    # last_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
+                        # 'name': sr_contact["names"][0]["familyName"]
+                    # }).id
 
             # Check the Middle Name field for Many2one relationship
-            if 'middleName' in sr_contact["names"][0] and sr_contact["names"][0]["middleName"]:
-                middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
-                    ('name', '=', sr_contact["names"][0]["middleName"])
-                ])
-                if middle_name_id and len(middle_name_id) > 0:
-                    middle_name_id = middle_name_id[0].id
-                else:
-                    middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
-                        'name': sr_contact["names"][0]["middleName"]
-                    }).id
+            # if 'middleName' in sr_contact["names"][0] and sr_contact["names"][0]["middleName"]:
+                # middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].search([
+                    # ('name', '=', sr_contact["names"][0]["middleName"])
+                # ])
+                # if middle_name_id and len(middle_name_id) > 0:
+                    # middle_name_id = middle_name_id[0].id
+                # else:
+                    # middle_name_id = self.__default_env[constants.RES_PARTNER_LAST_NAME_MODEL].create({
+                        # 'name': sr_contact["names"][0]["middleName"]
+                    # }).id
 
-            if first_name_id:
-                db_data_params["first_name"] = first_name_id
-            if middle_name_id:
-                db_data_params["middle_name"] = middle_name_id
-            if last_name_id:
-                db_data_params["last_name"] = last_name_id
-            if title_id:
-                db_data_params["title"] = title_id
+            if firstname:
+                db_data_params["firstname"] = firstname
+            # if middle_name_id:
+                # db_data_params["middle_name"] = middle_name_id
+            if lastname:
+                db_data_params["lastname"] = lastname
+            # if title_id:
+                # db_data_params["title"] = title_id
 
             if "birthdays" in sr_contact and len(sr_contact['birthdays']) > 0:
                 birth_date = sr_contact["birthdays"][0]["date"]
@@ -787,7 +787,7 @@ class People:
 
                 filter_res = list(filter(lambda x: x['type'] == "pager", sr_contact['phoneNumbers']))
                 db_data_params["phone_business"] = filter_res[0]["value"] if len(filter_res) > 1 else ""
-
+                
                 filter_res = list(filter(lambda x: x['type'] == "other", sr_contact['phoneNumbers']))
                 db_data_params["phone_other"] = filter_res[0]["value"] if len(filter_res) > 1 else ""
 
@@ -892,11 +892,11 @@ class People:
             else:
                 db_data_params["website"] = ""
 
-            if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
-                if previous_local_contact:
-                    ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
-                    if not ct_mbrs_resp["err_status"]:
-                        previous_local_contact.update_categories_params(ct_mbrs_resp["response"])
+            # if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
+                # if previous_local_contact:
+                    # ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
+                    # if not ct_mbrs_resp["err_status"]:
+                        # previous_local_contact.update_categories_params(ct_mbrs_resp["response"])
 
             if 'biographies' in sr_contact and len(sr_contact['biographies']) > 0:
                 db_data_params['comment'] = sr_contact['biographies'][0]['value']
@@ -925,10 +925,10 @@ class People:
                 db_data_params["gc_id"] = sr_contact["resourceName"].split('/')[1]
                 contact_obj = self.__default_env[constants.RES_PARTNER_MODEL].create(db_data_params)
 
-                if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
-                    ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
-                    if not ct_mbrs_resp["err_status"]:
-                        contact_obj.update_categories_params(ct_mbrs_resp["response"])
+                # if 'memberships' in sr_contact and len(sr_contact['memberships']) > 0:
+                    # ct_mbrs_resp = self.create_membership_lists(s2l_contact=sr_contact)
+                    # if not ct_mbrs_resp["err_status"]:
+                        # contact_obj.update_categories_params(ct_mbrs_resp["response"])
 
                 crt_lc_resp["response"] = contact_obj
 
@@ -1367,8 +1367,8 @@ class People:
                 query_params.append(('write_date', '>=', str(self.__initial_date)))
                 query_params.append(('write_date', '<=', str(self.__end_date)))
 
-        #    query_params.append('&')
-       #     query_params.append(('is_family', '=', False))
+            query_params.append('&')
+            query_params.append(('is_family', '=', False))
             query_params.append(('active_sync', '=', True))
 
             _db_contacts = self.__default_env[constants.RES_PARTNER_MODEL].search(query_params, order='write_date desc')

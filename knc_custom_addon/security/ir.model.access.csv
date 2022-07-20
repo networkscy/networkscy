@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_first_name,res.partner.first.name,model_res_partner_first_name,base.group_user,1,1,1,1
+access_res_partner_last_name,res.partner.last.name,model_res_partner_last_name,base.group_user,1,1,1,1
+access_res_partner_street,res.partner.street,model_res_partner_street,base.group_user,1,1,1,1
+access_social_profiles,social.profiles,model_social_profiles,base.group_user,1,1,1,1
+access_social_profile_types,social.profile.types,model_social_profile_types,base.group_user,1,1,1,1

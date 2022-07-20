@@ -130,7 +130,7 @@ class GoogleModResPartner(models.Model):
 
         try:
             local_update_record = self.env[constants.RES_PARTNER_MODEL].search([
-                '&', ('id', '=', self.id), ('active_sync', '=', True)
+                '&', ('id', '=', self.id), '&', ('active_sync', '=', True), ('is_family', '=', False)
             ])
             if local_update_record and len(local_update_record) > 0:
                 db_ref_token = self.get_db_token()
