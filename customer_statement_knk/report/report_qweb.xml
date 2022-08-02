@@ -33,7 +33,7 @@
                     </thead>
                     <t t-set="balance" t-value="o.get_customer_opbalance(from_date, to_date)['balance']"/>
                     <tr>
-                        <td class="text-center"></td>
+                        <td class="text-center" t-esc="(datetime.datetime.strptime(str(from_date), '%Y-%m-%d') + datetime.timedelta(days=-1) ).strftime('%d/%m/%Y')"/>
                         <td class="text-left">Opening Balance</td>
                         <td></td>
                         <td class="text-center"><t t-esc="balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
