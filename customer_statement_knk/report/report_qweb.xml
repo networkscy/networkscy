@@ -32,11 +32,11 @@
                         </tr>
                     </thead>
                     <t t-set="balance" t-value="o.get_customer_opbalance(from_date, to_date)['balance']"/>
-                    <tr class="text-center">
+                    <tr>
                         <td></td>
-                        <td><strong>Opening Balance</strong></td>
+                        <td class="text-left">Opening Balance</td>
                         <td></td>
-                        <td><t t-esc="balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        <td class="text-center"><t t-esc="balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                     </tr>
                     <tr class="text-center" t-foreach="o.get_customer_statements(from_date, to_date)" t-as="stmt">
                         <t t-set="stmt_balance" t-value="stmt.debit-stmt.credit"/>
