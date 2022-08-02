@@ -82,6 +82,7 @@
                             <field name="reg_date" placeholder="Incorporation Date of the Company" widget="date"/>
                             <field name="website" string="Website" placeholder="Company / Corporate Website" widget="url"/>
                             <field name="category_id" placeholder="Tags / Categories" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+							<field name="accounting_contact"/>
                         </group>
                         <group name="names_com_fam" string="Family Name" attrs="{'invisible': ['|',('is_company', '=', False),('is_family', '=', False)]}">
                             <field name="name" string="Family Name" placeholder="Family Name for Internal Use"/>

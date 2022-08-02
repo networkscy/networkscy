@@ -32,7 +32,9 @@ class Partner(models.Model):
     reg_date = fields.Date(string="Reg. Date", tracking=True)
 
     id_x = fields.Integer(string='IDx')  # Temporary Previous ID
-
+    
+    accounting_contact = fields.Many2one('res.partner', string="Accounting Contact")
+    
     status = fields.Selection(selection=[
         ('draft', 'Draft'),
         ('pending', 'Pending'),
