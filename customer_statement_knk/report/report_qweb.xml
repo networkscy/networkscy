@@ -56,9 +56,9 @@
                     <t t-set="agedheader" t-value="o.get_agedheader(from_date, to_date)"/>
                     <thead>
                         <tr>
-                            <!-- <th class="text-right">
+                            <th class="text-right">
                                 <span>Not due</span>
-                            </th> -->
+                            </th>
                             <th class="text-right"><span t-esc="agedheader['4']['name']"/></th>
                             <th class="text-right"><span t-esc="agedheader['3']['name']"/></th>
                             <th class="text-right"><span t-esc="agedheader['2']['name']"/></th>
@@ -69,9 +69,9 @@
                     </thead>
                     <tbody>
                         <tr t-foreach="o.get_ageddata(from_date, to_date)" t-as="partner">
-                            <!-- <td class="text-right">
+                            <td class="text-right">
                                 <span t-esc="partner['direction']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
-                            </td> -->
+                            </td>
                             <td class="text-right">
                                 <span t-esc="partner['4'] + partner['direction']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                             </td>
