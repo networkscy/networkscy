@@ -26,7 +26,6 @@
          'views/sale_view.xml',
          'views/asset_view.xml',
          'views/sale_view.xml',
-         "views/sale_order_report_templates.xml",
          'views/account_view.xml',
 
 
