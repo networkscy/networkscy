@@ -9,3 +9,4 @@ class account_move(models.Model):
     _inherit = 'account.move'   
 
     title = fields.Char()
+    contact_id = fields.Many2one('res.partner',"Contact Person")

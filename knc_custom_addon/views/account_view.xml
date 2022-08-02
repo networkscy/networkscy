@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <field name="payment_reference" position="before">
                 <field name="title"/>
+				<field name="contact_id"/>
             </field>  
         </field>
     </record>

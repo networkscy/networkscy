@@ -91,7 +91,10 @@ class SaleOrder(models.Model):
         invoice_vals["title"] = self.title
         return invoice_vals
     
-    
+    def _prepare_invoice(self):
+        invoice_vals1 = super(SaleOrder, self)._prepare_invoice()
+        invoice_vals1["contact_id"] = self.contact_id
+        return invoice_vals1
 
 
     # @api.onchange('new_project_id')
