@@ -33,7 +33,7 @@ class Partner(models.Model):
 
     id_x = fields.Integer(string='IDx')  # Temporary Previous ID
     
-    accounting_contact = fields.Many2one('res.partner', string="Accounting Contact")
+    accounting_contact_id = fields.Many2one('res.partner', string="Accounting Contact")
     
     status = fields.Selection(selection=[
         ('draft', 'Draft'),
