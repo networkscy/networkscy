@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="custom_external_layout_standard">
+        <div class="header" style="margin-left:-15px;">
+              <img src="/customer_statement_knk/static/src/img/nc_header.png"  width="100%" height="auto" alt=""/>
+        </div>
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer" style="margin-left:-15px;">
+			<img src="/customer_statement_knk/static/src/img/nc_footer.png"  width="100%" height="auto" alt=""/>
+            <div class="row">
+                    <div class="col-6">
+                        <span>P.K.P Networkscy Ltd</span><br/>
+						<span>BANK OF CYPRUS - SWIFT: BCYPCY2N</span><br/>
+						<span>ACC No: 357003771038</span><br/>
+						<span>IBAN: CY20 0020 0195 0000 3570 0377 1038</span><br/>
+						<span>IMPORTANT: Please refer to invoice number when making payments</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Please make all cheques payable to P.K.P NETWORKSCY LTD</span><br/>
+                        <span>Terms of sales:</span><br/>
+						<span>-Invoices not settled within 30 days are subject to interest at 9% p.a.</span><br/>
+						<span>-All products are property of P.K.P Networkscy Ltd until settlment of the total amount of the invoice.</span>
+                    </div>
+            </div>
+        </div>
+    </template>
+</odoo>

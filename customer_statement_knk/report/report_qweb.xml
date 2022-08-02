@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_customer_template">
+        <t t-call="customer_statement_knk.custom_external_layout_standard">
+            <t t-set="o" t-value="o"/>
+           <div class="page">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>STATEMENT OF ACCOUNT</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <!-- <span t-field="o.name"/><br/> -->
+                        <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
+                        <span t-field="o.vat"/>
+                    </div>
+                    <div class="col-6">
+                        <b>Date: </b> <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/><br/>
+                        <b>Statement Period:</b> <t t-esc="from_date" t-options='{"widget": "date"}' ></t> <b>TO</b> <t t-esc="to_date" t-options='{"widget": "date"}'></t>
+                    </div>
+                </div>
+
+                <table class="table table-bordered o_main_table">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Date</th>
+                            <th>Transaction</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+
+                        </tr>
+                    </thead>
+                    <t t-set="balance" t-value="o.get_customer_opbalance(from_date, to_date)['balance']"/>
+                    <tr class="text-center">
+                        <td></td>
+                        <td><strong>Opening Balance</strong></td>
+                        <td></td>
+                        <td><t t-esc="balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                    </tr>
+                    <tr class="text-center" t-foreach="o.get_customer_statements(from_date, to_date)" t-as="stmt">
+                        <t t-set="stmt_balance" t-value="stmt.debit-stmt.credit"/>
+                        <td><t t-esc="stmt.date" t-options='{"widget": "date"}' /></td>
+                        <td class="text-left"><span><t t-esc="stmt.move_id.name"/>   <t t-esc="stmt.move_id.title"/>   <t t-esc="stmt.move_id.invoice_origin"/></span></td>
+                        <td><t t-esc="stmt_balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        <t t-set="balance" t-value="balance+stmt_balance"/>
+                        <td><t t-esc="balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                    </tr>
+                </table>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>Ageing Analysis</h3>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <t t-set="agedheader" t-value="o.get_agedheader(from_date, to_date)"/>
+                    <thead>
+                        <tr>
+                            <!-- <th class="text-right">
+                                <span>Not due</span>
+                            </th> -->
+                            <th class="text-right"><span t-esc="agedheader['4']['name']"/></th>
+                            <th class="text-right"><span t-esc="agedheader['3']['name']"/></th>
+                            <th class="text-right"><span t-esc="agedheader['2']['name']"/></th>
+                            <th class="text-right"><span t-esc="agedheader['1']['name']"/></th>
+                            <th class="text-right"><span t-esc="agedheader['0']['name']"/></th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.get_ageddata(from_date, to_date)" t-as="partner">
+                            <!-- <td class="text-right">
+                                <span t-esc="partner['direction']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td> -->
+                            <td class="text-right">
+                                <span t-esc="partner['4'] + partner['direction']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="partner['3']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="partner['2']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="partner['1']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="partner['0']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="partner['total']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <template id="report_customer_statement_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="customer_statement_knk.report_customer_template"/>
+            </t>
+        </t>
+    </template>
+	
+
+</odoo>
+
+
