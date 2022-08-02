@@ -11,7 +11,9 @@ from odoo.tools import float_is_zero
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-
+    
+    obalance_date = from_date - datetime.timedelta(days = 1)
+    
     def get_customer_opbalance(self, from_date, to_date):
         domain = [('partner_id', '=', self.id), ('move_id.state', '=', 'posted'), ('account_id.internal_type', 'in', ['payable', 'receivable'])]
         debit = 0.0

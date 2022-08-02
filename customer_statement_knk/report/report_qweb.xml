@@ -6,7 +6,7 @@
            <div class="page">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h3>STATEMENT OF ACCOUNT</h3>
+                        <h3>STATEMENT OF ACCOUNT</h3><br/>
                     </div>
                 </div>
                 <div class="row">
@@ -20,7 +20,7 @@
                         <b>Statement Period:</b> <t t-esc="from_date" t-options='{"widget": "date"}' ></t> <b>TO</b> <t t-esc="to_date" t-options='{"widget": "date"}'></t>
                     </div>
                 </div>
-
+				<br/>
                 <table class="table table-bordered o_main_table">
                     <thead>
                         <tr class="text-center">
@@ -33,7 +33,7 @@
                     </thead>
                     <t t-set="balance" t-value="o.get_customer_opbalance(from_date, to_date)['balance']"/>
                     <tr>
-                        <td class="text-center"> <t t-esc="context_timestamp(datetime.datetime.now()-datetime.timedelta(days = 1)).strftime('%d-%m-%Y')"/></td>
+                        <td class="text-center"> <t t-esc="obalance_date"/></td>
                         <td class="text-left">Opening Balance</td>
                         <td></td>
                         <td class="text-center"><t t-esc="balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
