@@ -267,12 +267,13 @@ class ResPartner(models.Model):
                 res.append(values)
         return res, total, lines
 
-    def get_agedheader(self, from_date, to_date):
+    def get_agedheader(self, to_date):
         res = {}
         period_length = 30
-        if not from_date:
-            from_date = fields.Date.today()
-        start = datetime.strptime(str(from_date), "%Y-%m-%d")
+        date = fields.Date.today()
+        # if not from_date:
+            # from_date = fields.Date.today()
+        start = datetime.strptime(str(date), "%Y-%m-%d")
         for i in range(5)[::-1]:
             stop = start - relativedelta(days=period_length - 1)
             res[str(i)] = {
@@ -286,10 +287,11 @@ class ResPartner(models.Model):
     def get_ageddata(self, from_date, to_date):
         target_move = 'posted'
         account_type = ['payable', 'receivable']
-        if not from_date:
-            from_date = fields.Date.today()
+        # date = fields.Date.today()
+        # if not from_date:
+            # from_date = fields.Date.today()
         movelines, total, total = self.with_context(partner_ids=self)._get_partner_move_lines(
-            account_type, from_date, target_move, 30)
+            account_type, to_date, target_move, 30)
         return movelines
 
     def action_view_statements(self):

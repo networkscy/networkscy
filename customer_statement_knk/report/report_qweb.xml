@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <table class="table table-bordered">
-                    <t t-set="agedheader" t-value="o.get_agedheader(from_date, to_date)"/>
+                    <t t-set="agedheader" t-value="o.get_agedheader(to_date)"/>
                     <thead>
                         <tr>
                             <th class="text-right">
