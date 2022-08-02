@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_sale_order_line_cost" model="ir.ui.view">
+        <field name="name">sale.order.cost</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="title"/>
+                <field name="contact_id"/>
+            </field>  
+            <field name="user_id" position="after">
+                <field name="create_uid" string="Created By"/>
+            </field>
+            <notebook position="inside">
+                <page string="Report">
+                    <group>
+                        <group>
+                            <field name="image_size"/>
+                            <field name="print_taxes"/>
+                            <field name="print_discount"/>
+                            <field name="print_total"/>
+                            <field name="approved_by"/>
+                            <field name="only_bom"/>
+                        </group>
+                        <group/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    
+
+</odoo>

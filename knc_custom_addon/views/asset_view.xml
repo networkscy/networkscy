@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- <template id="report_assets_common" inherit_id="web.report_assets_common"> -->
+        <!-- <xpath expr="." position="inside"> -->
+            <!-- <link href="/knc_custom_addon/static/src/less/report.less" rel="stylesheet"/> -->
+        <!-- </xpath> -->
+    <!-- </template> -->
+
+    <template id="web.external_layout_standard">
+        <div class="header" style="margin-left:-15px;">
+              <img src="/knc_custom_addon/static/src/img/nc_header.png"  width="100%" height="auto" alt=""/>
+        </div>
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer" style="margin-left:-15px;">
+            <img src="/knc_custom_addon/static/src/img/nc_footer.png"  width="100%" height="auto" alt=""/>
+            <div class="">
+                <ul class="list-inline" style="font-size:13px; margin-top:-37px;">
+                    <li>Page <span class="page"/> of <span class="topage"/></li>
+                    <li>-</li>
+                    <li>Printed on <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/> by 
+                        <span t-esc="user.name"/></li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="blanck_layout">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <div class="header" style="margin-left:-15px;">
+        </div>
+        <t t-raw="0"/>
+        <div class="footer">
+        </div>
+    </template>    
+
+</odoo>

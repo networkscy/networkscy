@@ -10,7 +10,7 @@
     "license": "AGPL-3",
 
     'depends': [
-        'base', 'contacts', 'base_address_city', 'base_location',
+        'base', 'contacts', 'base_address_city', 'base_location', 'sale',
     ],
 
     'data': [
@@ -23,6 +23,11 @@
          'views/partner_profiles.xml',
          # 'views/partner_relations.xml',
          'views/partner_street_names.xml',
+         'views/sale_view.xml',
+         'views/asset_view.xml',
+         'views/sale_view.xml',
+         "views/sale_order_report_templates.xml",
+         'views/account_view.xml',
 
 
         # Views Website
@@ -31,10 +36,22 @@
         # Menu
 
         # Reports
-
+          'report/sale_report.xml',
+          
         # Reports Configuration
     ],
 
+
+    'assets': { 
+        'web.report_assets_common': [
+            '/static/src/js/boolean_fa_icon_widget.js',
+            '/static/src/js/hide_details_translations.js',
+            '/static/src/js/sale_layout_category_hide_detail.js',
+            '/static/src/less/report.less',
+        ],
+    },
+     
+        
     'images': [
         'images/KNC_Logo.png',
         'images/KNC_Logo_Inv.png',
