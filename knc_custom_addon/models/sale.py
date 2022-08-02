@@ -6,10 +6,10 @@ import odoo.addons.decimal_precision as dp
 
 
 
-# class SaleClass(models.Model):
-    # _name = "sale.class"
+class SaleClass(models.Model):
+    _name = "sale.class"
 
-    # name = fields.Char()
+    name = fields.Char()
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
