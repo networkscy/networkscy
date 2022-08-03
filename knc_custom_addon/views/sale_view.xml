@@ -10,12 +10,6 @@
                 <field name="title"/>
                 <field name="contact_id"/>
             </field>  
-			<field name="title" position="after">
-                <field name="create_date"/>
-            </field>  
-			<field name="create_date" position="attributes">
-				<attribute name="readonly">0</attribute>
-			</field>
             <field name="user_id" position="after">
                 <field name="create_uid" string="Created By"/>
             </field>
